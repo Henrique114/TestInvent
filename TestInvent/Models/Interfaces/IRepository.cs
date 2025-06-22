@@ -2,10 +2,10 @@
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> ListAllEvents();
-        T GetById(Guid id);
-        void AddEvent(T entity);
-        void Update(T entity);
-        void Delete(Guid id);
+        IEnumerable<T> ListarTodosOsEquipamentos();
+        T ListarEquipamentoPorId(Guid id);
+        void AdicionarEquipamento(T entity);
+        void EditarEquipamento(T entity);
+        void DeletarEquipamento(Guid id);
     }
 }

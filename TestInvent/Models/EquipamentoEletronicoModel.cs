@@ -11,9 +11,12 @@ namespace TestInvent.Models
         [Required]
         public string tipo { get; set; }
         [Required]
-        public int qntidadeEmEstoque { get; set; }
+        public int quantidadeEmEstoque { get; set; }
         [Required]
         public DateTime dataDeInclusao { get; set; }
-        public bool temEmEstoque { get; } = false;
+        public bool temEmEstoque { get { return quantidadeEmEstoque > 0; } }
+
+
+
     }
 }

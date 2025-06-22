@@ -7,25 +7,25 @@ namespace TestInvent.Models
     {
         private readonly List<T> _items = new();
 
-        public IEnumerable<T> ListAllEvents() => _items;
+        public IEnumerable<T> ListarTodosOsEquipamentos() => _items;
 
-        public T GetById(Guid id) => _items.SingleOrDefault(x => x.Id == id);
+        public T ListarEquipamentoPorId(Guid id) => _items.SingleOrDefault(x => x.Id == id);
 
-        public void AddEvent(T entity)
+        public void AdicionarEquipamento(T entity)
         {
             entity.Id = Guid.NewGuid();
             _items.Add(entity);
         }
 
-        public void Update(T entity)
+        public void EditarEquipamento(T entity)
         {
-            Delete(entity.Id);
+            DeletarEquipamento(entity.Id);
             _items.Add(entity);
         }
 
-        public void Delete(Guid id)
+        public void DeletarEquipamento(Guid id)
         {
-            var existing = GetById(id);
+            var existing = ListarEquipamentoPorId(id);
             if (existing != null) _items.Remove(existing);
         }
     } 

@@ -1,4 +1,7 @@
 
+using TestInvent.Models;
+using TestInvent.Models.Interfaces;
+
 namespace TestInvent
 {
     public class Program
@@ -8,7 +11,7 @@ namespace TestInvent
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddSingleton<IRepository<EquipamentoEletronicoModel>, InMemoryRepository<EquipamentoEletronicoModel>>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
