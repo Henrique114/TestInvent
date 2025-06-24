@@ -2,7 +2,7 @@
 
 namespace TestInvent.Data
 {
-    public class MongoDbContext
+    public class MongoDbContext 
     {
 
         public IMongoDatabase Database { get; }

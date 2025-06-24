@@ -1,20 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TestInvent.Models.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TestInvent.Models
 {
     public class EquipamentoEletronicoModel : IEntity
     {
-        public Guid Id { get; set; }
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
+
+        [BsonElement("nome")]
         [Required]
-        public string nome { get; set; }
+        public string? Nome { get; set; }
+
+        [BsonElement("tipo")]
         [Required]
-        public string tipo { get; set; }
+        public string? Tipo { get; set; }
+
+        [BsonElement("quantidade_em_estoque")]
         [Required]
-        public int quantidadeEmEstoque { get; set; }
+        public int? QuantidadeEmEstoque { get; set; }
+
+        [BsonElement("data_de_inclusao")]
         [Required]
-        public DateTime dataDeInclusao { get; set; }
-        public bool temEmEstoque { get { return quantidadeEmEstoque > 0; } }
+        public DateTime DataDeInclusao { get; set; }
+
+        [BsonElement("tem_em_estoquw")]
+        public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 
 
 
