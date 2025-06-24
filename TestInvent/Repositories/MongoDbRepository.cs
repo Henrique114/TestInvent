@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using TestInvent.Data;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -6,10 +7,15 @@ namespace TestInvent.Repositories
     public class MongoDbRepository<T> : IRepository<T> where T : class, IEntity
     {
         protected readonly IMongoCollection<T> _collection;
-
-        public MongoDbRepository(IMongoDatabase database, string collectionName)
+          
+        public MongoDbRepository(MongoDbContext contex)
         {
-            _collection = database.GetCollection<T>(collectionName);
+            string? collectionName = Environment.GetEnvironmentVariable("MongoSettings__CollectionName");
+            if (string.IsNullOrWhiteSpace(collectionName))
+            {
+                throw new Exception("As variáveis de ambiente MongoSettings__ConnectionString e MongoSettings__DatabaseName precisam estar definidas.");
+            }
+            _collection = contex.Database.GetCollection<T>(collectionName);
         }
 
         public IEnumerable<T> GetAll()
