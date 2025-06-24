@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TestInvent.Models;
-using TestInvent.Models.Interfaces;
+using TestInvent.Repositories;
 
 namespace TestInvent.Controllers
 {
@@ -8,45 +8,59 @@ namespace TestInvent.Controllers
     [Route("[controller]")]
     public class EquipamentoEletronicoController : ControllerBase
     {
-        private readonly IRepository<EquipamentoEletronicoModel> _repo;
+        private readonly IRepository<EquipamentoEletronicoModel> _repository;
 
-        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repo)
+        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IActionResult ListarTodos() => Ok(_repo.ListarTodosOsEquipamentos());
+        public ActionResult<IEnumerable<EquipamentoEletronicoModel>> GetAll()
+        {
+            return Ok(_repository.GetAll());
+        }
 
         [HttpGet("{id}")]
-        public IActionResult ListarPorId(Guid id)
+        public ActionResult<EquipamentoEletronicoModel> GetById(string id)
         {
-            var equipamento = _repo.ListarEquipamentoPorId(id);
-            if (equipamento == null) return NotFound();
-            return Ok(equipamento);
+            var product = _repository.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
         }
 
         [HttpPost]
-        public IActionResult Adicionar(EquipamentoEletronicoModel Equipamento)
+        public ActionResult<EquipamentoEletronicoModel> Create(EquipamentoEletronicoModel EquipamentoE)
         {
-            _repo.AdicionarEquipamento(Equipamento);
-            return CreatedAtAction(nameof(ListarPorId), new { id = Equipamento.Id }, Equipamento);
+            _repository.Add(EquipamentoE);
+            return CreatedAtAction(nameof(GetById), new { id = EquipamentoE.Id }, EquipamentoE);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Atualizar(Guid id, EquipamentoEletronicoModel m)
+        public IActionResult Update(string id, EquipamentoEletronicoModel updateEquipamentoE)
         {
-            if (_repo.ListarEquipamentoPorId(id) == null) return NotFound();
-            m.Id = id;
-            _repo.EditarEquipamento(m);
+            var existing = _repository.GetById(id);
+            if (existing == null)
+            {
+                return NotFound();
+            }
+            updateEquipamentoE.Id = id;
+            _repository.Update(updateEquipamentoE);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Deletar(Guid id)
+        public IActionResult Delete(string id)
         {
-            if (_repo.ListarEquipamentoPorId(id) == null) return NotFound();
-            _repo.DeletarEquipamento(id);
+            var existing = _repository.GetById(id);
+            if (existing == null)
+            {
+                return NotFound();
+            }
+            _repository.Delete(id);
             return NoContent();
         }
     }
