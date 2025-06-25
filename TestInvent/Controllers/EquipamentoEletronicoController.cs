@@ -21,19 +21,19 @@ namespace TestInvent.Controllers
         public ActionResult<IEnumerable<ReadDTO>> GetAll()
         {
             var equipamentos = _repository.GetAll()
-            .Select(p => new ReadDTO
+            .Select(equipamento => new ReadDTO
             {
-                Id = p.Id,
+                Id = equipamento.Id,
 
-                Nome = p.Nome,
+                Nome = equipamento.Nome,
 
-                Tipo = p.Tipo,
+                Tipo = equipamento.Tipo,
 
-                QuantidadeEmEstoque = p.QuantidadeEmEstoque,
+                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
 
-                DataDeInclusao = p.DataDeInclusao,
+                DataDeInclusao = equipamento.DataDeInclusao,
 
-                TemEmEstoque = p.TemEmEstoque
+                TemEmEstoque = equipamento.TemEmEstoque
             });
             return Ok(equipamentos);
         }
@@ -112,7 +112,6 @@ namespace TestInvent.Controllers
 
             existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
 
-            existing.DataDeInclusao = updateDTO.DataDeInclusao;
 
             _repository.Update(existing);
             return NoContent();
