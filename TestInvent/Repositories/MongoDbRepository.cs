@@ -13,7 +13,7 @@ namespace TestInvent.Repositories
             string? collectionName = Environment.GetEnvironmentVariable("MongoSettings__CollectionName");
             if (string.IsNullOrWhiteSpace(collectionName))
             {
-                throw new Exception("As variáveis de ambiente MongoSettings__ConnectionString e MongoSettings__DatabaseName precisam estar definidas.");
+                throw new Exception("A variável de ambiente MongoSettings__CollectionName precisa estar definida.");
             }
             _collection = contex.Database.GetCollection<T>(collectionName);
         }
