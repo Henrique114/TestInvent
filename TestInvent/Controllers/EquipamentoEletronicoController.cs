@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using TestInvent.DTOs;
 using TestInvent.Models;
 using TestInvent.Repositories;
 
@@ -16,39 +18,103 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EquipamentoEletronicoModel>> GetAll()
+        public ActionResult<IEnumerable<ReadDTO>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            var equipamentos = _repository.GetAll()
+            .Select(p => new ReadDTO
+            {
+                Id = p.Id,
+
+                Nome = p.Nome,
+
+                Tipo = p.Tipo,
+
+                QuantidadeEmEstoque = p.QuantidadeEmEstoque,
+
+                DataDeInclusao = p.DataDeInclusao,
+
+                TemEmEstoque = p.TemEmEstoque
+            });
+            return Ok(equipamentos);
         }
 
         [HttpGet("{id}")]
         public ActionResult<EquipamentoEletronicoModel> GetById(string id)
         {
-            var product = _repository.GetById(id);
-            if (product == null)
+            var equipamento = _repository.GetById(id);
+            if (equipamento == null)
             {
                 return NotFound();
             }
-            return Ok(product);
+            return Ok(new ReadDTO
+            {
+                Id = equipamento.Id,
+
+                Nome = equipamento.Nome,
+
+                Tipo = equipamento.Tipo,
+
+                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
+
+                DataDeInclusao = equipamento.DataDeInclusao,
+
+                TemEmEstoque =  equipamento.TemEmEstoque
+            });
         }
 
         [HttpPost]
-        public ActionResult<EquipamentoEletronicoModel> Create(EquipamentoEletronicoModel EquipamentoE)
+        public ActionResult<EquipamentoEletronicoModel> Create(CreateDTO createDTO)
         {
-            _repository.Add(EquipamentoE);
-            return CreatedAtAction(nameof(GetById), new { id = EquipamentoE.Id }, EquipamentoE);
+            var equipamento = new EquipamentoEletronicoModel
+            {
+
+                Nome = createDTO.Nome,
+
+                Tipo = createDTO.Tipo,
+
+                QuantidadeEmEstoque = createDTO.QuantidadeEmEstoque,
+
+                DataDeInclusao = createDTO.DataDeInclusao,
+
+            };
+
+            _repository.Add(equipamento);
+
+            var result = new ReadDTO
+            {
+                Id = equipamento.Id,
+
+                Nome = equipamento.Nome,
+
+                Tipo = equipamento.Tipo,
+
+                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
+
+                DataDeInclusao = equipamento.DataDeInclusao,
+
+                TemEmEstoque = equipamento.TemEmEstoque
+            };
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, EquipamentoEletronicoModel updateEquipamentoE)
+        public IActionResult Update(string id, UpdateDTO updateDTO)
         {
             var existing = _repository.GetById(id);
             if (existing == null)
             {
                 return NotFound();
             }
-            updateEquipamentoE.Id = id;
-            _repository.Update(updateEquipamentoE);
+
+            existing.Nome = updateDTO.Nome;
+
+            existing.Tipo = updateDTO.Tipo;
+
+            existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
+
+            existing.DataDeInclusao = updateDTO.DataDeInclusao;
+
+            _repository.Update(existing);
             return NoContent();
         }
 
