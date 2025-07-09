@@ -12,12 +12,8 @@ namespace TestInvent
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-            // Registra o contexto Mongo
-            builder.Services.AddSingleton(typeof(IMongoDbContext), typeof(MongoDbContext));
-
             // Registra o repositório genérico
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoDbRepository<>));
+            builder.Services.AddSingleton<IRepository<EquipamentoEletronicoModel>, InMemoryRepository<EquipamentoEletronicoModel>>();
 
             // Add services to the container.
            

@@ -13,9 +13,9 @@ namespace TestInvent.Controllers
     {
         private readonly IRepository<EquipamentoEletronicoModel> _repository;
 
-        public EquipamentoEletronicoController(IMongoDbContext contex)
+        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repository)
         {
-            _repository = new MongoDbRepository<EquipamentoEletronicoModel>(contex);
+            _repository = repository;
         }
 
         [HttpGet]
