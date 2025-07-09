@@ -8,14 +8,10 @@ namespace TestInvent.Repositories
     {
         protected readonly IMongoCollection<T> _collection;
           
-        public MongoDbRepository(MongoDbContext contex)
+        public MongoDbRepository(IMongoDbContext contex)
         {
-            string? collectionName = Environment.GetEnvironmentVariable("MongoSettings__CollectionName");
-            if (string.IsNullOrWhiteSpace(collectionName))
-            {
-                throw new Exception("A variável de ambiente MongoSettings__CollectionName precisa estar definida.");
-            }
-            _collection = contex.Database.GetCollection<T>(collectionName);
+            
+            _collection = contex.GetCollection<T>();
         }
 
         public IEnumerable<T> GetAll()

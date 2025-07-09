@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using TestInvent.Data;
 using TestInvent.DTOs;
 using TestInvent.Models;
 using TestInvent.Repositories;
@@ -12,9 +13,9 @@ namespace TestInvent.Controllers
     {
         private readonly IRepository<EquipamentoEletronicoModel> _repository;
 
-        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repository)
+        public EquipamentoEletronicoController(IMongoDbContext contex)
         {
-            _repository = repository;
+            _repository = new MongoDbRepository<EquipamentoEletronicoModel>(contex);
         }
 
         [HttpGet]
