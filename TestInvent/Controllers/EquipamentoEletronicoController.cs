@@ -11,7 +11,7 @@ namespace TestInvent.Controllers
     [Route("[controller]")]
     public class EquipamentoEletronicoController : ControllerBase
     {
-        private readonly IRepository<EquipamentoEletronicoModel> _repository;
+        private readonly RavenRepository<EquipamentoEletronicoModel> _repository;
 
         public EquipamentoEletronicoController(RavenDbContext context)
         {

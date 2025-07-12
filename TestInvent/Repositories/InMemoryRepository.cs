@@ -11,7 +11,7 @@ namespace TestInvent.Repositories
         
         public IEnumerable<T> GetAll() => _items;
 
-        public T GetById(string? id) => _items.SingleOrDefault(x => x.Id == id);
+        public T? GetById(string? id) => _items.SingleOrDefault(x => x.Id == id);
 
         public void Add(T entity)
         {
@@ -19,7 +19,7 @@ namespace TestInvent.Repositories
             _items.Add(entity);
         }
 
-        public void Update(T entity)
+        public void Update(string id, T entity)
         {
             _items[ _items.FindIndex(item => item.Id == entity.Id)] = entity;
         }

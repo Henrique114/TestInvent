@@ -7,9 +7,20 @@ public class RavenDbContext
 
     public RavenDbContext(IConfiguration config)
     {
-        var base64Cert = config["CertificadoBase64"];
+        var caminhoCert = config["CertificadoBase64"];
         var password = config[""];
-        var certBytes = Convert.FromBase64String(base64Cert);
+
+        if (!File.Exists(caminhoCert))
+            throw new FileNotFoundException("Arquivo de certificado não encontrado.", caminhoCert);
+
+        // Leitura e limpeza
+        var base64Content = File.ReadAllText(caminhoCert)
+            .Replace("\r", "")
+            .Replace("\n", "")
+            .Replace(" ", "")
+            .Trim();
+
+        var certBytes = Convert.FromBase64String(base64Content);
 
         var cert = new X509Certificate2(certBytes, password,
             X509KeyStorageFlags.MachineKeySet |

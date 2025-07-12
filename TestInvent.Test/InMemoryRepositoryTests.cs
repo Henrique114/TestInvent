@@ -32,7 +32,7 @@ namespace TestInvent.Test
             _repo.Add(equipamento);
 
             equipamento.Nome = "multilaser";
-            _repo.Update(equipamento);
+            _repo.Update(equipamento.Id, equipamento);
 
             var fetched = _repo.GetById(equipamento.Id);
             Assert.Equal("multilaser", fetched.Nome);
