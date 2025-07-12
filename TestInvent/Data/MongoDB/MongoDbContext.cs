@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace TestInvent.Data
+namespace TestInvent.Data.MongoDB
 {
     public class MongoDbContext : IMongoDbContext
     {

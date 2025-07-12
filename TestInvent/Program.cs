@@ -12,8 +12,11 @@ namespace TestInvent
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Registra o RavenContex(conecção com o banco)
+            builder.Services.AddSingleton<RavenDbContext>();
+
             // Registra o repositório genérico
-            builder.Services.AddSingleton<IRepository<EquipamentoEletronicoModel>, InMemoryRepository<EquipamentoEletronicoModel>>();
+            builder.Services.AddScoped<IRepository<EquipamentoEletronicoModel>, RavenRepository<EquipamentoEletronicoModel>>();
 
             // Add services to the container.
            

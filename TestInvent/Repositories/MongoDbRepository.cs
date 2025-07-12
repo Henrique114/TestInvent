@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using TestInvent.Data;
+using TestInvent.Data.MongoDB;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -29,9 +29,9 @@ namespace TestInvent.Repositories
             _collection.InsertOne(entity);
         }
 
-        public void Update(T entity)
+        public void Update(string id, T entity)
         {
-            _collection.ReplaceOne(x => x.Id == entity.Id, entity);
+            _collection.ReplaceOne(id, entity);
         }
 
         public void Delete(string id)

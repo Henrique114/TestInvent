@@ -13,9 +13,9 @@ namespace TestInvent.Controllers
     {
         private readonly IRepository<EquipamentoEletronicoModel> _repository;
 
-        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repository)
+        public EquipamentoEletronicoController(RavenDbContext context)
         {
-            _repository = repository;
+            _repository = new RavenRepository<EquipamentoEletronicoModel>(context);
         }
 
         [HttpGet]
@@ -114,7 +114,7 @@ namespace TestInvent.Controllers
             existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
 
 
-            _repository.Update(existing);
+            _repository.Update(id, existing);
             return NoContent();
         }
 
