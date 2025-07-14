@@ -1,8 +1,10 @@
 
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using TestInvent.Data;
 using TestInvent.Models;
 using TestInvent.Repositories;
+using TestInvent.Service;
 
 namespace TestInvent
 {
@@ -12,14 +14,17 @@ namespace TestInvent
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //Registra o RavenContex(conecção com o banco)
-            builder.Services.AddSingleton<RavenDbContext>();
+
+            // Add services to the container.
+            builder.Services.AddScoped<IValidator<EquipamentoEletronicoModel>, EquipamentoEletronicoValidator>();
 
             // Registra o repositório genérico
             builder.Services.AddScoped<IRepository<EquipamentoEletronicoModel>, RavenRepository<EquipamentoEletronicoModel>>();
-
-            // Add services to the container.
+            builder.Services.AddScoped<ServiceEquipamentoEletronico>();
            
+            //Registra o RavenContex(conecção com o banco)
+            builder.Services.AddSingleton<RavenDbContext>();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

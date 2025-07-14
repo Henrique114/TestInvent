@@ -1,5 +1,8 @@
 ﻿
+using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Raven.Client.Documents;
+using TestInvent.Models;
 
 namespace TestInvent.Repositories
 {
@@ -10,11 +13,14 @@ namespace TestInvent.Repositories
         public RavenRepository(RavenDbContext context)
         {
             _store = context.Store;
+            
         }
         public void Add(T entity)
         {
+
             using var session = _store.OpenSession();
-             session.Store(entity);
+
+            session.Store(entity);
              session.SaveChanges();
         }
 
@@ -39,6 +45,7 @@ namespace TestInvent.Repositories
 
         public void Update(string id, T entity)
         {
+           
             using var session = _store.OpenSession();
 
              session.Store(entity, id);
