@@ -15,7 +15,7 @@ namespace TestInvent.Test
         [Fact]
         public void Add_GetAll_TesteDeLançamentoDeItem()
         {
-            var equipamento = new EquipamentoEletronicoModel { Nome = "Lenovo", Tipo = "notebook", QuantidadeEmEstoque = 10 };
+            var equipamento = new EquipamentoEletronicoModel { Nome = "Lenovo", Tipo = "Notebook", QuantidadeEmEstoque = 10 };
             _repo.Add(equipamento);
 
             var list = _repo.GetAll().ToList();

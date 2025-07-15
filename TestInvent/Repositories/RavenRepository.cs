@@ -1,9 +1,7 @@
 ﻿
-using FluentValidation;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Raven.Client.Documents;
 using System.Web;
-using TestInvent.Models;
+
 
 namespace TestInvent.Repositories
 {
