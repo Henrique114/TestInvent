@@ -3,9 +3,11 @@ using Raven.Client.Documents;
 
 public class RavenDbContext
 {
-    public IDocumentStore Store { get; }
+    private static Lazy<IDocumentStore> store = new Lazy<IDocumentStore>(CreateStore);
 
-    public RavenDbContext(IConfiguration config)
+    public static IDocumentStore Store => store.Value;
+
+    private static IDocumentStore CreateStore()
     {
         //var caminhoCert = config["CertificadoBase64"];
         //var password = config[""];
@@ -27,13 +29,14 @@ public class RavenDbContext
         //    X509KeyStorageFlags.PersistKeySet |
         //    X509KeyStorageFlags.Exportable);
 
-        Store = new DocumentStore
+        IDocumentStore store = new DocumentStore()
         {
-            Urls = new[] { config["RavenDbUrl"] },
-            Database = config["RavenDbSettings"],
+            Urls = new[] { Environment.GetEnvironmentVariable("RavenDbUrl")
+        },
+            Database = Environment.GetEnvironmentVariable("RavenDbSettings"),
             //Certificate = cert
-        };
-        Store.Initialize();
+        }.Initialize();
+        return store;
     }
 }
 

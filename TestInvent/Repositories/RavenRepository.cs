@@ -2,32 +2,30 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Raven.Client.Documents;
+using System.Web;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
 {
     public class RavenRepository<T> : IRepository<T> where T : class
     {
-        private readonly IDocumentStore _store;
+        private readonly IDocumentStore _store = RavenDbContext.Store;
 
-        public RavenRepository(RavenDbContext context)
-        {
-            _store = context.Store;
-            
-        }
+       
         public void Add(T entity)
         {
 
             using var session = _store.OpenSession();
 
             session.Store(entity);
-             session.SaveChanges();
+            session.SaveChanges();
         }
 
         public void Delete(string id)
         {
             using var session = _store.OpenSession();
-            session.Delete(id);
+            var idDecodificado = HttpUtility.UrlDecode(id);
+            session.Delete(idDecodificado);
             session.SaveChanges();
         }
 
@@ -40,7 +38,8 @@ namespace TestInvent.Repositories
         public T? GetById(string id)
         {
             using var session = _store.OpenSession();
-            return session.Load<T>(id);
+            var idDecodificado = HttpUtility.UrlDecode(id);
+            return session.Load<T>(idDecodificado);
         }
 
         public void Update(string id, T entity)
@@ -48,8 +47,9 @@ namespace TestInvent.Repositories
            
             using var session = _store.OpenSession();
 
-             session.Store(entity, id);
-             session.SaveChanges();
+            var idDecodificado = HttpUtility.UrlDecode(id);
+            session.Store(entity, idDecodificado);
+            session.SaveChanges();
         }
     }
 }

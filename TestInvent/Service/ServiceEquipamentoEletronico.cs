@@ -10,7 +10,7 @@ namespace TestInvent.Service
         private IValidator<EquipamentoEletronicoModel> _validator;
         public ServiceEquipamentoEletronico( RavenDbContext context, IValidator<EquipamentoEletronicoModel> validator)
         {
-            _repository = new RavenRepository<EquipamentoEletronicoModel>(context);
+            _repository = new RavenRepository<EquipamentoEletronicoModel>();
             _validator = validator;
         }
 
