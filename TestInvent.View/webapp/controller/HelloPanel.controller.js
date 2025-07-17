@@ -23,10 +23,10 @@ sap.ui.define([
             this.oDialog.open();
         },
         
-		onCloseDialog () {
-			 // observação: não precisamos encadear a promessa pDialog, pois este manipulador de eventos 
-			// só é chamado de dentro do próprio diálogo carregado. 
-			this . byId ( "helloDialog" ). close ();
+		onCloseDialog() {
+			// note: We don't need to chain to the pDialog promise, since this event handler
+			// is only called from within the loaded dialog itself.
+			this.byId("helloDialog").close();
 		}
    });
 });
