@@ -15,16 +15,17 @@
             }"
             title="{invoice>Quantity} x {invoice>ProductName}"
             number="{
-                    parts: [
-                        'invoice>ExtendedPrice',
-                        'view>/currency'
-                    ],
-                    type: 'Currency',
-                    formatOptions: {
-                        showMeasure: false
-                    }
-                }"
-                numberUnit="{view>/currency}"/>
+               parts: [
+                  'invoice>ExtendedPrice',
+                  'view>/currency'
+               ],
+               type: 'Currency',
+               formatOptions: {
+                  showMeasure: false
+               }
+            }"
+            numberUnit="{view>/currency}"
+            numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success' }"/>
       </items>
    </List>
 </mvc:View>
