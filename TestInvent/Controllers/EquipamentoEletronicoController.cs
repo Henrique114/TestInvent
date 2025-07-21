@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using TestInvent.Data;
 using TestInvent.DTOs;
 using TestInvent.Models;
 using TestInvent.Repositories;
+using TestInvent.Service;
 
 namespace TestInvent.Controllers
 {
@@ -10,17 +12,17 @@ namespace TestInvent.Controllers
     [Route("[controller]")]
     public class EquipamentoEletronicoController : ControllerBase
     {
-        private readonly IRepository<EquipamentoEletronicoModel> _repository;
+        private readonly ServiceEquipamentoEletronico _service;
 
-        public EquipamentoEletronicoController(IRepository<EquipamentoEletronicoModel> repository)
+        public EquipamentoEletronicoController(ServiceEquipamentoEletronico service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ReadDTO>> GetAll()
         {
-            var equipamentos = _repository.GetAll()
+            var equipamentos = _service.GetAll()
             .Select(equipamento => new ReadDTO
             {
                 Id = equipamento.Id,
@@ -41,7 +43,7 @@ namespace TestInvent.Controllers
         [HttpGet("{id}")]
         public ActionResult<EquipamentoEletronicoModel> GetById(string id)
         {
-            var equipamento = _repository.GetById(id);
+            var equipamento = _service.GetById(id);
             if (equipamento == null)
             {
                 return NotFound();
@@ -78,7 +80,7 @@ namespace TestInvent.Controllers
 
             };
 
-            _repository.Add(equipamento);
+            _service.Add(equipamento);
 
             var result = new ReadDTO
             {
@@ -100,7 +102,7 @@ namespace TestInvent.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, UpdateDTO updateDTO)
         {
-            var existing = _repository.GetById(id);
+            var existing = _service.GetById(id);
             if (existing == null)
             {
                 return NotFound();
@@ -113,19 +115,19 @@ namespace TestInvent.Controllers
             existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
 
 
-            _repository.Update(existing);
+            _service.Update(id, existing);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            var existing = _repository.GetById(id);
+            var existing = _service.GetById(id);
             if (existing == null)
             {
                 return NotFound();
             }
-            _repository.Delete(id);
+            _service.Delete(id);
             return NoContent();
         }
     }

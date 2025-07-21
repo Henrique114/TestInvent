@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using TestInvent.Data;
+using TestInvent.Data.MongoDB;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -8,14 +8,10 @@ namespace TestInvent.Repositories
     {
         protected readonly IMongoCollection<T> _collection;
           
-        public MongoDbRepository(MongoDbContext contex)
+        public MongoDbRepository(IMongoDbContext contex)
         {
-            string? collectionName = Environment.GetEnvironmentVariable("MongoSettings__CollectionName");
-            if (string.IsNullOrWhiteSpace(collectionName))
-            {
-                throw new Exception("A variável de ambiente MongoSettings__CollectionName precisa estar definida.");
-            }
-            _collection = contex.Database.GetCollection<T>(collectionName);
+            
+            _collection = contex.GetCollection<T>();
         }
 
         public IEnumerable<T> GetAll()
@@ -33,9 +29,9 @@ namespace TestInvent.Repositories
             _collection.InsertOne(entity);
         }
 
-        public void Update(T entity)
+        public void Update(string id, T entity)
         {
-            _collection.ReplaceOne(x => x.Id == entity.Id, entity);
+            _collection.ReplaceOne(id, entity);
         }
 
         public void Delete(string id)

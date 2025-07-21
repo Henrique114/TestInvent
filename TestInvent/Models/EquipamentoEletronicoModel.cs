@@ -17,7 +17,7 @@ namespace TestInvent.Models
 
         [BsonElement("tipo")]
         [Required]
-        public string? Tipo { get; set; }
+        public String? Tipo { get; set; }
 
         [BsonElement("quantidade_em_estoque")]
         [Required]
@@ -30,6 +30,7 @@ namespace TestInvent.Models
         [BsonElement("tem_em_estoquw")]
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 
+       
 
 
     }
