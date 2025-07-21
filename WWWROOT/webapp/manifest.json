@@ -34,7 +34,11 @@
 		  "supportedLocales": [""],
 		  "fallbackLocale": ""
 		}
-	  }
+	  }, 
+	   "equipamento": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "Equipamentos.json"
+    	}
 	},
 	"rootView": {
 		"viewName": "ui5.testinvent.view.App",
@@ -47,10 +51,7 @@
 		  "uri": "css/style.css"
 		}
 	  ]
-	}, 
-    "equipamento": {
-        "type": "sap.ui.model.json.JSONModel",
-        "uri": "Equipamentos.json"
-    }
+	} 
+   
   }
 }
