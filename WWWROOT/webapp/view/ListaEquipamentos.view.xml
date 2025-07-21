@@ -1,0 +1,74 @@
+<mvc:View
+	controllerName="ui5.testinvent.controller.ListaEquipamentos"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Table
+		id="listaequipamentos"
+		class="sapUiResponsiveMargin"
+		width="auto"
+		items="{
+				path : 'equipamento>/Equipamentos',
+				sorter : {
+					path : 'tipo',
+					group : true
+				}
+			}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="{i18n>tituloLista}" />
+				<ToolbarSpacer />
+				<SearchField
+					width="50%"
+					search=".onFiltrarEquipamentos"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column
+				hAlign="End"
+				minScreenWidth="Small"
+				demandPopin="true"
+				width="7em">
+				<Text text="{i18n>colunaQuantidade}" />
+			</Column>
+			<Column>
+				<Text text="{i18n>colunaNome}" />
+			</Column>
+			<Column
+				minScreenWidth="Small"
+				demandPopin="true">
+				<Text text="{i18n>colunaStatus}" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="false">
+				<Text text="{i18n>colunaTipo}" />
+			</Column>
+			<Column hAlign="End">
+				<Text text="{i18n>dataInclusão}" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem
+				type="Navigation"
+				press=".onPress">
+				<cells>
+					<ObjectNumber
+						number="{equipamento>quantidadeEmEstoque}"
+						emphasized="false"/>
+					<ObjectIdentifier title="{equipamento>nome}" />
+					<!-- <Text
+						text="(equipamento>temEmEstoque)"
+                        staus="{= ${equipamento>ExtendedtemEmEstoque} false ? 'Error' : 'Success' }"/> -->
+                    <Text
+						text="(equipamento>temEmEstoque)"/>
+					<Text 
+                        text="(equipamento>tipo)" />
+					<Text
+                        text="(equipamento>dataDeInclusao)"/>
+
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>
