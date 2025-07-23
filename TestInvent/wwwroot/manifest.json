@@ -8,14 +8,8 @@
 	"type": "application",
 	"applicationVersion": {
 	  "version": "1.0.0"
-	},
-	"dataSources": {
-			"inventarioRemoto": {
-				"uri": "/EquipamentoEletronico",
-				"type": "JSON"
-				
-			}
-		}
+	}
+	
   },
   "sap.ui": {
 	"technology": "UI5",
@@ -39,16 +33,8 @@
 		"settings": {
 		  "bundleName": "ui5.testinvent.i18n.i18n"
 		}
-	  }, 
-	   "equipamento": {
-        "type": "sap.ui.model.json.JSONModel",
-		"dataSource": "inventarioRemoto",
-		"settings": {
-           "defaultBindingMode": "TwoWay",
-           "defaultCountMode": "Inline",
-           "refreshAfterChange": false
-          }
-    	}
+	  }
+	   
 	},
 	"rootView": {
 		"viewName": "ui5.testinvent.view.App",
