@@ -1,10 +1,9 @@
 sap.ui.define([
 	
 	"sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/ui/core/UIComponent"
-], (fetch, Controller, JSONModel, MessageToast, UIComponent) => {
+], (Controller, fetch, MessageToast, UIComponent) => {
 	"use strict";
 
     const MODELO_EQUIPAMENTO = "equipamentos";

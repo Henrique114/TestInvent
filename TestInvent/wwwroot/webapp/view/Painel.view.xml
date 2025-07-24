@@ -1,0 +1,75 @@
+<mvc:View
+   controllerName="ui5.testinvent.controller.Painel"
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc">
+   <Panel
+      headerText="{i18n>tituloPainel}"
+      class="sapUiResponsiveMargin"
+      width="auto">
+      <content>
+         <Button
+            text="{i18n>showHelloButtonText}"
+            press=".onShowHello"
+            class="myCustomButton"/>
+         <Input
+            value="{/recipient/name}"
+            valueLiveUpdate="true"
+            width="60%"/>
+         <FormattedText
+            htmlText="Hello {/recipient/name}"
+            class="sapUiSmallMargin sapThemeHighlight-asColor myCustomText"/>
+      </content>
+   </Panel>
+	<Panel accessibleRole="Region">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Listagem"/>
+				<ToolbarSpacer/>
+				<content>
+					<Button
+					   text="Teste"
+					   press=".onShow"
+					   class="myCustomButton"/>
+
+				</content>
+				<SearchField
+					width="50%"
+					search=".onFilterInvoices"/>
+			</Toolbar>
+		</headerToolbar>
+		<Table
+		  id="listaEquipamentos"
+		  headerText="Equipamentos"
+		  class="sapUiResponsiveMargin"
+		  width="auto"
+		  items="{path: 'equipamentos>/'}" >
+
+			<columns>
+				<Column
+					hAlign="End"
+					minScreenWidth="Small"
+					demandPopin="true"
+					width="5em">
+					<Text text="Quantidade" />
+				</Column>
+				<Column>
+					<Text text="Nome" />
+				</Column>
+
+			</columns>
+			<items>
+				<ColumnListItem
+					type="Navigation"
+					press=".onPress">
+					<cells>
+						<ObjectNumber
+							number="{equipamentos>quantidadeEmEstoque}"
+							emphasized="false"/>
+						<ObjectIdentifier title="{equipamentos>nome}" />
+
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Panel>
+</mvc:View>
