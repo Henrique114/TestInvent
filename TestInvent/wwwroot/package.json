@@ -1,0 +1,17 @@
+{
+  "name": "ui5.testinvent",
+  "version": "1.0.0",
+  "description": "Aplicação para consumir a API",
+  "scripts": {
+    "start": "ui5 serve -o index.html"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4.0.22",
+    "eslint": "^9.31.0",
+    "ui5-middleware-simpleproxy": "^3.4.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -1,8 +1,9 @@
 
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
-   "sap/m/MessageToast",
-], (Controller, MessageToast) => {
+    "sap/m/MessageToast",
+    "sap/ui/core/UIComponent"
+], (Controller, MessageToast, UIComponent) => {
    "use strict";
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
@@ -16,7 +17,7 @@ sap.ui.define([
 
         _aoAcessarEditar: function () {
             debugger
-            fetch("https://localhost:7104/EquipamentoEletronico")
+            fetch("/EquipamentoEletronico")
                 .then(function (response) {
                     debugger
                     return response.json(); // ou response.text(), response.blob(), etc.
@@ -44,7 +45,7 @@ sap.ui.define([
 
          // // show message
         
-           fetch("/EquipamentoEletronico")
+           fetch("https://localhost:7104/EquipamentoEletronico")
                  .then(function(response) {
                      return response.json(); // ou response.text(), response.blob(), etc.
                  })
