@@ -5,7 +5,7 @@
   displayBlock="true">
         <App class="myAppDemoWT">
             <pages>
-                <Page title="{i18n>homePageTitle}">
+                <Page title="Inventario">
                     <content>
                     <Panel
                         headerText="{i18n>tituloPainel}"
