@@ -14,8 +14,6 @@
                         <content>
                             <mvc:XMLView
                                     viewName="ui5.testinvent.view.Painel"/>
-                                <mvc:XMLView
-                                    viewName="ui5.testinvent.view.ListaEquipamentos"/>
                         </content>
                     </Panel>
                     </content>
