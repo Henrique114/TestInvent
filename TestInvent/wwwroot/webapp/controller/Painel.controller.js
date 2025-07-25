@@ -11,38 +11,32 @@ sap.ui.define([
         onInit: function () {
 
             this.roteador = UIComponent.getRouterFor(this);
-            this.roteador.getRoute("teste").attachPatternMatched(this._aoAcessarEditar, this);
+            const nomeRotaEditar = "teste"; //conferir ids e definicoes dessa rota no manifest.json
+            this.roteador.getRoute(nomeRotaEditar).attachPatternMatched(this._aoAcessarEditar, this);
 
-            //TODO: MIGRAR CODIGO PARA aoCoincidirRota
-            fetch("/EquipamentoEletronico")
-                .then(response => response.json())
-                .then(data => {
-                    const oModel = new sap.ui.model.json.JSONModel(data);
-                    this.getView().setModel(oModel, "equipamentos");
-                })
-                .catch(function (error) {
-                    // Trata erros da requisição
-                    console.error("Erro na requisição:", error);
-               });
+            return this._aoAcessarEditar();
         },
 
         _aoAcessarEditar: function () {
-            fetch("/EquipamentoEletronico")
-            .then(response => response.json())
-            .then(data => {
-                debugger
-                // Manipula os dados recebidos
-                const dados = data.json();
-                console.log(dados);
-                MessageToast.show(dados);
-
-                const oModel = new sap.ui.model.json.JSONModel(dados);
-                this.getView().setModel(oModel, "equipamentos");
-            })
-            .catch(error => console.error("Erro na requisição:", error));
+            this._obterDadosEquipamentos();
         },
 
-      onShowHello() {
+        _obterDadosEquipamentos: function(){
+            const nomeRotaEquipamentos = "/EquipamentoEletronico"; 
+            fetch(nomeRotaEquipamentos)
+                .then(response => response.json())
+                .then(equipamentos => this._setarModeloEquipamentos(equipamentos))
+                .catch(error => console.error("Erro na requisição:", error));
+        },
+
+        _setarModeloEquipamentos: function(equipamentos){
+            const oModel = new sap.ui.model.json.JSONModel(equipamentos);
+            
+            const nomeModeloEquipamentos = "equipamentos"
+            return this.getView().setModel(oModel, nomeModeloEquipamentos);
+        },
+
+        onShowHello() {
          // // read msg from i18n model
          // const oBundle = this.getView().getModel("i18n").getResourceBundle();
          // const sRecipient = this.getView().getModel().getProperty("/recipient/name");
