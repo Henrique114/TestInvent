@@ -17,9 +17,6 @@ sap.ui.define([
             fetch("/EquipamentoEletronico")
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    MessageToast.show(data);
-
                     const oModel = new sap.ui.model.json.JSONModel(data);
                     this.getView().setModel(oModel, "equipamentos");
                 })
