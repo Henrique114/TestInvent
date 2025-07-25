@@ -42,7 +42,7 @@
 		  headerText="Equipamentos"
 		  class="sapUiResponsiveMargin"
 		  width="auto"
-		  items="{path: 'equipamentos>/'}" >
+		  items="{ path: 'equipamentos>/' }" >
 
 			<columns>
 				<Column

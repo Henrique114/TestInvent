@@ -10,31 +10,41 @@ sap.ui.define([
 
 
         onInit: function () {
-            debugger
             this.roteador = UIComponent.getRouterFor(this);
             this.roteador.getRoute("teste").attachPatternMatched(this._aoAcessarEditar, this);
-        },
 
-        _aoAcessarEditar: function () {
-            debugger
+            //TODO: MIGRAR CODIGO PARA aoCoincidirRota
             fetch("/EquipamentoEletronico")
-                .then(function (response) {
+                .then(response => response.json())
+                .then(data => {
                     debugger
-                    return response.json(); // ou response.text(), response.blob(), etc.
-                })
-                .then(function (data) {
                     // Manipula os dados recebidos
-                    const dados = data.json();
-                    console.log(dados);
-                    MessageToast.show(dados);
+                    console.log(data);
+                    MessageToast.show(data);
 
-                    const oModel = new sap.ui.model.json.JSONModel(dados);
+                    const oModel = new sap.ui.model.json.JSONModel(data);
                     this.getView().setModel(oModel, "equipamentos");
                 })
                 .catch(function (error) {
                     // Trata erros da requisição
                     console.error("Erro na requisição:", error);
-                });
+               });
+        },
+
+        _aoAcessarEditar: function () {
+            fetch("/EquipamentoEletronico")
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                // Manipula os dados recebidos
+                const dados = data.json();
+                console.log(dados);
+                MessageToast.show(dados);
+
+                const oModel = new sap.ui.model.json.JSONModel(dados);
+                this.getView().setModel(oModel, "equipamentos");
+            })
+            .catch(error => console.error("Erro na requisição:", error));
         },
 
       onShowHello() {
