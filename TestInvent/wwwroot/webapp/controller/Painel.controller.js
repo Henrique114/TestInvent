@@ -8,8 +8,8 @@ sap.ui.define([
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
 
-
         onInit: function () {
+
             this.roteador = UIComponent.getRouterFor(this);
             this.roteador.getRoute("teste").attachPatternMatched(this._aoAcessarEditar, this);
 
@@ -17,8 +17,6 @@ sap.ui.define([
             fetch("/EquipamentoEletronico")
                 .then(response => response.json())
                 .then(data => {
-                    debugger
-                    // Manipula os dados recebidos
                     console.log(data);
                     MessageToast.show(data);
 
