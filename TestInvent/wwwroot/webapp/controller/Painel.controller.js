@@ -14,10 +14,10 @@ sap.ui.define([
             const nomeRotaEditar = "teste"; //conferir ids e definicoes dessa rota no manifest.json
             this.roteador.getRoute(nomeRotaEditar).attachPatternMatched(this._aoAcessarEditar, this);
 
-            return this._aoAcessarEditar();
+            return this._aoAcessarListar();
         },
 
-        _aoAcessarEditar: function () {
+        _aoAcessarListar: function () {
             this._obterDadosEquipamentos();
         },
 
