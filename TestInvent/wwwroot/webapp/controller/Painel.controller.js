@@ -10,11 +10,15 @@ sap.ui.define([
 
         onInit: function () {
 
+
+
             this.roteador = UIComponent.getRouterFor(this);
             const nomeRotaEditar = "teste"; //conferir ids e definicoes dessa rota no manifest.json
             this.roteador.getRoute(nomeRotaEditar).attachPatternMatched(this._aoAcessarEditar, this);
 
             return this._aoAcessarListar();
+
+           
         },
 
         _aoAcessarListar: function () {

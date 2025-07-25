@@ -30,7 +30,8 @@ sap.ui.define([
 			oDeviceModel.setDefaultBindingMode("OneWay");
 			this.setModel(oDeviceModel, "device");
 
-        
+          // create the views based on the url/hash
+          this.getRouter().initialize();
 			
       },
       getContentDensityClass() {
