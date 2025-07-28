@@ -15,7 +15,7 @@ sap.ui.define([
             this.getView().setModel(oModelo, "equipamentos");
             debugger;
             let oRouter = this.getOwnerComponent().getRouter();
-            const nomeRotaListar = "teste"; //conferir ids e definicoes dessa rota no manifest.json
+            const nomeRotaListar = "ListagemEquipamentos"; //conferir ids e definicoes dessa rota no manifest.json
 
             oRouter.getRoute(nomeRotaListar).attachPatternMatched(this._obterDadosEquipamentos, this);
 

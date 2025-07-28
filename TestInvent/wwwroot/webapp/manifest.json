@@ -52,13 +52,13 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "teste",
-					"target": "testeTarget"
+					"name": "ListagemEquipamentos",
+					"target": "ListagemTarget"
 				}
 			],
 			"targets": {
-				"testeTarget": {
-					"viewName": "Painel"
+				"ListagemTarget": {
+					"viewName": "ListagemEquipamentos"
 				}
 			}
 		},

@@ -1,5 +1,5 @@
 <mvc:View
-   controllerName="ui5.testinvent.controller.Painel"
+   controllerName="ui5.testinvent.controller.ListagemEquipamentos"
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc">
 	<Panel accessibleRole="Region">
