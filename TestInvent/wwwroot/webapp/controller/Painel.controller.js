@@ -2,42 +2,53 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/core/UIComponent"
-], (Controller, MessageToast, UIComponent) => {
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel"
+], (Controller, MessageToast, UIComponent, JSONModel) => {
    "use strict";
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
 
-
         onInit: function () {
-            debugger
-            this.roteador = UIComponent.getRouterFor(this);
-            this.roteador.getRoute("teste").attachPatternMatched(this._aoAcessarEditar, this);
+
+            let oModelo = new JSONModel([]);
+            this.getView().setModel(oModelo, "equipamentos");
+            debugger;
+            let oRouter = this.getOwnerComponent().getRouter();
+            const nomeRotaListar = "teste"; //conferir ids e definicoes dessa rota no manifest.json
+
+            oRouter.getRoute(nomeRotaListar).attachPatternMatched(this._obterDadosEquipamentos, this);
+
+            // let oRouter = UIComponent.getRouterFor(this);
+            // debugger;
+            // oRouter.getRoute("teste").attachPatternMatched(this._obterDadosEquipamentos, this);
+            
+
+           
         },
 
-        _aoAcessarEditar: function () {
-            debugger
-            fetch("/EquipamentoEletronico")
-                .then(function (response) {
-                    debugger
-                    return response.json(); // ou response.text(), response.blob(), etc.
-                })
-                .then(function (data) {
-                    // Manipula os dados recebidos
-                    const dados = data.json();
-                    console.log(dados);
-                    MessageToast.show(dados);
-
-                    const oModel = new sap.ui.model.json.JSONModel(dados);
-                    this.getView().setModel(oModel, "equipamentos");
-                })
-                .catch(function (error) {
-                    // Trata erros da requisição
-                    console.error("Erro na requisição:", error);
-                });
+        _aoAcessarListar: function () {
+            debugger;
+            this._obterDadosEquipamentos();
         },
 
-      onShowHello() {
+        _obterDadosEquipamentos: function () {
+            debugger;   
+            const nomeRotaEquipamentos = "/EquipamentoEletronico"; 
+            fetch(nomeRotaEquipamentos)
+                .then(response => response.json())
+                .then(equipamentos => this._setarModeloEquipamentos(equipamentos))
+                .catch(error => console.error("Erro na requisição:", error));
+        },
+
+        _setarModeloEquipamentos: function(equipamentos){
+            const oModel = new sap.ui.model.json.JSONModel(equipamentos);
+            
+            const nomeModeloEquipamentos = "equipamentos"
+            return this.getView().setModel(oModel, nomeModeloEquipamentos);
+        },
+
+        onShowHello() {
          // // read msg from i18n model
          // const oBundle = this.getView().getModel("i18n").getResourceBundle();
          // const sRecipient = this.getView().getModel().getProperty("/recipient/name");

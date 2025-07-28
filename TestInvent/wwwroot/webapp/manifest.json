@@ -44,22 +44,21 @@
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",
-				"viewPath": "ui5.testinvent",
+				"viewPath": "ui5.testinvent.view",
 				"viewType": "XML",
 				"controlId": "app",
 				"controlAggregation": "pages"
 			},
 			"routes": [
 				{
-					"pattern": "teste",
+					"pattern": "",
 					"name": "teste",
-					"target": "teste"
+					"target": "testeTarget"
 				}
 			],
 			"targets": {
-				"teste": {
-					"viewId": "teste",
-					"viewName": "ui5.testinvent.view.Painel"
+				"testeTarget": {
+					"viewName": "Painel"
 				}
 			}
 		},
