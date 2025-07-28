@@ -5,7 +5,7 @@
 	<Panel accessibleRole="Region">
 		<headerToolbar>
 			<Toolbar>
-				<Title text="Listagem"/>
+				<Title text="Inventário"/>
 				<ToolbarSpacer/>
 				<SearchField
 					width="50%"

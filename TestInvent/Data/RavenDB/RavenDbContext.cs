@@ -8,25 +8,7 @@ public class RavenDbContext
 
     private static IDocumentStore CreateStore()
     {
-        //const string nomeVariavelCertificado = "CertificadoBase64";
-        //var caminhoCertificadoRaven = Environment.GetEnvironmentVariable(nomeVariavelCertificado);
-
-        //if (!File.Exists(caminhoCertificadoRaven))
-        //    throw new FileNotFoundException("Arquivo de certificado não encontrado.", caminhoCertificadoRaven);
-
-        //// Leitura e limpeza
-        //var base64Content = File.ReadAllText(caminhoCertificadoRaven)
-        //    .Replace("\r", "")
-        //    .Replace("\n", "")
-        //    .Replace(" ", "")
-        //    .Trim();
-
-        //var certBytes = Convert.FromBase64String(base64Content);
-
-        //var cert = new X509Certificate2(certBytes, string.Empty,
-        //    X509KeyStorageFlags.MachineKeySet |
-        //    X509KeyStorageFlags.PersistKeySet |
-        //    X509KeyStorageFlags.Exportable);
+        
 
         IDocumentStore store = new DocumentStore()
         {
