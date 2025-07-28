@@ -5,16 +5,16 @@
 	<Panel accessibleRole="Region">
 		<headerToolbar>
 			<Toolbar>
-				<Title text="Inventário"/>
+				<Title text="{i18n>listPageTitle}"/>
 				<ToolbarSpacer/>
 				<SearchField
 					width="50%"
-					search=".onFilterInvoices"/>
+					search=".onFiltrarEquipamentos"/>
 			</Toolbar>
 		</headerToolbar>
 		<Table
 		id="listaEquipamentos"
-		headerText="Equipamentos"
+		headerText="{i18n>listPageTitle}"
 		class="sapUiResponsiveMargin sapUiSizeCompact"
 		inset="false"
 		width="auto"
@@ -29,14 +29,14 @@
 				hAlign="End"
 				minScreenWidth="Small"
 				demandPopin="true"
-				width="6em">
-				<Text text="Quantidade" wrapping="false"/>
+				width="8em">
+				<Text text="{i18n>colunaQuantidade}" wrapping="false"/>
 			</Column>
 			<Column>
-				<Text text="Nome" wrapping="false"/>
+				<Text text="{i18n>colunaNome}" wrapping="false"/>
 			</Column>
 			<Column>
-				<Text text="Data de Inclusão" wrapping="false"/>
+				<Text text="{i18n>dataInclusao}" wrapping="false"/>
 			</Column>
 		</columns>
 

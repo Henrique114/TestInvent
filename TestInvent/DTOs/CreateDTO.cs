@@ -13,7 +13,7 @@
         public int? QuantidadeEmEstoque { get; set; }
 
        
-        public DateTime DataDeInclusao { get; set; }
+        public String? DataDeInclusao { get; set; }
 
         public bool TemEmEstoque { get; set; }
     }

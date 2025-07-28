@@ -38,6 +38,11 @@ namespace TestInvent.Repositories
         {
             _collection.DeleteOne(x => x.Id == id);
         }
+
+        public IEnumerable<T> LookingFor(string nome)
+        {
+            throw new NotImplementedException();
+        }
     } 
    
 }

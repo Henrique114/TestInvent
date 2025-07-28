@@ -26,8 +26,17 @@ namespace TestInvent.Service
             return equipamento;
         }
 
+        public IEnumerable<EquipamentoEletronicoModel> LookingFor(string nome)
+        {
+            var equipamentos = _repository.LookingFor(nome);
+            return equipamentos;
+        }
+
+
+
         public void Add(EquipamentoEletronicoModel equipamento) 
         {
+            equipamento.DataDeInclusao = DateTime.Now.ToShortDateString();
             _validator.ValidateAndThrow( equipamento ); 
             _repository.Add( equipamento ); 
 

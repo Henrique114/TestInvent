@@ -1,13 +1,15 @@
 ﻿
 using Raven.Client.Documents;
 using System.Web;
+using TestInvent.Models;
 
 
 namespace TestInvent.Repositories
 {
-    public class RavenRepository<T> : IRepository<T> where T : class
+    public class RavenRepository<T> : IRepository<T> where T :  EquipamentoEletronicoModel
     {
         private readonly IDocumentStore _store = RavenDbContext.Store;
+
 
        
         public void Add(T entity)
@@ -38,6 +40,16 @@ namespace TestInvent.Repositories
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
             return session.Load<T>(idDecodificado);
+        }
+
+        public IEnumerable<T> LookingFor(string Nome) 
+        {
+            using var session = _store.OpenSession();
+            IList<T> results = session
+                .Query<T>()
+                .Where(x => x.Nome.StartsWith(Nome))
+                .ToList();
+            return results;
         }
 
         public void Update(string id, T entity)

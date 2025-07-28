@@ -25,7 +25,7 @@ namespace TestInvent.Models
 
         [BsonElement("data_de_inclusao")]
         [Required]
-        public DateTime DataDeInclusao { get; set; }
+        public string? DataDeInclusao { get; set; }
 
         [BsonElement("tem_em_estoquw")]
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }

@@ -29,6 +29,11 @@ namespace TestInvent.Repositories
             var existing = GetById(id);
             if (existing != null) _items.Remove(existing);
         }
+
+        public IEnumerable<T> LookingFor(string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
   
 }

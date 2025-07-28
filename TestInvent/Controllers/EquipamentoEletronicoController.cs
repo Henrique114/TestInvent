@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using TestInvent.Data;
 using TestInvent.DTOs;
 using TestInvent.Models;
@@ -23,7 +24,7 @@ namespace TestInvent.Controllers
         public ActionResult<IEnumerable<ReadDTO>> GetAll()
         {
             var equipamentos = _service.GetAll()
-            .Select(equipamento => new ReadDTO
+            .Select( equipamento => new ReadDTO
             {
                 Id = equipamento.Id,
 
@@ -64,6 +65,26 @@ namespace TestInvent.Controllers
             });
         }
 
+        [HttpGet("/lookinfor")]
+        public ActionResult<IEnumerable<ReadDTO>> LookingFor([FromQuery] string nome)
+        {
+            if (string.IsNullOrEmpty(nome))
+            {
+                return BadRequest("O parâmetro 'nome' é obrigatório.");
+            }
+            var equipamentos = _service.LookingFor(nome)
+            .Select(equipamento => new ReadDTO
+            {
+                Id = equipamento.Id,
+                Nome = equipamento.Nome,
+                Tipo = equipamento.Tipo,
+                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
+                DataDeInclusao = equipamento.DataDeInclusao,
+                TemEmEstoque = equipamento.TemEmEstoque
+            });
+            return Ok(equipamentos);
+        }
+
         [HttpPost]
         public ActionResult<EquipamentoEletronicoModel> Create(CreateDTO createDTO)
         {
@@ -79,7 +100,7 @@ namespace TestInvent.Controllers
                 DataDeInclusao = createDTO.DataDeInclusao,
 
             };
-
+            
             _service.Add(equipamento);
 
             var result = new ReadDTO
