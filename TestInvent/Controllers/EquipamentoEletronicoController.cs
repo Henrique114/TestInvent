@@ -21,23 +21,9 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReadDTO>> GetAll()
+        public OkObjectResult GetAll([FromQuery] string nome = null)
         {
-            var equipamentos = _service.GetAll()
-            .Select( equipamento => new ReadDTO
-            {
-                Id = equipamento.Id,
-
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque = equipamento.TemEmEstoque
-            });
+            var equipamentos = _service.GetAll(nome);
             return Ok(equipamentos);
         }
 
@@ -63,26 +49,6 @@ namespace TestInvent.Controllers
 
                 TemEmEstoque =  equipamento.TemEmEstoque
             });
-        }
-
-        [HttpGet("/lookingfor")]
-        public ActionResult<IEnumerable<ReadDTO>> LookingFor([FromQuery] string nome)
-        {
-            if (string.IsNullOrEmpty(nome))
-            {
-                return BadRequest("O parâmetro 'nome' é obrigatório.");
-            }
-            var equipamentos = _service.LookingFor(nome)
-            .Select(equipamento => new ReadDTO
-            {
-                Id = equipamento.Id,
-                Nome = equipamento.Nome,
-                Tipo = equipamento.Tipo,
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-                DataDeInclusao = equipamento.DataDeInclusao,
-                TemEmEstoque = equipamento.TemEmEstoque
-            });
-            return Ok(equipamentos);
         }
 
         [HttpPost]

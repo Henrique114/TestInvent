@@ -14,7 +14,7 @@ namespace TestInvent.Repositories
             _collection = contex.GetCollection<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string nome)
         {
             return _collection.Find(_ => true).ToList();
         }
@@ -38,11 +38,7 @@ namespace TestInvent.Repositories
         {
             _collection.DeleteOne(x => x.Id == id);
         }
-
-        public IEnumerable<T> LookingFor(string nome)
-        {
-            throw new NotImplementedException();
-        }
+       
     } 
    
 }

@@ -5,7 +5,7 @@
 	<Panel accessibleRole="Region">
 		<headerToolbar>
 			<Toolbar>
-				<Title text="{i18n>listPageTitle}"/>
+				<Title text="{i18n>homePageTitle}"/>
 				<ToolbarSpacer/>
 				<SearchField
 					width="50%"

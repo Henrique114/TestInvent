@@ -9,7 +9,7 @@ namespace TestInvent.Repositories
         private readonly List<T> _items = new();
 
         
-        public IEnumerable<T> GetAll() => _items;
+        public IEnumerable<T> GetAll(string nome) => _items;
 
         public T? GetById(string? id) => _items.SingleOrDefault(x => x.Id == id);
 
@@ -29,11 +29,7 @@ namespace TestInvent.Repositories
             var existing = GetById(id);
             if (existing != null) _items.Remove(existing);
         }
-
-        public IEnumerable<T> LookingFor(string nome)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
   
 }

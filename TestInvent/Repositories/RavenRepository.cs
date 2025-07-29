@@ -29,10 +29,19 @@ namespace TestInvent.Repositories
             session.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string nome)
         {
             using var session = _store.OpenSession();
-            return session.Query<T>().ToList();
+            if (nome != null && nome != string.Empty)
+            {
+                return session
+                .Query<T>()
+                .Where(x => x.Nome.StartsWith(nome))
+                .ToList();
+            }
+            return session
+                .Query<T>()
+                .ToList();
         }
 
         public T? GetById(string id)
@@ -40,16 +49,6 @@ namespace TestInvent.Repositories
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
             return session.Load<T>(idDecodificado);
-        }
-
-        public IEnumerable<T> LookingFor(string Nome) 
-        {
-            using var session = _store.OpenSession();
-            IList<T> results = session
-                .Query<T>()
-                .Where(x => x.Nome.StartsWith(Nome))
-                .ToList();
-            return results;
         }
 
         public void Update(string id, T entity)

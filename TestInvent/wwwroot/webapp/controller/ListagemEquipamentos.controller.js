@@ -7,10 +7,11 @@ sap.ui.define([
     "sap/ui/model/FilterOperator"
 ], (Controller, MessageToast, JSONModel) => {
     "use strict";
-    const ENDPOINT_BASE = "/EquipamentoEletronico";
+    const ENDPOINT_BASE = "https://localhost:7104/EquipamentoEletronico";
     const ENDPOINT_FILTRO = "/lookingfor" 
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
+    
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
         
@@ -18,8 +19,8 @@ sap.ui.define([
         onInit: function () {
 
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            let oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._obterDadosEquipamentos, this);
+            let rota = this.getOwnerComponent().getRouter();
+            rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
            
         },
 
@@ -28,12 +29,19 @@ sap.ui.define([
             this._obterDadosEquipamentos();
         },
 
-        _obterDadosEquipamentos: function () {
-               
-            fetch(ENDPOINT_BASE)
+        _obterDadosEquipamentos: function (nome = "") {
+            
+            
+            fetch(`${ENDPOINT_BASE}${nome ? "?nome=" + encodeURIComponent(nome) : ""}`)
                 .then(response => response.json())
-                .then(equipamentos => this._setarModeloEquipamentos(equipamentos))
-                .catch(error => console.error("Erro na requisição:", error));
+                .then(dados => {
+                    const oModel = new sap.ui.model.json.JSONModel(dados);
+                    this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar clientes:", error);
+                    sap.m.MessageToast.show("Erro ao carregar dados.");
+                });
         },
 
         _setarModeloEquipamentos: function (equipamentos) {
@@ -42,34 +50,22 @@ sap.ui.define([
                 MessageToast.show("Nenhum equipamento encontrado.");
                 return;
             }
-            const oModel = new JSONModel(equipamentos);
+            const modelo = new JSONModel(equipamentos);
             
-            return this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
+            return this.getView().setModel(modelo, MODELO_EQUIPAMENTOS);
         },
 
         onFiltrarEquipamentos: function (oEvent) 
         {
-            var sQuery = oEvent.getParameter("query");
-            if (sQuery) {
-                fetch(`${ENDPOINT_FILTRO}?nome=${sQuery}`)
-                    .then(response => response.json())
-                    .then(equipamentos => this.onVinculandoFiltro(equipamentos))
-                    .catch(error => console.error("Erro na requisição:", error));
-            }
+            // Obter o valor do campo de pesquisa
+            const _query = oEvent.getParameter("query");
+            this._obterDadosEquipamentos(_query);
+           
 
             
-        },
-
-        onVinculandoFiltro: function (equipamentos) {
-
-            if (!equipamentos || !Array.isArray(equipamentos)) {
-                MessageToast.show("Nenhum equipamento encontrado.");
-                return;
-            }
-            const oModel = new JSONModel(equipamentos);
-
-            return this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
         }
+
+        
         
    });
 });

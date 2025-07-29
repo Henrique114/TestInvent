@@ -14,9 +14,9 @@ namespace TestInvent.Service
             _validator = validator;
         }
 
-        public IEnumerable<EquipamentoEletronicoModel> GetAll()
+        public IEnumerable<EquipamentoEletronicoModel> GetAll(string nome)
         {
-            var equipamentos = _repository.GetAll();
+            var equipamentos = _repository.GetAll(nome);
             return equipamentos;
         }
 
@@ -25,14 +25,6 @@ namespace TestInvent.Service
             var equipamento = _repository.GetById(id);
             return equipamento;
         }
-
-        public IEnumerable<EquipamentoEletronicoModel> LookingFor(string nome)
-        {
-            var equipamentos = _repository.LookingFor(nome);
-            return equipamentos;
-        }
-
-
 
         public void Add(EquipamentoEletronicoModel equipamento) 
         {

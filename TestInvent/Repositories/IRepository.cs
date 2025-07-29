@@ -2,10 +2,8 @@
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string nome);
         T? GetById(string id);
-
-        IEnumerable<T> LookingFor(string nome);
         void Add(T entity);
         void Update(string id,T entity);
         void Delete(string id);
