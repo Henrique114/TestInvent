@@ -12,7 +12,7 @@ namespace TestInvent.Repositories
 
 
        
-        public void Add(T entity)
+        public void Adicionar(T entity)
         {
 
             using var session = _store.OpenSession();
@@ -21,7 +21,7 @@ namespace TestInvent.Repositories
             session.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Deletar(string id)
         {
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
@@ -29,7 +29,7 @@ namespace TestInvent.Repositories
             session.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll(string nome)
+        public IEnumerable<T> BuscarTodos(string nome)
         {
             using var session = _store.OpenSession();
             if (nome != null && nome != string.Empty)
@@ -44,14 +44,14 @@ namespace TestInvent.Repositories
                 .ToList();
         }
 
-        public T? GetById(string id)
+        public T? BuscarPorId(string id)
         {
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
             return session.Load<T>(idDecodificado);
         }
 
-        public void Update(string id, T entity)
+        public void Atualizar(string id, T entity)
         {
            
             using var session = _store.OpenSession();

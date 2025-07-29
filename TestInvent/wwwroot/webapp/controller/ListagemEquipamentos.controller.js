@@ -55,10 +55,10 @@ sap.ui.define([
             return this.getView().setModel(modelo, MODELO_EQUIPAMENTOS);
         },
 
-        onFiltrarEquipamentos: function (oEvent) 
+        aoFiltrarEquipamentos: function (event) 
         {
             // Obter o valor do campo de pesquisa
-            const _query = oEvent.getParameter("query");
+            const _query = event.getParameter("query");
             this._obterDadosEquipamentos(_query);
            
 

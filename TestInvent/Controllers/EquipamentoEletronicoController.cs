@@ -21,16 +21,16 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet]
-        public OkObjectResult GetAll([FromQuery] string nome = null)
+        public OkObjectResult BuscarTodos([FromQuery] string nome = null)
         {
-            var equipamentos = _service.GetAll(nome);
+            var equipamentos = _service.BuscarTodos(nome);
             return Ok(equipamentos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<EquipamentoEletronicoModel> GetById(string id)
+        public ActionResult<EquipamentoEletronicoModel> BuscarPorId(string id)
         {
-            var equipamento = _service.GetById(id);
+            var equipamento = _service.BuscarPorId(id);
             if (equipamento == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ namespace TestInvent.Controllers
         }
 
         [HttpPost]
-        public ActionResult<EquipamentoEletronicoModel> Create(CreateDTO createDTO)
+        public ActionResult<EquipamentoEletronicoModel> Criar(CreateDTO createDTO)
         {
             var equipamento = new EquipamentoEletronicoModel
             {
@@ -67,7 +67,7 @@ namespace TestInvent.Controllers
 
             };
             
-            _service.Add(equipamento);
+            _service.Adicionar(equipamento);
 
             var result = new ReadDTO
             {
@@ -83,13 +83,13 @@ namespace TestInvent.Controllers
 
                 TemEmEstoque = equipamento.TemEmEstoque
             };
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            return CreatedAtAction(nameof(BuscarPorId), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, UpdateDTO updateDTO)
+        public IActionResult Atualizar(string id, UpdateDTO updateDTO)
         {
-            var existing = _service.GetById(id);
+            var existing = _service.BuscarPorId(id);
             if (existing == null)
             {
                 return NotFound();
@@ -102,19 +102,19 @@ namespace TestInvent.Controllers
             existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
 
 
-            _service.Update(id, existing);
+            _service.Atualizar(id, existing);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Deletar(string id)
         {
-            var existing = _service.GetById(id);
+            var existing = _service.BuscarPorId(id);
             if (existing == null)
             {
                 return NotFound();
             }
-            _service.Delete(id);
+            _service.Deletar(id);
             return NoContent();
         }
     }

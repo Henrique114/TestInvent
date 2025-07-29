@@ -14,36 +14,36 @@ namespace TestInvent.Service
             _validator = validator;
         }
 
-        public IEnumerable<EquipamentoEletronicoModel> GetAll(string nome)
+        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
-            var equipamentos = _repository.GetAll(nome);
+            var equipamentos = _repository.BuscarTodos(nome);
             return equipamentos;
         }
 
-        public EquipamentoEletronicoModel GetById(string id)
+        public EquipamentoEletronicoModel BuscarPorId(string id)
         {
-            var equipamento = _repository.GetById(id);
+            var equipamento = _repository.BuscarPorId(id);
             return equipamento;
         }
 
-        public void Add(EquipamentoEletronicoModel equipamento) 
+        public void Adicionar(EquipamentoEletronicoModel equipamento) 
         {
             equipamento.DataDeInclusao = DateTime.Now.ToShortDateString();
             _validator.ValidateAndThrow( equipamento ); 
-            _repository.Add( equipamento ); 
+            _repository.Adicionar( equipamento ); 
 
         }
 
-        public void Update(string id, EquipamentoEletronicoModel equipamento) 
+        public void Atualizar(string id, EquipamentoEletronicoModel equipamento) 
         {
             _validator.ValidateAndThrow(equipamento);
-            _repository.Update( id, equipamento );
+            _repository.Atualizar( id, equipamento );
         }
 
-        public void Delete(string id) 
+        public void Deletar(string id) 
         {
    
-            _repository.Delete( id );
+            _repository.Deletar( id );
         }
 
 

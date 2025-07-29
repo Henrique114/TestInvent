@@ -9,24 +9,24 @@ namespace TestInvent.Repositories
         private readonly List<T> _items = new();
 
         
-        public IEnumerable<T> GetAll(string nome) => _items;
+        public IEnumerable<T> BuscarTodos(string nome) => _items;
 
-        public T? GetById(string? id) => _items.SingleOrDefault(x => x.Id == id);
+        public T? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
 
-        public void Add(T entity)
+        public void Adicionar(T entity)
         {
             entity.Id = Guid.NewGuid().ToString();
             _items.Add(entity);
         }
 
-        public void Update(string id, T entity)
+        public void Atualizar(string id, T entity)
         {
             _items[ _items.FindIndex(item => item.Id == entity.Id)] = entity;
         }
 
-        public void Delete(string? id)
+        public void Deletar(string? id)
         {
-            var existing = GetById(id);
+            var existing = BuscarPorId(id);
             if (existing != null) _items.Remove(existing);
         }
        
