@@ -2,10 +2,13 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ], (Controller, MessageToast, JSONModel) => {
     "use strict";
-    const ENDPOINT_BASE = "https://localhost:7104/EquipamentoEletronico";
+    const ENDPOINT_BASE = "/EquipamentoEletronico";
+    const ENDPOINT_FILTRO = "/lookingfor" 
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
 
@@ -13,7 +16,6 @@ sap.ui.define([
         
 
         onInit: function () {
-
 
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             let oRouter = this.getOwnerComponent().getRouter();
@@ -40,20 +42,43 @@ sap.ui.define([
                 MessageToast.show("Nenhum equipamento encontrado.");
                 return;
             }
-            const oModel = new sap.ui.model.json.JSONModel(equipamentos);
+            const oModel = new JSONModel(equipamentos);
             
             return this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
         },
 
-        onFiltrarEquipamentos: function () 
+        onFiltrarEquipamentos: function (oEvent) 
         {
-              fetch(ENDPOINT_BASE + "/lookingfor")
-                .then(response => response.json())
-                .then(equipamentos => this._setarModeloEquipamentos(equipamentos))
-                .catch(error => console.error("Erro na requisição:", error));
+            //var oInput = this.getView().byId("inputFiltro");
+            //fetch(`${ENDPOINT_BASE}/lookingfor?nome=${oInput.getValue()}`)
+            //.then(response => response.json())
+            //.then(equipamentos => this._setarModeloEquipamentos(equipamentos))
+            //    .catch(error => console.error("Erro na requisição:", error));
 
+
+
+            var sQuery = oEvent.getParameter("query");
+            debugger;
+            if (sQuery) {
+                fetch(`${ENDPOINT_FILTRO}?nome=${sQuery}`)
+                    .then(response => response.json())
+                    .then(equipamentos => this.onVinculandoFiltro(equipamentos))
+                    .catch(error => console.error("Erro na requisição:", error));
+            }
+
+            
+        },
+
+        onVinculandoFiltro: function (equipamentos) {
+
+            if (!equipamentos || !Array.isArray(equipamentos)) {
+                MessageToast.show("Nenhum equipamento encontrado.");
+                return;
+            }
+            const oModel = new JSONModel(equipamentos);
+
+            return this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
         }
-
         
    });
 });

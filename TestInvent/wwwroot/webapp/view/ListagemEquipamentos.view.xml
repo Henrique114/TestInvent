@@ -9,7 +9,8 @@
 				<ToolbarSpacer/>
 				<SearchField
 					width="50%"
-					search=".onFiltrarEquipamentos"/>
+					search=".onFiltrarEquipamentos"
+					id="inputFiltro"/>
 			</Toolbar>
 		</headerToolbar>
 		<Table

@@ -1,5 +1,6 @@
 
 using FluentValidation;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using TestInvent.Data;
 using TestInvent.Models;
@@ -50,7 +51,13 @@ namespace TestInvent
             }
 
             app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = new FileExtensionContentTypeProvider
+                {
+                    Mappings = { [".properties"] = "application/x-msdownload" }
+                }
+            });
 
 
             app.UseHttpsRedirection();

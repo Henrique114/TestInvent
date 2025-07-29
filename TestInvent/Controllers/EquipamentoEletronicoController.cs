@@ -65,7 +65,7 @@ namespace TestInvent.Controllers
             });
         }
 
-        [HttpGet("/lookinfor")]
+        [HttpGet("/lookingfor")]
         public ActionResult<IEnumerable<ReadDTO>> LookingFor([FromQuery] string nome)
         {
             if (string.IsNullOrEmpty(nome))
