@@ -7,25 +7,25 @@ sap.ui.define([
 
    return UIComponent.extend("ui5.testinvent.Component", {
 
-     metadata : {
-         interfaces: ["sap.ui.core.IAsyncContentCreation"],
-         manifest: "json"
-      },
+		metadata : {
+			interfaces: ["sap.ui.core.IAsyncContentCreation"],
+			manifest: "json"
+		},
 
-      init() {
-         // call the init function of the parent
-         UIComponent.prototype.init.apply(this, arguments);
+		init() {
+			// call the init function of the parent
+			UIComponent.prototype.init.apply(this, arguments);
 
-         // set device model
+			// set device model
 			const oDeviceModel = new JSONModel(Device);
 			oDeviceModel.setDefaultBindingMode("OneWay");
 			this.setModel(oDeviceModel, "device");
 
-          // create the views based on the url/hash
-          this.getRouter().initialize();
+			// create the views based on the url/hash
+			this.getRouter().initialize();
 			
-      },
-      getContentDensityClass() {
+		},
+		getContentDensityClass() {
 			return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";
 		}
    });
