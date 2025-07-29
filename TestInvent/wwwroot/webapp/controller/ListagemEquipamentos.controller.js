@@ -49,14 +49,6 @@ sap.ui.define([
 
         onFiltrarEquipamentos: function (oEvent) 
         {
-            //var oInput = this.getView().byId("inputFiltro");
-            //fetch(`${ENDPOINT_BASE}/lookingfor?nome=${oInput.getValue()}`)
-            //.then(response => response.json())
-            //.then(equipamentos => this._setarModeloEquipamentos(equipamentos))
-            //    .catch(error => console.error("Erro na requisição:", error));
-
-
-
             var sQuery = oEvent.getParameter("query");
             debugger;
             if (sQuery) {

@@ -16,15 +16,6 @@ sap.ui.define([
          // call the init function of the parent
          UIComponent.prototype.init.apply(this, arguments);
 
-          // set data model
-         const oData = {
-            recipient : {
-               name : "World"
-            }
-         };
-         const oModel = new JSONModel(oData);
-         this.setModel(oModel);
-
          // set device model
 			const oDeviceModel = new JSONModel(Device);
 			oDeviceModel.setDefaultBindingMode("OneWay");
