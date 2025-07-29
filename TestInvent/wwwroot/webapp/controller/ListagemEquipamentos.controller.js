@@ -50,7 +50,6 @@ sap.ui.define([
         onFiltrarEquipamentos: function (oEvent) 
         {
             var sQuery = oEvent.getParameter("query");
-            debugger;
             if (sQuery) {
                 fetch(`${ENDPOINT_FILTRO}?nome=${sQuery}`)
                     .then(response => response.json())
