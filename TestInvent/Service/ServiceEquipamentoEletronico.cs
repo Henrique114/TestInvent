@@ -28,7 +28,6 @@ namespace TestInvent.Service
 
         public void Adicionar(EquipamentoEletronicoModel equipamento) 
         {
-            equipamento.DataDeInclusao = DateTime.Now.ToShortDateString();
             _validator.ValidateAndThrow( equipamento ); 
             _repository.Adicionar( equipamento ); 
 

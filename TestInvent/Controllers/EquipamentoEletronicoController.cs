@@ -52,7 +52,7 @@ namespace TestInvent.Controllers
         }
 
         [HttpPost]
-        public ActionResult<EquipamentoEletronicoModel> Criar(CreateDTO createDTO)
+        public ActionResult<EquipamentoEletronicoModel> Adicionar(CreateDTO createDTO)
         {
             var equipamento = new EquipamentoEletronicoModel
             {
