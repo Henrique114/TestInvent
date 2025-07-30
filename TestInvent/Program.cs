@@ -21,7 +21,7 @@ namespace TestInvent
             builder.Services.AddScoped<IValidator<EquipamentoEletronicoModel>, EquipamentoEletronicoValidator>();
 
             // Registra o repositório genérico
-            builder.Services.AddScoped<IRepository<EquipamentoEletronicoModel>, RavenRepository<EquipamentoEletronicoModel>>();
+            builder.Services.AddScoped<IRepository, RavenRepository>();
             builder.Services.AddScoped<ServiceEquipamentoEletronico>();
            
             //Registra o RavenContex(conecção com o banco)

@@ -1,11 +1,13 @@
-﻿namespace TestInvent.Repositories
+﻿using TestInvent.Models;
+
+namespace TestInvent.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository
     {
-        IEnumerable<T> BuscarTodos(string nome);
-        T? BuscarPorId(string id);
-        void Adicionar(T entity);
-        void Atualizar(string id,T entity);
+        IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome);
+        EquipamentoEletronicoModel? BuscarPorId(string id);
+        void Adicionar(EquipamentoEletronicoModel entity);
+        void Atualizar(string id,EquipamentoEletronicoModel entity);
         void Deletar(string id);
     }
 }

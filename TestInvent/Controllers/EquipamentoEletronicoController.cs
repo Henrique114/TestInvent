@@ -28,62 +28,21 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<EquipamentoEletronicoModel> BuscarPorId(string id)
+        public OkObjectResult BuscarPorId([FromRoute] string id)
         {
             var equipamento = _service.BuscarPorId(id);
-            if (equipamento == null)
-            {
-                return NotFound();
-            }
-            return Ok(new ReadDTO
-            {
-                Id = equipamento.Id,
-
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque =  equipamento.TemEmEstoque
-            });
+           
+            return Ok(equipamento);
         }
 
         [HttpPost]
-        public ActionResult<EquipamentoEletronicoModel> Adicionar(CreateDTO createDTO)
+        public CreatedResult Adicionar([FromBody]CreateDTO createDTO)
         {
-            var equipamento = new EquipamentoEletronicoModel
-            {
-
-                Nome = createDTO.Nome,
-
-                Tipo = createDTO.Tipo,
-
-                QuantidadeEmEstoque = createDTO.QuantidadeEmEstoque,
-
-                DataDeInclusao = createDTO.DataDeInclusao,
-
-            };
+          
             
-            _service.Adicionar(equipamento);
+            _service.Adicionar(createDTO);
 
-            var result = new ReadDTO
-            {
-                Id = equipamento.Id,
-
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque = equipamento.TemEmEstoque
-            };
-            return CreatedAtAction(nameof(BuscarPorId), new { id = result.Id }, result);
+             return new CreatedResult();
         }
 
         [HttpPut("{id}")]

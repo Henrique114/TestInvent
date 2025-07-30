@@ -4,22 +4,22 @@ using TestInvent.Models;
 
 namespace TestInvent.Repositories
 {
-    public class InMemoryRepository<T> : IRepository<T> where T : class, IEntity
+    public class InMemoryRepository : IRepository
     {
-        private readonly List<T> _items = new();
+        private readonly List<EquipamentoEletronicoModel> _items = new();
 
         
-        public IEnumerable<T> BuscarTodos(string nome) => _items;
+        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome) => _items;
 
-        public T? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
+        public EquipamentoEletronicoModel? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
 
-        public void Adicionar(T entity)
+        public void Adicionar(EquipamentoEletronicoModel entity)
         {
             entity.Id = Guid.NewGuid().ToString();
             _items.Add(entity);
         }
 
-        public void Atualizar(string id, T entity)
+        public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
             _items[ _items.FindIndex(item => item.Id == entity.Id)] = entity;
         }

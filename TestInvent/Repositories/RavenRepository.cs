@@ -6,13 +6,13 @@ using TestInvent.Models;
 
 namespace TestInvent.Repositories
 {
-    public class RavenRepository<T> : IRepository<T> where T :  EquipamentoEletronicoModel
+    public class RavenRepository : IRepository 
     {
         private readonly IDocumentStore _store = RavenDbContext.Store;
 
 
        
-        public void Adicionar(T entity)
+        public void Adicionar(EquipamentoEletronicoModel entity)
         {
 
             using var session = _store.OpenSession();
@@ -29,29 +29,29 @@ namespace TestInvent.Repositories
             session.SaveChanges();
         }
 
-        public IEnumerable<T> BuscarTodos(string nome)
+        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
             using var session = _store.OpenSession();
             if (nome != null && nome != string.Empty)
             {
                 return session
-                .Query<T>()
+                .Query<EquipamentoEletronicoModel>()
                 .Where(x => x.Nome.StartsWith(nome))
                 .ToList();
             }
             return session
-                .Query<T>()
+                .Query<EquipamentoEletronicoModel>()
                 .ToList();
         }
 
-        public T? BuscarPorId(string id)
+        public EquipamentoEletronicoModel? BuscarPorId(string id)
         {
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
-            return session.Load<T>(idDecodificado);
+            return session.Load<EquipamentoEletronicoModel>(idDecodificado);
         }
 
-        public void Atualizar(string id, T entity)
+        public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
            
             using var session = _store.OpenSession();

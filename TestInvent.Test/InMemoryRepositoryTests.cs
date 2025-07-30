@@ -5,20 +5,21 @@ namespace TestInvent.Test
 {
     public class InMemoryRepositoryTests
     {
-        private IRepository<EquipamentoEletronicoModel> _repo;
+        private IRepository _repo;
 
         public InMemoryRepositoryTests()
         {
-            _repo = new InMemoryRepository<EquipamentoEletronicoModel>();
+            _repo = new InMemoryRepository();
         }
 
         [Fact]
         public void Add_GetAll_TesteDeLançamentoDeItem()
         {
+            string nome = " ";
             var equipamento = new EquipamentoEletronicoModel { Nome = "Lenovo", Tipo = "Notebook", QuantidadeEmEstoque = 10 };
             _repo.Adicionar(equipamento);
 
-            var list = _repo.GetAll().ToList();
+            var list = _repo.BuscarTodos(nome).ToList();
 
             Assert.Single(list);
             Assert.Equal("Lenovo", list[0].Nome);

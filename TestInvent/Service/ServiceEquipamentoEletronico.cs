@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using TestInvent.DTOs;
 using TestInvent.Models;
 using TestInvent.Repositories;
 
@@ -6,11 +7,11 @@ namespace TestInvent.Service
 {
     public class ServiceEquipamentoEletronico
     {
-        private IRepository<EquipamentoEletronicoModel> _repository;
+        private IRepository _repository;
         private IValidator<EquipamentoEletronicoModel> _validator;
         public ServiceEquipamentoEletronico( RavenDbContext context, IValidator<EquipamentoEletronicoModel> validator)
         {
-            _repository = new RavenRepository<EquipamentoEletronicoModel>();
+            _repository = new RavenRepository();
             _validator = validator;
         }
 
@@ -22,12 +23,29 @@ namespace TestInvent.Service
 
         public EquipamentoEletronicoModel BuscarPorId(string id)
         {
+
             var equipamento = _repository.BuscarPorId(id);
+            if (equipamento == null)
+            {
+                throw new KeyNotFoundException($"Equipamento com ID {id} não encontrado.");
+            }
             return equipamento;
         }
 
-        public void Adicionar(EquipamentoEletronicoModel equipamento) 
+        public void Adicionar(CreateDTO createDTO) 
         {
+            var equipamento = new EquipamentoEletronicoModel
+            {
+
+                Nome = createDTO.Nome,
+
+                Tipo = createDTO.Tipo,
+
+                QuantidadeEmEstoque = createDTO.QuantidadeEmEstoque,
+
+                DataDeInclusao = createDTO.DataDeInclusao,
+
+            };
             _validator.ValidateAndThrow( equipamento ); 
             _repository.Adicionar( equipamento ); 
 
