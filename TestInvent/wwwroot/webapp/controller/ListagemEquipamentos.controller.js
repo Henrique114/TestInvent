@@ -63,7 +63,16 @@ sap.ui.define([
            
 
             
-        }
+        }, 
+        aoNavegarParaDetalhes(evento) {
+            debugger;
+			const item = evento.getSource();
+			const rota = this.getOwnerComponent().getRouter();
+			// Navegar para a rota de detalhes com o caminho do equipamento
+			rota.navTo("detalhesDoEquipamento", {
+                caminhoParaEquipamento: item.getBindingContext(MODELO_EQUIPAMENTOS).getPath().substr(1)
+            });
+		}
 
         
         

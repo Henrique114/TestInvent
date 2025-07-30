@@ -44,7 +44,7 @@
 		<items>
 			<ColumnListItem
 				type="Navigation"
-				press=".onPress">
+				press=".aoNavegarParaDetalhes">
 				<cells>
 					<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
 					<Text text="{equipamentos>nome}" />

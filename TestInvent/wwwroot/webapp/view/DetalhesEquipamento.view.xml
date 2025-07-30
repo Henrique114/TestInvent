@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="ui5.testinvent.controller.DetalhesEquipamento"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:wt="ui5.testinvent.control">
+	<Page
+		title="{i18n>tituloPaginaDetalhes}"
+		showNavButton="true"
+		navButtonPress=".aoRetornarParaListagem">
+		
+		<ObjectHeader
+			core:require="{
+                Date: 'sap/ui/model/type/Date',
+            }"
+            responsive="true"
+            fullScreenOptimized="true"
+            intro="{equipamentos>tipo}"
+			title="{equipamentos>nome}">
+			  <attributes>
+                <ObjectAttribute
+                    title="{i18n>tituloquantidade}"
+                    text="{equipamentos>quantidadeEmEstoque}"/>
+                <ObjectAttribute
+                    title="{i18n>dataInclusao}"
+                    text="{
+                        path: 'equipamentos>dataDeInclusao',
+                        type: 'Date',
+                        formatOptions: {
+                            style: 'long',
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ss'
+                            }
+                        }
+                    }"/>
+            </attributes>
+			</ObjectHeader>
+            <wt:EquipamentoDetalhes
+                id="EquipamentoDescricao"
+                bindingContext="{equipamentos>}"
+                class="sapUiResponsiveMargin sapUiSizeCompact">
+                <wt:conteudo>
+                    <Text text="Uma breve descrição do Equipamento"/>
+                </wt:conteudo>
+	</Page>
+</mvc:View>
