@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Raven.Client.Documents;
+﻿using Raven.Client.Documents;
 
 public class RavenDbContext
 {
@@ -15,7 +14,7 @@ public class RavenDbContext
             Urls = new[] { Environment.GetEnvironmentVariable("RavenDbUrl")
         },
             Database = "Inventario",
-            //Certificate = cert
+            
         }.Initialize();
         return store;
     }
