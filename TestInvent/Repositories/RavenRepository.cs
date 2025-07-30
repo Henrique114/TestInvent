@@ -33,17 +33,9 @@ namespace TestInvent.Repositories
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
             using var session = _store.OpenSession();
-            if (!String.IsNullOrEmpty(nome))
-            {
-                
-                return session
-                .Query<EquipamentoEletronicoModel>()
-                .Where(x => x.Nome.StartsWith(nome))
-                .ToList();
-            }
-            return session
-                .Query<EquipamentoEletronicoModel>()
-                .ToList();
+            var query = !String.IsNullOrEmpty(nome) ? session.Query<EquipamentoEletronicoModel>().Where(x => x.Nome.StartsWith(nome)) : session.Query<EquipamentoEletronicoModel>();
+            
+            return query.ToList();
         }
 
         public EquipamentoEletronicoModel? BuscarPorId(string id)
@@ -51,7 +43,7 @@ namespace TestInvent.Repositories
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
 
-
+            
             return session.Load<EquipamentoEletronicoModel>(idDecodificado);
         }
 
