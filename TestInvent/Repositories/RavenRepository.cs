@@ -24,6 +24,7 @@ namespace TestInvent.Repositories
         public void Deletar(string id)
         {
             using var session = _store.OpenSession();
+
             var idDecodificado = HttpUtility.UrlDecode(id);
             session.Delete(idDecodificado);
             session.SaveChanges();
@@ -32,8 +33,9 @@ namespace TestInvent.Repositories
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
             using var session = _store.OpenSession();
-            if (nome != null && nome != string.Empty)
+            if (!String.IsNullOrEmpty(nome))
             {
+                
                 return session
                 .Query<EquipamentoEletronicoModel>()
                 .Where(x => x.Nome.StartsWith(nome))
@@ -48,6 +50,8 @@ namespace TestInvent.Repositories
         {
             using var session = _store.OpenSession();
             var idDecodificado = HttpUtility.UrlDecode(id);
+
+
             return session.Load<EquipamentoEletronicoModel>(idDecodificado);
         }
 

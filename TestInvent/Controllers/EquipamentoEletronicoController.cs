@@ -24,6 +24,7 @@ namespace TestInvent.Controllers
         public OkObjectResult BuscarTodos([FromQuery] string nome = null)
         {
             var equipamentos = _service.BuscarTodos(nome);
+
             return Ok(equipamentos);
         }
 
@@ -36,7 +37,7 @@ namespace TestInvent.Controllers
         }
 
         [HttpPost]
-        public CreatedResult Adicionar([FromBody]CreateDTO createDTO)
+        public CreatedResult Adicionar([FromBody] CreateDTO createDTO)
         {
           
             
@@ -46,33 +47,15 @@ namespace TestInvent.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Atualizar(string id, UpdateDTO updateDTO)
+        public NoContentResult Atualizar([FromRoute] string id, [FromBody] UpdateDTO updateDTO)
         {
-            var existing = _service.BuscarPorId(id);
-            if (existing == null)
-            {
-                return NotFound();
-            }
-
-            existing.Nome = updateDTO.Nome;
-
-            existing.Tipo = updateDTO.Tipo;
-
-            existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
-
-
-            _service.Atualizar(id, existing);
+            _service.Atualizar(id, updateDTO);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Deletar(string id)
+        public NoContentResult Deletar([FromRoute] string id)
         {
-            var existing = _service.BuscarPorId(id);
-            if (existing == null)
-            {
-                return NotFound();
-            }
             _service.Deletar(id);
             return NoContent();
         }

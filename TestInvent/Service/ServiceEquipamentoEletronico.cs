@@ -17,8 +17,7 @@ namespace TestInvent.Service
 
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
-            var equipamentos = _repository.BuscarTodos(nome);
-            return equipamentos;
+            return _repository.BuscarTodos(nome);
         }
 
         public EquipamentoEletronicoModel BuscarPorId(string id)
@@ -51,15 +50,31 @@ namespace TestInvent.Service
 
         }
 
-        public void Atualizar(string id, EquipamentoEletronicoModel equipamento) 
+        public void Atualizar(string id, UpdateDTO updateDTO) 
         {
-            _validator.ValidateAndThrow(equipamento);
-            _repository.Atualizar( id, equipamento );
+            var existing = BuscarPorId(id);
+            if (existing == null)
+            {
+                throw new KeyNotFoundException($"Equipamento com ID {id} não encontrado.");
+            }
+
+            existing.Nome = updateDTO.Nome;
+
+            existing.Tipo = updateDTO.Tipo;
+
+            existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
+
+            _validator.ValidateAndThrow(existing);
+            _repository.Atualizar( id, existing);
         }
 
         public void Deletar(string id) 
         {
-   
+            var existing = BuscarPorId(id);
+            if (existing == null)
+            {
+                throw new KeyNotFoundException($"Equipamento com ID {id} não encontrado.");
+            }
             _repository.Deletar( id );
         }
 
