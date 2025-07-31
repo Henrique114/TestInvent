@@ -1,10 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using TestInvent.Data;
-using TestInvent.DTOs;
 using TestInvent.Models;
-using TestInvent.Repositories;
 using TestInvent.Service;
 
 namespace TestInvent.Controllers
@@ -21,9 +16,9 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet]
-        public OkObjectResult BuscarTodos([FromQuery] string nome = null)
+        public OkObjectResult BuscarTodos([FromQuery] string filtro = null)
         {
-            var equipamentos = _service.BuscarTodos(nome);
+            var equipamentos = _service.BuscarTodos(filtro);
 
             return Ok(equipamentos);
         }
@@ -37,19 +32,16 @@ namespace TestInvent.Controllers
         }
 
         [HttpPost]
-        public CreatedResult Adicionar([FromBody] CreateDTO createDTO)
+        public CreatedResult Adicionar([FromBody] EquipamentoEletronicoModel equipamentoEletronico)
         {
-          
-            
-            _service.Adicionar(createDTO);
-
-             return new CreatedResult();
+            _service.Adicionar(equipamentoEletronico);
+             return Created(equipamentoEletronico.Id, equipamentoEletronico);
         }
 
         [HttpPut("{id}")]
-        public NoContentResult Atualizar([FromRoute] string id, [FromBody] UpdateDTO updateDTO)
+        public NoContentResult Atualizar([FromRoute] string id, [FromBody] EquipamentoEletronicoModel equipamentoEletronico)
         {
-            _service.Atualizar(id, updateDTO);
+            _service.Atualizar(id, equipamentoEletronico);
             return NoContent();
         }
 

@@ -7,13 +7,11 @@ public class RavenDbContext
 
     private static IDocumentStore CreateStore()
     {
-        
-
         IDocumentStore store = new DocumentStore()
         {
             Urls = new[] { Environment.GetEnvironmentVariable("RavenDbUrl")
         },
-            Database = "Inventario",
+        Database = "Inventario",
             
         }.Initialize();
         return store;

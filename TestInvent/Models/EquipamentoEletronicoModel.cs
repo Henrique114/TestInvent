@@ -11,11 +11,11 @@ namespace TestInvent.Models
 
         public string? Nome { get; set; }
 
-        public String? Tipo { get; set; }
+        public string? Tipo { get; set; }
 
         public int? QuantidadeEmEstoque { get; set; }
 
-        public DateTime DataDeInclusao { get; set; }
+        public DateTimeOffset DataDeInclusao { get; set; }
 
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 

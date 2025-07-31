@@ -54,19 +54,11 @@
 					"pattern": "",
 					"name": "ListagemEquipamentos",
 					"target": "ListagemTarget"
-				}, 
-				{
-					"pattern": "detalhes/{caminhoParaEquipamento}",
-					"name": "detalhesDoEquipamento",
-					"target": "DetalhesTarget"
 				}
 			],
 			"targets": {
 				"ListagemTarget": {
 					"viewName": "ListagemEquipamentos"
-				},
-				"DetalhesTarget": {
-					"viewName": "DetalhesEquipamento"
 				}
 			}
 		},

@@ -3,18 +3,16 @@ sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], (Controller, MessageToast, JSONModel) => {
+    "../model/formatter" 
+], (Controller, MessageToast, JSONModel, formatter) => {
     "use strict";
-    const ENDPOINT_BASE = "https://localhost:7104/EquipamentoEletronico";
-    const ENDPOINT_FILTRO = "/lookingfor" 
+    const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
     
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
-        
+         formatter: formatter,
 
         onInit: function () {
 
@@ -35,12 +33,12 @@ sap.ui.define([
             fetch(`${ENDPOINT_BASE}${nome ? "?nome=" + encodeURIComponent(nome) : ""}`)
                 .then(response => response.json())
                 .then(dados => {
+                    dados.dataDeInclusao = new Date(dados.dataDeInclusao);
                     const oModel = new sap.ui.model.json.JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
                 .catch(error => {
                     console.error("Erro ao buscar clientes:", error);
-                    sap.m.MessageToast.show("Erro ao carregar dados.");
                 });
         },
 
@@ -60,21 +58,7 @@ sap.ui.define([
             // Obter o valor do campo de pesquisa
             const _query = event.getParameter("query");
             this._obterDadosEquipamentos(_query);
-           
-
-            
-        }, 
-        aoNavegarParaDetalhes(evento) {
-            debugger;
-			const item = evento.getSource();
-			const rota = this.getOwnerComponent().getRouter();
-			// Navegar para a rota de detalhes com o caminho do equipamento
-			rota.navTo("detalhesDoEquipamento", {
-                caminhoParaEquipamento: item.getBindingContext(MODELO_EQUIPAMENTOS).getPath().substr(1)
-            });
-		}
-
-        
+        }
         
    });
 });
