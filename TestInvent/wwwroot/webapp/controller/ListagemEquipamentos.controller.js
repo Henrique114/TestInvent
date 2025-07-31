@@ -29,12 +29,16 @@ sap.ui.define([
 
         _obterDadosEquipamentos: function (nome = "") {
             
-            
-            fetch(`${ENDPOINT_BASE}${nome ? "?nome=" + encodeURIComponent(nome) : ""}`)
+            let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
+
+            fetch(urlRequisicaoEquipamentos)
                 .then(response => response.json())
                 .then(dados => {
-                    dados.dataDeInclusao = new Date(dados.dataDeInclusao);
-                    const oModel = new sap.ui.model.json.JSONModel(dados);
+                    dados.forEach(element => {
+                        element.dataDeInclusao = new Date(element.dataDeInclusao);
+                    });
+
+                    const oModel = new JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
                 .catch(error => {
@@ -55,7 +59,6 @@ sap.ui.define([
 
         aoFiltrarEquipamentos: function (event) 
         {
-            // Obter o valor do campo de pesquisa
             const _query = event.getParameter("query");
             this._obterDadosEquipamentos(_query);
         }
