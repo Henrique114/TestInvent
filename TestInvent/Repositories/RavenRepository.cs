@@ -1,7 +1,6 @@
 ﻿
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
-using System;
 using TestInvent.Extensions;
 using TestInvent.Models;
 
@@ -16,7 +15,9 @@ namespace TestInvent.Repositories
        
         public void Adicionar(EquipamentoEletronicoModel entity)
         {
+            
             using var session = _store.OpenSession();
+            entity.Id = null;
             session.Store(entity);
             session.SaveChanges();
         }
@@ -24,8 +25,7 @@ namespace TestInvent.Repositories
         public void Deletar(string id)
         {
             using var session = _store.OpenSession();
-            var equipamento = BuscarPorId(DecodificadorDeStrings.DecodificarURLString(id));
-            session.Delete(equipamento);
+            session.Delete(id);
             session.SaveChanges();
         }
 
@@ -43,7 +43,8 @@ namespace TestInvent.Repositories
         public EquipamentoEletronicoModel? BuscarPorId(string id)
         {
             using var session = _store.OpenSession();
-            return session.Load<EquipamentoEletronicoModel>(DecodificadorDeStrings.DecodificarURLString(id)) ?? throw new Exception("");
+
+            return session.Load<EquipamentoEletronicoModel>(id.DecodificarURL()) ?? throw new Exception("Erro ao decodificar o id do equipamento");
         }
 
         public void Atualizar(string id, EquipamentoEletronicoModel entity)
@@ -51,7 +52,7 @@ namespace TestInvent.Repositories
             using var session = _store.OpenSession();
 
             
-            var equipamento = BuscarPorId(DecodificadorDeStrings.DecodificarURLString(id));
+            var equipamento = BuscarPorId(id.DecodificarURL());
 
             equipamento.Nome = entity.Nome;
             equipamento.Tipo = entity.Tipo;
