@@ -16,7 +16,7 @@ namespace TestInvent.Controllers
         }
 
         [HttpGet]
-        public OkObjectResult BuscarTodos([FromQuery] string filtro = null)
+        public OkObjectResult BuscarTodos([FromQuery] string? filtro)
         {
             var equipamentos = _service.BuscarTodos(filtro);
 
