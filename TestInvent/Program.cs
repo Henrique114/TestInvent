@@ -22,7 +22,7 @@ namespace TestInvent
 
             // Registra o repositório genérico
             builder.Services.AddScoped<IRepository, RavenRepository>();
-            builder.Services.AddScoped<ServiceEquipamentoEletronico>();
+            builder.Services.AddScoped<EquipamentoEletronicoService>();
            
             //Registra o RavenContex(conecção com o banco)
             builder.Services.AddSingleton<RavenDbContext>();

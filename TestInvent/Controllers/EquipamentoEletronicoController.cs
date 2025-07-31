@@ -8,9 +8,9 @@ namespace TestInvent.Controllers
     [Route("[controller]")]
     public class EquipamentoEletronicoController : ControllerBase
     {
-        private readonly ServiceEquipamentoEletronico _service;
+        private readonly EquipamentoEletronicoService _service;
 
-        public EquipamentoEletronicoController(ServiceEquipamentoEletronico service)
+        public EquipamentoEletronicoController(EquipamentoEletronicoService service)
         {
             _service = service;
         }
