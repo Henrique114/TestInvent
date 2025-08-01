@@ -1,27 +1,27 @@
-<c:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:c="sap.ui.core"
->
-    <Dialog 
-        id=""
-		type="Message" 
-        afterOpen=""
-		title="{i18n>}"
-		contentHeight="100%"
-		contentWidth="700px"
-        horizontalScrolling="false">
-        <content>
-            <FlexBox
-                justifyContent="Center"
-                class="sapUiTinyMarginEnd">
-                <HBox>
-                    <c:Fragment fragmentName="" type="XML" />
-                </HBox>
-            </FlexBox>
-            <c:Fragment fragmentName="" type="XML" />
-        </content>
-        <endButton>
-            <Button text="{i18n>}" width="90px" type="Emphasized" press="aoClicarEmSair"/>
-        </endButton>
-    </Dialog>
-</c:FragmentDefinition>
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="idDialog" title="{i18n>tituloPaginaDetalhes}" afterClose="onDialogClose" >
+    <ObjectHeader
+            responsive="true"
+            fullScreenOptimized="true"
+            number="{modeloDialogo>/quantidadeEmEstoque}"
+            numberUnit="Und."
+            intro="{modeloDialogo>/tipo}"
+			   title="{modeloDialogo>/nome}">
+			  <attributes>
+                <ObjectAttribute
+                    title="{i18n>dataInclusao}"
+                    text="{
+                        path: 'modeloDialogo>/dataDeInclusao',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                           style: 'medium'
+                           
+                     }
+					}"/>
+                </attributes>
+			</ObjectHeader>
+    <buttons>
+      <Button text="Fechar" press="aoPrecionarFechar"/>
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>
