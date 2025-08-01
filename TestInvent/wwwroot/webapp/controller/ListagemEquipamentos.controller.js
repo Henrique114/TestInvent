@@ -3,21 +3,23 @@ sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "../model/formatter" 
-], (Controller, MessageToast, JSONModel, formatter) => {
+    
+], (Controller, MessageToast, JSONModel) => {
     "use strict";
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
-    const ROTA = this.getOwnerComponent().getRouter();
+    
     
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
-         formatter: formatter,
+
+
 
         onInit: function () {
 
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const ROTA = this.getOwnerComponent().getRouter();
             ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
            
         },
@@ -38,7 +40,7 @@ sap.ui.define([
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
                     });
 
-                    this._setarModeloEquipamentos(dados);
+                    
                     const oModel = new JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
