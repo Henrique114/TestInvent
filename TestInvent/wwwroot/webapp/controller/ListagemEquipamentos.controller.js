@@ -38,23 +38,13 @@ sap.ui.define([
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
                     });
 
+                    this._setarModeloEquipamentos(dados);
                     const oModel = new JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
                 .catch(error => {
                     console.error("Erro ao buscar clientes:", error);
                 });
-        },
-
-        _setarModeloEquipamentos: function (equipamentos) {
-
-            if (!equipamentos || !Array.isArray(equipamentos)) {
-                MessageToast.show("Nenhum equipamento encontrado.");
-                return;
-            }
-            const modelo = new JSONModel(equipamentos);
-            
-            return this.getView().setModel(modelo, MODELO_EQUIPAMENTOS);
         },
 
         aoFiltrarEquipamentos: function (event) 
