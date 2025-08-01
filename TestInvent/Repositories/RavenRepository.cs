@@ -10,14 +10,11 @@ namespace TestInvent.Repositories
     public class RavenRepository : IRepository 
     {
         private readonly IDocumentStore _store = RavenDbContext.Store;
-
-
        
         public void Adicionar(EquipamentoEletronicoModel entity)
-        {
-            
+        {  
             using var session = _store.OpenSession();
-            entity.Id = null;
+            
             session.Store(entity);
             session.SaveChanges();
         }
@@ -25,7 +22,8 @@ namespace TestInvent.Repositories
         public void Deletar(string id)
         {
             using var session = _store.OpenSession();
-            session.Delete(id);
+            var equipamento = BuscarPorId(id.DecodificarURL());
+            session.Delete(equipamento);
             session.SaveChanges();
         }
 
@@ -44,13 +42,12 @@ namespace TestInvent.Repositories
         {
             using var session = _store.OpenSession();
 
-            return session.Load<EquipamentoEletronicoModel>(id.DecodificarURL()) ?? throw new Exception("Erro ao decodificar o id do equipamento");
+            return session.Load<EquipamentoEletronicoModel>(id.DecodificarURL()) ?? throw new Exception($"Equipamento com {id} não encontrado");
         }
 
         public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
             using var session = _store.OpenSession();
-
             
             var equipamento = BuscarPorId(id.DecodificarURL());
 
