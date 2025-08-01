@@ -9,6 +9,7 @@ sap.ui.define([
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
+    const ROTA = this.getOwnerComponent().getRouter();
     
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
@@ -17,8 +18,7 @@ sap.ui.define([
         onInit: function () {
 
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            let rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
+            ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
            
         },
 
@@ -42,9 +42,7 @@ sap.ui.define([
                     const oModel = new JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
-                .catch(error => {
-                    console.error("Erro ao buscar clientes:", error);
-                });
+                
         },
 
         aoFiltrarEquipamentos: function (event) 
