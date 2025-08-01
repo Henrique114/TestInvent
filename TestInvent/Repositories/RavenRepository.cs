@@ -1,52 +1,60 @@
 ﻿
 using Raven.Client.Documents;
-using System.Web;
+using Raven.Client.Documents.Linq;
+using TestInvent.Extensions;
+using TestInvent.Models;
 
 
 namespace TestInvent.Repositories
 {
-    public class RavenRepository<T> : IRepository<T> where T : class
+    public class RavenRepository : IRepository 
     {
         private readonly IDocumentStore _store = RavenDbContext.Store;
-
        
-        public void Add(T entity)
-        {
-
+        public void Adicionar(EquipamentoEletronicoModel entity)
+        {  
             using var session = _store.OpenSession();
-
+            
             session.Store(entity);
             session.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Deletar(string id)
         {
             using var session = _store.OpenSession();
-            var idDecodificado = HttpUtility.UrlDecode(id);
-            session.Delete(idDecodificado);
+            var equipamento = BuscarPorId(id.DecodificarURL());
+            session.Delete(equipamento);
             session.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string filtro)
         {
             using var session = _store.OpenSession();
-            return session.Query<T>().ToList();
+            var query = session.Query<EquipamentoEletronicoModel>();
+
+            if (!string.IsNullOrEmpty(filtro))
+                query = query.Where(equipamento => equipamento.Nome.StartsWith(filtro));
+
+            return query.ToList();
         }
 
-        public T? GetById(string id)
+        public EquipamentoEletronicoModel? BuscarPorId(string id)
         {
             using var session = _store.OpenSession();
-            var idDecodificado = HttpUtility.UrlDecode(id);
-            return session.Load<T>(idDecodificado);
+
+            return session.Load<EquipamentoEletronicoModel>(id.DecodificarURL()) ?? throw new Exception($"Equipamento com {id} não encontrado");
         }
 
-        public void Update(string id, T entity)
+        public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
-           
             using var session = _store.OpenSession();
+            
+            var equipamento = BuscarPorId(id.DecodificarURL());
 
-            var idDecodificado = HttpUtility.UrlDecode(id);
-            session.Store(entity, idDecodificado);
+            equipamento.Nome = entity.Nome;
+            equipamento.Tipo = entity.Tipo;
+            equipamento.QuantidadeEmEstoque = entity.QuantidadeEmEstoque;
+
             session.SaveChanges();
         }
     }

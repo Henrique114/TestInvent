@@ -5,20 +5,21 @@ namespace TestInvent.Test
 {
     public class InMemoryRepositoryTests
     {
-        private IRepository<EquipamentoEletronicoModel> _repo;
+        private IRepository _repo;
 
         public InMemoryRepositoryTests()
         {
-            _repo = new InMemoryRepository<EquipamentoEletronicoModel>();
+            _repo = new InMemoryRepository();
         }
 
         [Fact]
         public void Add_GetAll_TesteDeLançamentoDeItem()
         {
+            string nome = " ";
             var equipamento = new EquipamentoEletronicoModel { Nome = "Lenovo", Tipo = "Notebook", QuantidadeEmEstoque = 10 };
-            _repo.Add(equipamento);
+            _repo.Adicionar(equipamento);
 
-            var list = _repo.GetAll().ToList();
+            var list = _repo.BuscarTodos(nome).ToList();
 
             Assert.Single(list);
             Assert.Equal("Lenovo", list[0].Nome);
@@ -29,12 +30,12 @@ namespace TestInvent.Test
         public void Update_ModificandoUmItem()
         {
             var equipamento = new EquipamentoEletronicoModel { Nome = "Logitech", Tipo = "teclado", QuantidadeEmEstoque = 5 };
-            _repo.Add(equipamento);
+            _repo.Adicionar(equipamento);
 
             equipamento.Nome = "multilaser";
-            _repo.Update(equipamento.Id, equipamento);
+            _repo.Atualizar(equipamento.Id, equipamento);
 
-            var fetched = _repo.GetById(equipamento.Id);
+            var fetched = _repo.BuscarPorId(equipamento.Id);
             Assert.Equal("multilaser", fetched.Nome);
         }
 
@@ -42,10 +43,10 @@ namespace TestInvent.Test
         public void Delete_RemovendoUmItem()
         {
             var equipamento = new EquipamentoEletronicoModel { Nome = "Inception", Tipo = "", QuantidadeEmEstoque = 10 };
-            _repo.Add(equipamento);
+            _repo.Adicionar(equipamento);
 
-            _repo.Delete(equipamento.Id);
-            Assert.Null(_repo.GetById(equipamento.Id));
+            _repo.Deletar(equipamento.Id);
+            Assert.Null(_repo.BuscarPorId(equipamento.Id));
         }
     }
 }

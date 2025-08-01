@@ -19,3 +19,7 @@ Tambem é possivel fazer  persistencia dos dados utilizando o RavenDB. Necessita
 
 
 Por padrão está implementado o Repositorio em memoria (INMemoryRepository) - apenas para testes.
+
+RavenDB:
+
+Para uso do RavenDB com certificado configurar a classe RavenDbContex, o código comentado já busca limpa e converte o certificado. Para criação do arquivo copie e cole seu conteúdo em um arquivo txt, crie uma variável de ambiente com o caminho para o arquivo txt e por fim, dentro do método de busca Environment.GetEnvironmentVariable(nomeVariavelCertificado), passe como parâmetro o nome da variável de ambiente.

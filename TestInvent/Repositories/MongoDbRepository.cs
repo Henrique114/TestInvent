@@ -4,40 +4,41 @@ using TestInvent.Models;
 
 namespace TestInvent.Repositories
 {
-    public class MongoDbRepository<T> : IRepository<T> where T : class, IEntity
+    public class MongoDbRepository : IRepository
     {
-        protected readonly IMongoCollection<T> _collection;
+        protected readonly IMongoCollection<EquipamentoEletronicoModel> _collection;
           
         public MongoDbRepository(IMongoDbContext contex)
         {
             
-            _collection = contex.GetCollection<T>();
+            _collection = contex.GetCollection<EquipamentoEletronicoModel>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
         {
             return _collection.Find(_ => true).ToList();
         }
 
-        public T? GetById(string id)
+        public EquipamentoEletronicoModel? BuscarPorId(string id)
         {
             return _collection.Find(x => x.Id == id).FirstOrDefault();
         }
 
-        public void Add(T entity)
+        public void Adicionar(EquipamentoEletronicoModel entity)
         {
             _collection.InsertOne(entity);
         }
 
-        public void Update(string id, T entity)
+        public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
             _collection.ReplaceOne(id, entity);
         }
 
-        public void Delete(string id)
+        public void Deletar(string id)
         {
             _collection.DeleteOne(x => x.Id == id);
         }
+       
     } 
    
 }

@@ -1,9 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using TestInvent.Data;
-using TestInvent.DTOs;
 using TestInvent.Models;
-using TestInvent.Repositories;
 using TestInvent.Service;
 
 namespace TestInvent.Controllers
@@ -12,122 +8,47 @@ namespace TestInvent.Controllers
     [Route("[controller]")]
     public class EquipamentoEletronicoController : ControllerBase
     {
-        private readonly ServiceEquipamentoEletronico _service;
+        private readonly EquipamentoEletronicoService _service;
 
-        public EquipamentoEletronicoController(ServiceEquipamentoEletronico service)
+        public EquipamentoEletronicoController(EquipamentoEletronicoService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReadDTO>> GetAll()
+        public OkObjectResult BuscarTodos([FromQuery] string? filtro)
         {
-            var equipamentos = _service.GetAll()
-            .Select(equipamento => new ReadDTO
-            {
-                Id = equipamento.Id,
+            var equipamentos = _service.BuscarTodos(filtro);
 
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque = equipamento.TemEmEstoque
-            });
             return Ok(equipamentos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<EquipamentoEletronicoModel> GetById(string id)
+        public OkObjectResult BuscarPorId([FromRoute] string id)
         {
-            var equipamento = _service.GetById(id);
-            if (equipamento == null)
-            {
-                return NotFound();
-            }
-            return Ok(new ReadDTO
-            {
-                Id = equipamento.Id,
-
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque =  equipamento.TemEmEstoque
-            });
+            var equipamento = _service.BuscarPorId(id);
+           
+            return Ok(equipamento);
         }
 
         [HttpPost]
-        public ActionResult<EquipamentoEletronicoModel> Create(CreateDTO createDTO)
+        public CreatedResult Adicionar([FromBody] EquipamentoEletronicoModel equipamentoEletronico)
         {
-            var equipamento = new EquipamentoEletronicoModel
-            {
-
-                Nome = createDTO.Nome,
-
-                Tipo = createDTO.Tipo,
-
-                QuantidadeEmEstoque = createDTO.QuantidadeEmEstoque,
-
-                DataDeInclusao = createDTO.DataDeInclusao,
-
-            };
-
-            _service.Add(equipamento);
-
-            var result = new ReadDTO
-            {
-                Id = equipamento.Id,
-
-                Nome = equipamento.Nome,
-
-                Tipo = equipamento.Tipo,
-
-                QuantidadeEmEstoque = equipamento.QuantidadeEmEstoque,
-
-                DataDeInclusao = equipamento.DataDeInclusao,
-
-                TemEmEstoque = equipamento.TemEmEstoque
-            };
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            _service.Adicionar(equipamentoEletronico);
+             return Created(equipamentoEletronico.Id, equipamentoEletronico);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, UpdateDTO updateDTO)
+        public NoContentResult Atualizar([FromRoute] string id, [FromBody] EquipamentoEletronicoModel equipamentoEletronico)
         {
-            var existing = _service.GetById(id);
-            if (existing == null)
-            {
-                return NotFound();
-            }
-
-            existing.Nome = updateDTO.Nome;
-
-            existing.Tipo = updateDTO.Tipo;
-
-            existing.QuantidadeEmEstoque = updateDTO.QuantidadeEmEstoque;
-
-
-            _service.Update(id, existing);
+            _service.Atualizar(id, equipamentoEletronico);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public NoContentResult Deletar([FromRoute] string id)
         {
-            var existing = _service.GetById(id);
-            if (existing == null)
-            {
-                return NotFound();
-            }
-            _service.Delete(id);
+            _service.Deletar(id);
             return NoContent();
         }
     }
