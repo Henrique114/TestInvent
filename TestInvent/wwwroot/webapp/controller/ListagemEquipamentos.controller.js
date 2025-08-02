@@ -1,34 +1,38 @@
 
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "../model/formatter" 
-], (Controller, MessageToast, JSONModel, formatter) => {
+], (Controller, JSONModel) => {
     "use strict";
+
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
-    const ROTA = this.getOwnerComponent().getRouter();
-    
+    const ROTA = "";
 
     return Controller.extend("ui5.testinvent.controller.Painel", {
-         formatter: formatter,
 
         onInit: function () {
+            this._inicializarI18n();
+            this._definirValorDaRota();
+            if(this.ROTA){
+                this.ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
+            }
+        },
+        
+        _inicializarI18n: function(){
+            return this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        },
 
-            this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
-           
+        _definirValorDaRota: function () {
+            this.ROTA = this.getOwnerComponent().getRouter();
         },
 
         _aoAcessarListar: function () {
-            
             this._obterDadosEquipamentos();
         },
 
         _obterDadosEquipamentos: function (nome = "") {
-            
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
 
             fetch(urlRequisicaoEquipamentos)
@@ -38,7 +42,6 @@ sap.ui.define([
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
                     });
 
-                    this._setarModeloEquipamentos(dados);
                     const oModel = new JSONModel(dados);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTOS);
                 })
@@ -50,6 +53,5 @@ sap.ui.define([
             const _query = event.getParameter("query");
             this._obterDadosEquipamentos(_query);
         }
-        
    });
 });

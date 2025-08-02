@@ -21,11 +21,11 @@ namespace TestInvent
             builder.Services.AddScoped<IValidator<EquipamentoEletronicoModel>, EquipamentoEletronicoValidator>();
 
             // Registra o repositório genérico
-            builder.Services.AddScoped<IRepository, RavenRepository>();
+            //builder.Services.AddScoped<IRepository, RavenRepository>();
             builder.Services.AddScoped<EquipamentoEletronicoService>();
            
             //Registra o RavenContex(conecção com o banco)
-            builder.Services.AddSingleton<RavenDbContext>();
+            builder.Services.AddSingleton<IRepository, InMemoryRepository>();
 
             builder.Services.AddCors(options =>
             {

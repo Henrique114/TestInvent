@@ -5,14 +5,16 @@ using TestInvent.Repositories;
 namespace TestInvent.Service
 {
     public class EquipamentoEletronicoService
-
     {
-        private IRepository _repository;
-        private IValidator<EquipamentoEletronicoModel> _validator;
+        private readonly IRepository _repository;
+        private readonly IValidator<EquipamentoEletronicoModel> _validator;
 
-        public EquipamentoEletronicoService(IValidator<EquipamentoEletronicoModel> validator)
+        public EquipamentoEletronicoService(
+            IRepository repository,
+            IValidator<EquipamentoEletronicoModel> validator
+            )
         {
-            _repository = new RavenRepository();
+            _repository = repository;
             _validator = validator;
         }
 
