@@ -30,7 +30,18 @@ namespace TestInvent.Repositories
 
         public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
-            _items[ _items.FindIndex(item => item.Id == entity.Id)] = entity;
+            var a = _items.FindIndex(item => item.Id == id);
+            try
+            {
+                _items[a] = entity;
+            }
+            catch (Exception ex) 
+            {
+
+                Console.WriteLine("Ocorreu um erro ao atualizar: "+ex);
+            }
+            
+           
         }
 
         public void Deletar(string? id)
