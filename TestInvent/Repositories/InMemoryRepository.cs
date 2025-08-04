@@ -6,9 +6,18 @@ namespace TestInvent.Repositories
 {
     public class InMemoryRepository : IRepository
     {
-        private readonly List<EquipamentoEletronicoModel> _items = new();
+        private readonly List<EquipamentoEletronicoModel> _items = new()  {
+                                                                        new()
+                                                                        {
+                                                                            Id = "id-teste",
+                                                                            DataDeInclusao = new DateTime(),
+                                                                            Nome = "Item abobora",
+                                                                            QuantidadeEmEstoque = 15,
+                                                                            Tipo = "tipo string, que esquisito"
+                                                                        }
+                                                                    };
 
-        
+
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome) => _items;
 
         public EquipamentoEletronicoModel? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
@@ -21,13 +30,26 @@ namespace TestInvent.Repositories
 
         public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
-            _items[ _items.FindIndex(item => item.Id == entity.Id)] = entity;
+            var a = _items.FindIndex(item => item.Id == id);
+            try
+            {
+                _items[a] = entity;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Ocorreu um erro ao atualizar: " + ex);
+            }
         }
 
         public void Deletar(string? id)
         {
             var existing = BuscarPorId(id);
-            if (existing != null) _items.Remove(existing);
+            if (existing != null)
+            {
+                _items.Remove(existing);
+            }
+            ;
         }
        
     }
