@@ -1,25 +1,35 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog id="idDialog" title="{i18n>tituloPaginaDetalhes}" afterClose="onDialogClose" >
+  <Dialog id="idDialog" title="{modeloDialogo>/nome}" afterClose="onDialogClose" 
+      >
     <ObjectHeader
-            responsive="true"
-            fullScreenOptimized="true"
-            number="{modeloDialogo>/quantidadeEmEstoque}"
-            numberUnit="Und."
-            intro="{modeloDialogo>/tipo}"
-			   title="{modeloDialogo>/nome}">
-			  <attributes>
-                <ObjectAttribute
-                    title="{i18n>dataInclusao}"
-                    text="{
-                        path: 'modeloDialogo>/dataDeInclusao',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                           style: 'medium'
-                           
-                     }
-					}"/>
-                </attributes>
-			</ObjectHeader>
+      responsive="true"
+      number="{modeloDialogo>/quantidadeEmEstoque}"
+      numberUnit="Unidade(s)"
+      title="{modeloDialogo>/tipo}"
+      >
+      <!-- <attributes>
+      <ObjectAttribute title="{i18n>disponibilidadeEquipamento}" width="50px" text="{modeloDialogo>/temEmEstoque}" />
+        <ObjectAttribute
+            title="{i18n>dataInclusao}"
+            text="{
+                path: 'modeloDialogo>/dataDeInclusao',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                    style: 'short'
+            }
+          }"/>
+      </attributes> -->
+       <content>
+                <Text title="{i18n>disponibilidadeEquipamento}" text="{modeloDialogo>/temEmEstoque}" />
+                <Text title="{i18n>dataInclusao}" text="{
+                path: 'modeloDialogo>/dataDeInclusao',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                    style: 'short'
+                    }
+                 }"/>
+        </content>
+    </ObjectHeader>
     <buttons>
       <Button text="Fechar" press="aoPrecionarFechar"/>
     </buttons>
