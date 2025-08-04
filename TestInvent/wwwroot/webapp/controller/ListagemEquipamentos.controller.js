@@ -9,6 +9,7 @@ sap.ui.define([
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
+    const ROTA = "";
     
 
 
@@ -18,10 +19,20 @@ sap.ui.define([
 
         onInit: function () {
 
-            this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            const ROTA = this.getOwnerComponent().getRouter();
-            ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
+            this._inicializarI18n();
+            this._definirValorDaRota();
+            if (this.ROTA) {
+                this.ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
+            }
         
+        },
+
+        _inicializarI18n: function () {
+            return this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        },
+
+        _definirValorDaRota: function () {
+            this.ROTA = this.getOwnerComponent().getRouter();
         },
 
         _aoAcessarListar: function () {
@@ -65,8 +76,6 @@ sap.ui.define([
     
         onOpenDialog: function() {
             var oView = this.getView();
-            console.log(oView);
-
                     // Verifica se o fragmento já foi carregado
                     if (!this.byId("idDialog")) {
                         Fragment.load({
