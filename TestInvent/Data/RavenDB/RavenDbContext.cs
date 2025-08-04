@@ -12,7 +12,11 @@ public class RavenDbContext
             Urls = new[] { Environment.GetEnvironmentVariable("RavenDbUrl")
         },
         Database = "Inventario",
-            
+            Conventions =
+        {
+            IdentityPartsSeparator = '-',
+        }
+
         }.Initialize();
         return store;
     }

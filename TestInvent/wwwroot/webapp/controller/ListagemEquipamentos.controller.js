@@ -1,10 +1,11 @@
 
 sap.ui.define([
+    
    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/UIComponent"
     
-],(Controller, JSONModel, Fragment) => {
+],(Controller, JSONModel, UIComponent) => {
     "use strict";
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
@@ -17,7 +18,6 @@ sap.ui.define([
 
 
         onInit: function () {
-
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             const ROTA = this.getOwnerComponent().getRouter();
             ROTA.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
@@ -54,45 +54,14 @@ sap.ui.define([
         },
         
         aoIrParaDetalhes: function (event) {
-            
+            debugger
             const equipamentoSelecionado = event.getSource().getBindingContext(MODELO_EQUIPAMENTOS).getObject();
-            const oModelEquipamento = new JSONModel(equipamentoSelecionado);
-            this.getView().setModel(oModelEquipamento, "modeloDialogo");
-            this.onOpenDialog();
-
             
+            var router = UIComponent.getRouterFor(this);
+            router.navTo("DetalhesEquipamento", { id: equipamentoSelecionado.id });
         },
     
-        onOpenDialog: function() {
-            var oView = this.getView();
-            console.log(oView);
-
-                    // Verifica se o fragmento já foi carregado
-                    if (!this.byId("idDialog")) {
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "ui5.testinvent.view.DetalhesEquipamento",
-                            controller: this
-                        }).then((oDialog)=> {
-                            oDialog.setModel();
-                            this.getResourceBundle();   
-                            oView.addDependent(oDialog);
-                            this.oDialog = oDialog; // Armazena a referência do diálogo
-                            oDialog.open();
-                        });
-                    } else {
-                        this.byId("idDialog").open();
-                    }
-        },
-
-        onDialogClose: function(oEvent) {
-        this.oDialog.destroy(); 
-        this.oDialog = null;
-        },
-
-        aoPrecionarFechar: function(oEvent) {
-        this.oDialog.close();
-        },
+       
 
         getResourceBundle: function() {
 				const nome = "i18n";

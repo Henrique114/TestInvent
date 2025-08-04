@@ -7,10 +7,10 @@
       numberUnit="Unidade(s)"
       title="{modeloDialogo>/tipo}"
       >
-      <!-- <attributes>
-      <ObjectAttribute title="{i18n>disponibilidadeEquipamento}" width="50px" text="{modeloDialogo>/temEmEstoque}" />
+      <attributes>
+      <ObjectAttribute title="{i18n>disponibilidadeEquipamento}" text="{modeloDialogo>/temEmEstoque}" />
         <ObjectAttribute
-            title="{i18n>dataInclusao}"
+          title="{i18n>dataInclusao}"
             text="{
                 path: 'modeloDialogo>/dataDeInclusao',
                 type: 'sap.ui.model.type.Date',
@@ -18,8 +18,12 @@
                     style: 'short'
             }
           }"/>
-      </attributes> -->
-       <content>
+          <Label text="These controls are within one multi-root Fragment:" />
+          <Input />
+          
+      </attributes>
+      
+       <!-- <content>
                 <Text title="{i18n>disponibilidadeEquipamento}" text="{modeloDialogo>/temEmEstoque}" />
                 <Text title="{i18n>dataInclusao}" text="{
                 path: 'modeloDialogo>/dataDeInclusao',
@@ -28,9 +32,8 @@
                     style: 'short'
                     }
                  }"/>
-        </content>
+        </content> -->
     </ObjectHeader>
-    <buttons>
       <Button text="Fechar" press="aoPrecionarFechar"/>
     </buttons>
   </Dialog>
