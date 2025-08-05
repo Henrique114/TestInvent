@@ -81,6 +81,10 @@ sap.ui.define([
 
          aoPrecionarFechar: function(evento) {
         this.oDialog.close();
+        },
+
+        aoCriarNovoEquipamento: function() {
+           
         }
    });
 });

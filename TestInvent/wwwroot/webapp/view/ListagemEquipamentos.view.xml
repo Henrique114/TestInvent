@@ -3,16 +3,30 @@
    xmlns="sap.m"
    xmlns:core="sap.ui.core"
    xmlns:mvc="sap.ui.core.mvc">
-   <Page title="{i18n>homePageTitle}">
+   <Page >
+   <customHeader>
+        <Bar>
+            <contentRight>
+                <Title text="{i18n>homePageTitle}" level="H1"/>
+            </contentRight>
+        </Bar>
+    </customHeader>
 		<content>
 			<Panel accessibleRole="Region">
 				<headerToolbar>
 					<Toolbar>
-						<ToolbarSpacer/>
-						<SearchField
+						
+						<SearchField 
 							width="50%"
 							search=".aoFiltrarEquipamentos"
-							id="inputFiltro"/>
+							id="inputFiltro"
+							class="leftAlignedSearch"/>
+						<ToolbarSpacer/>
+						<Button
+							id="btnNovoEquipamento"
+							text="{i18n>btnNovoEquipamento}"
+							press=".aoCriarNovoEquipamento"/>
+						
 					</Toolbar>
 				</headerToolbar>
 				<Table
