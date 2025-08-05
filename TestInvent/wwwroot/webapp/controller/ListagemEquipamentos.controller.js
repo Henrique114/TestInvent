@@ -1,8 +1,8 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/UIComponent"
-],(Controller, JSONModel, UIComponent) => {
+    "sap/ui/core/Fragment"
+],(Controller, JSONModel, Fragment) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -31,6 +31,7 @@ sap.ui.define([
                 .then(dados => {
                     dados.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
+                        element.descricao = "aqui vai uma descrição do equipamento"; // Simulação de descrição
                     });
 
                     
@@ -47,21 +48,52 @@ sap.ui.define([
         },
         
         aoIrParaDetalhes: function (event) {
-            debugger
-            const equipamentoSelecionado = event.getSource().getBindingContext(MODELO_EQUIPAMENTOS).getObject();
             
-            var router = UIComponent.getRouterFor(this);
-            router.navTo("DetalhesEquipamento", { id: equipamentoSelecionado.id });
+            const equipamentoSelecionado = event.getSource().getBindingContext(MODELO_EQUIPAMENTOS).getObject();
+            const oModelEquipamento = new JSONModel(equipamentoSelecionado);
+            this.getView().setModel(oModelEquipamento, "modeloDialogo");
+            this.onOpenDialog();
+
+            
+        },
+
+        onOpenDialog: function() {
+            var oView = this.getView();
+            console.log(oView);
+
+            // Verifica se o fragmento já foi carregado
+            if (!this.byId("idDialog")) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "ui5.testinvent.view.DetalhesEquipamento",
+                    controller: this
+                }).then((oDialog)=> {
+                    oDialog.setModel();
+                    this.getResourceBundle();   
+                    oView.addDependent(oDialog);
+                    this.oDialog = oDialog; // Armazena a referência do diálogo
+                    oDialog.open();
+                });
+            } else {
+                this.byId("idDialog").open();
+            }
+        },
+
+         onDialogClose: function(oEvent) {
+        this.oDialog.destroy(); 
+        this.oDialog = null;
+        },
+
+         aoPrecionarFechar: function(oEvent) {
+        this.oDialog.close();
         },
     
-       
-
         getResourceBundle: function() {
-				const nome = "i18n";
-				return this
-					.getOwnerComponent()
-					.getModel(nome)
-					.getResourceBundle();
+            const nome = "i18n";
+            return this
+                .getOwnerComponent()
+                .getModel(nome)
+                .getResourceBundle();
         }
    });
 });
