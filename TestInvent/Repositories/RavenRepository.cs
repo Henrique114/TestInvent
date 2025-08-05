@@ -54,6 +54,7 @@ namespace TestInvent.Repositories
             equipamento.Nome = entity.Nome;
             equipamento.Tipo = entity.Tipo;
             equipamento.QuantidadeEmEstoque = entity.QuantidadeEmEstoque;
+            equipamento.Descricao = entity.Descricao;
 
             session.SaveChanges();
         }
