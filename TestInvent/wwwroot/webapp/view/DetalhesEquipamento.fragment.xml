@@ -1,13 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-  <Dialog id="idDialog" title="{i18n>tituloPaginaDetalhes}" afterClose="onDialogClose" >
+  <Dialog id="idDialog" title="{modeloDialogo>/nome}" afterClose="onDialogClose" >
     <ObjectHeader
             responsive="true"
             fullScreenOptimized="true"
             number="{modeloDialogo>/quantidadeEmEstoque}"
             numberUnit="Und."
-            intro="{modeloDialogo>/tipo}"
-			   title="{modeloDialogo>/nome}">
-			  <attributes>
+			title="{modeloDialogo>/tipo}">
+            <attributes>
                 <ObjectAttribute
                     title="{i18n>dataInclusao}"
                     text="{
@@ -22,6 +21,10 @@
                     title="{i18n>descricaoEquipamento}"
                     text="{modeloDialogo>/descricao}" 
                    /> 
+                <ObjectAttribute
+                    title="{i18n>disponibilidadeEquipamento}"
+                    text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Sim' : 'Não' }" 
+                    />
                 </attributes>
 			</ObjectHeader>
     <buttons>

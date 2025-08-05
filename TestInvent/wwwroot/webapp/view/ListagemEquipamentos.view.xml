@@ -3,64 +3,67 @@
    xmlns="sap.m"
    xmlns:core="sap.ui.core"
    xmlns:mvc="sap.ui.core.mvc">
-	<Panel accessibleRole="Region">
-		<headerToolbar>
-			<Toolbar>
-				<Title text="{i18n>homePageTitle}"/>
-				<ToolbarSpacer/>
-				<SearchField
-					width="50%"
-					search=".aoFiltrarEquipamentos"
-					id="inputFiltro"/>
-			</Toolbar>
-		</headerToolbar>
-		<Table
-		id="listaEquipamentos"
-		headerText="{i18n>listPageTitle}"
-		class="sapUiResponsiveMargin sapUiSizeCompact"
-		inset="false"
-		width="auto"
-		items="{ path: 'equipamentos>/',
-            sorter : {
-                path : 'tipo',
-                group : true
-            } }">
+   <Page title="{i18n>homePageTitle}">
+		<content>
+			<Panel accessibleRole="Region">
+				<headerToolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<SearchField
+							width="50%"
+							search=".aoFiltrarEquipamentos"
+							id="inputFiltro"/>
+					</Toolbar>
+				</headerToolbar>
+				<Table
+					id="listaEquipamentos"
+					headerText="{i18n>listPageTitle}"
+					class="sapUiResponsiveMargin sapUiSizeCompact"
+					inset="false"
+					width="auto"
+					items="{ path: 'equipamentos>/',
+						sorter : {
+							path : 'tipo',
+							group : true
+						} }">
 
-		<columns>
-			<Column
-				hAlign="End"
-				minScreenWidth="Small"
-				demandPopin="true"
-				width="8em">
-				<Text text="{i18n>colunaQuantidade}" wrapping="false"/>
-			</Column>
-			<Column>
-				<Text text="{i18n>colunaNome}" wrapping="false"/>
-			</Column>
-			<Column>
-				<Text text="{i18n>dataInclusao}" wrapping="false"/>
-			</Column>
-		</columns>
+					<columns>
+						<Column
+							hAlign="End"
+							minScreenWidth="Small"
+							demandPopin="true"
+							width="8em">
+							<Text text="{i18n>colunaQuantidade}" wrapping="false"/>
+						</Column>
+						<Column>
+							<Text text="{i18n>colunaNome}" wrapping="false"/>
+						</Column>
+						<Column>
+							<Text text="{i18n>dataInclusao}" wrapping="false"/>
+						</Column>
+					</columns>
 
-		<items>
-			<ColumnListItem
-				type="Navigation"
-				press=".aoIrParaDetalhes">
-				<cells>
-					<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
-					<Text text="{equipamentos>nome}" />
-					<Text
-						text="{
-							path: 'equipamentos>dataDeInclusao',
-							type: 'sap.ui.model.type.Date',
-							formatOptions: {
-								style: 'short'
-								
-							}
-					}"/>
-				</cells>
-			</ColumnListItem>
-		</items>
-		</Table>
-	</Panel>
+					<items>
+						<ColumnListItem
+							type="Navigation"
+							press=".aoIrParaDetalhes">
+							<cells>
+								<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
+								<Text text="{equipamentos>nome}" />
+								<Text
+									text="{
+										path: 'equipamentos>dataDeInclusao',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											style: 'short'
+											
+										}
+								}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</content>
+	</Page>
 </mvc:View>
