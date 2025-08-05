@@ -25,7 +25,7 @@
                 </attributes>
 			</ObjectHeader>
     <buttons>
-      <Button text="Fechar" press="aoPrecionarFechar"/>
+      <Button text="{i18n>btnFechar}" press="aoPrecionarFechar"/>
     </buttons>
   </Dialog>
 </core:FragmentDefinition>
