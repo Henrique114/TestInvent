@@ -32,9 +32,9 @@
                                         <Text text="{modeloDialogo>/tipo}" id="nameText"  />
                                     </f:fields>
                                 </f:FormElement>
-                                <f:FormElement label="{i18n>tituloquantidade} {i18n>unidade}">
+                                <f:FormElement label="{i18n>tituloquantidade}">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/quantidadeEmEstoque}" />
+                                        <Text text="{modeloDialogo>/quantidadeEmEstoque} {i18n>unidade}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
