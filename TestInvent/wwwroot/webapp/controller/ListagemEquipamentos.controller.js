@@ -1,22 +1,15 @@
-
 sap.ui.define([
-    
    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/UIComponent"
-    
 ],(Controller, JSONModel, UIComponent) => {
     "use strict";
+
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const MODELO_EQUIPAMENTOS = "equipamentos";
-    
-
 
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
-
-
-
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             const ROTA = this.getOwnerComponent().getRouter();

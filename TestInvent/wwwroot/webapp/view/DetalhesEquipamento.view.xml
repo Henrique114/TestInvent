@@ -1,47 +1,65 @@
- <mvc:View
+<mvc:View
     controllerName="ui5.testinvent.controller.DetalhesEquipamento"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true"
-	xmlns:f="sap.f"
-	>
-	 <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:f="sap.f"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        headerExpanded="true"
+    >
         <f:title>
             <f:DynamicPageTitle>
-                <f:heading navButtonPress=".onNavBack">
-                    <Title text="{equipamento>/nome}"/>
+                <f:navigationActions>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack"
+                        type="Transparent"
+                        tooltip="Voltar"
+                    />
+                </f:navigationActions>
+                <f:heading>
+                    <Title text="{equipamento>/nome}" />
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
+
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <VBox>
-					<ObjectIdentifier
-						title="{equipamento>/tipo}"
-						/>
+                    <ObjectIdentifier
+                        title="{equipamento>/tipo}" />
+
                     <ObjectStatus
-						text="{equipamento>/quantidadeEmEstoque}"
-						state="Information"
-						title="{i18n>tituloquantidade}"/>
-					<ObjectAttribute
-						title="{i18n>dataInclusao}"
-						text="{
-							path: 'equipamento>/dataDeInclusao',
-							type: 'sap.ui.model.type.Date',
-							formatOptions: {
-								style: 'short'
-							}
-						}"/>
-					<ObjectAttribute
-						title="{i18n>descricaoEquipamento}"
-						text="{equipamento>/descricaoEquipamento}"/>
-					<ObjectAttribute title="{i18n>disponibilidadeEquipamento}" text="{= ${equipamento>/temEmEstoque} === true ? 'Sim' : 'Não' }" />
+                        text="{equipamento>/quantidadeEmEstoque}"
+                        state="Information"
+                        title="{i18n>tituloquantidade}" />
+
+                    <ObjectAttribute
+                        title="{i18n>dataInclusao}"
+                        text="{
+                            path: 'equipamento>/dataDeInclusao',
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                style: 'short'
+                            }
+                        }" />
+
+                    <ObjectAttribute
+                        title="{i18n>descricaoEquipamento}"
+                        text="{equipamento>/descricaoEquipamento}" />
+
+                    <ObjectAttribute
+                        title="{i18n>disponibilidadeEquipamento}"
+                        text="{= ${equipamento>/temEmEstoque} === true ? 'Sim' : 'Não' }" />
                 </VBox>
             </f:DynamicPageHeader>
         </f:header>
+
         <f:content>
-            <Text text=""/>
+            <Text text="" />
         </f:content>
     </f:DynamicPage>
-</mvc:View> 
+</mvc:View>

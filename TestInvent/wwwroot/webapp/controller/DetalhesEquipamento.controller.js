@@ -1,20 +1,19 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/m/MessageToast",
 	"sap/ui/model/json/JSONModel"
 ], (Controller, History, JSONModel) => {
 	"use strict";
 	const MODELO_EQUIPAMENTO = "equipamento";
-	 const ENDPOINT_BASE = "/EquipamentoEletronico";
-   
+	const ENDPOINT_BASE = "/EquipamentoEletronico";
+	const ID = "";
+	const ROTA = "";
+
 	return Controller.extend("ui5.testinvent.controller.DetalhesEquipamento", {
 		onInit() {
-			// debugger;
-			
-			const ROTA = this.getOwnerComponent().getRouter();
+			this.ROTA = this.getOwnerComponent().getRouter();
 			this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-			ROTA.getRoute("DetalhesEquipamento").attachPatternMatched(this._obterEquipamentoPorId, this);
+			this.ROTA.getRoute("DetalhesEquipamento").attachPatternMatched(this._aoCoincidirRota, this);
 
 			//TODO:
 			//CRIA O MODELO DO EQUIPAMENTO
@@ -39,22 +38,23 @@ sap.ui.define([
 		// 	this.ROTA = this.getOwnerComponent().getRouter();	
 		// },
 
-        _obterEquipamentoPorId: function (id= "") {
-            
+		_aoCoincidirRota: function (oEvent) {
+			this.ID = oEvent.getParameter("arguments").id;
+			if(this.ID){
+				this._obterEquipamentoPorId(this.ID);	
+			}
+        },
+
+        _obterEquipamentoPorId: function (id) {
 			let urlRequisicaoEquipamento = `${ENDPOINT_BASE}/${id}`;
-			console.log(urlRequisicaoEquipamento);
 
             fetch(urlRequisicaoEquipamento)
                 .then(response => response.json())
                 .then(dado => {
-                    
-                        dado.dataDeInclusao = new Date(dado.dataDeInclusao);
-                    
-
+					dado.dataDeInclusao = new Date(dado.dataDeInclusao);
                     const oModel = new JSONModel(dado);
                     this.getView().setModel(oModel, MODELO_EQUIPAMENTO);
                 })
-                
         },
 
 		onNavBack() {
@@ -64,7 +64,7 @@ sap.ui.define([
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				ROTA.navTo("ListagemEquipamentos", {}, true);
+				this.ROTA.navTo("ListagemEquipamentos", {}, true);
 			}
 		},
 		getResourceBundle: function() {
