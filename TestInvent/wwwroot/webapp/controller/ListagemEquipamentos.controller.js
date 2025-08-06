@@ -106,7 +106,7 @@ sap.ui.define([
                 case 5:
                     tipoS = "Headset";
                     break;
-                // Adicione outros casos conforme necessário
+               
                 default:
                     tipoS = "Outros";
             }

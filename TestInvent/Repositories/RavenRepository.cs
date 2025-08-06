@@ -15,8 +15,6 @@ namespace TestInvent.Repositories
         {  
             using var session = _store.OpenSession();
 
-            entity.Tipo = ExtensaoDeStrings.PrimeiraLetraEmCaixaAlta(entity.Tipo);
-
             session.Store(entity);
             session.SaveChanges();
         }
@@ -54,7 +52,7 @@ namespace TestInvent.Repositories
             var equipamento = session.Load<EquipamentoEletronicoModel>(id) ?? throw new Exception($"Equipamento com {id} não encontrado"); ;
 
             equipamento.Nome = entity.Nome;
-            equipamento.Tipo = ExtensaoDeStrings.PrimeiraLetraEmCaixaAlta(entity.Tipo);
+            equipamento.Tipo = entity.Tipo;
             equipamento.QuantidadeEmEstoque = entity.QuantidadeEmEstoque;
             equipamento.Descricao = entity.Descricao;
 
