@@ -44,7 +44,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
-                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Sim' : 'Não' }" />
+                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Disponivel' : 'Não Disponivel' }" />
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
