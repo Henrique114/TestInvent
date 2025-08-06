@@ -1,5 +1,6 @@
 ﻿
 
+using TestInvent.DTOS;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -13,12 +14,12 @@ namespace TestInvent.Repositories
                                                                             DataDeInclusao = new DateTime(),
                                                                             Nome = "Item abobora",
                                                                             QuantidadeEmEstoque = 15,
-                                                                            Tipo = "tipo string, que esquisito"
+                                                                            Tipo = EquipamentoEletronicoModel.Tipos.Notebook
                                                                         }
                                                                     };
 
 
-        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome) => _items;
+        public IEnumerable<LerDTO> BuscarTodos(string nome) => (IEnumerable<LerDTO>)_items;
 
         public EquipamentoEletronicoModel? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
 

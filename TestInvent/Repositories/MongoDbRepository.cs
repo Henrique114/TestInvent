@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using TestInvent.Data.MongoDB;
+using TestInvent.DTOS;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -11,12 +12,12 @@ namespace TestInvent.Repositories
         public MongoDbRepository(IMongoDbContext contex)
         {
             
-            _collection = contex.GetCollection<EquipamentoEletronicoModel>();
+            _collection = (IMongoCollection<EquipamentoEletronicoModel>?)contex.GetCollection<LerDTO>();
         }
 
-        public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome)
+        public IEnumerable<LerDTO> BuscarTodos(string nome)
         {
-            return _collection.Find(_ => true).ToList();
+            return (IEnumerable<LerDTO>)_collection.Find(_ => true).ToList();
         }
 
         public EquipamentoEletronicoModel? BuscarPorId(string id)

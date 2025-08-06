@@ -2,7 +2,9 @@
 using FluentValidation;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
 using TestInvent.Data;
+using TestInvent.DTOS;
 using TestInvent.Models;
 using TestInvent.Repositories;
 using TestInvent.Service;
@@ -26,6 +28,12 @@ namespace TestInvent
            
             //Registra o RavenContex(conecção com o banco)
             builder.Services.AddSingleton<RavenDbContext>();
+
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.CreateMap<EquipamentoEletronicoModel, LerDTO>();
+                
+            });
 
             builder.Services.AddCors(options =>
             {

@@ -30,7 +30,7 @@ sap.ui.define([
                 .then(dados => {
                     dados.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
-                        element.tipo = this._mapearTipoDoEquipamneto(element.tipo);
+                        //element.tipo = this._mapearTipoDoEquipamneto(element.tipo);
                     });
 
                     const model = new JSONModel(dados);

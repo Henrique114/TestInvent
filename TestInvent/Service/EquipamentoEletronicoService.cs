@@ -21,7 +21,7 @@ namespace TestInvent.Service
 
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string filtro)
         {
-            return _repository.BuscarTodos(filtro);
+            return (IEnumerable<EquipamentoEletronicoModel>)_repository.BuscarTodos(filtro);
         }
 
         public EquipamentoEletronicoModel BuscarPorId(string id)
