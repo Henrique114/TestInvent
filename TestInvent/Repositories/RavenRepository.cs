@@ -14,7 +14,9 @@ namespace TestInvent.Repositories
         public void Adicionar(EquipamentoEletronicoModel entity)
         {  
             using var session = _store.OpenSession();
-            
+
+            entity.Tipo = ExtensaoDeStrings.PrimeiraLetraEmCaixaAlta(entity.Tipo);
+
             session.Store(entity);
             session.SaveChanges();
         }
@@ -22,7 +24,7 @@ namespace TestInvent.Repositories
         public void Deletar(string id)
         {
             using var session = _store.OpenSession();
-            var equipamento = BuscarPorId(id.DecodificarURL());
+            var equipamento = session.Load<EquipamentoEletronicoModel>(id) ?? throw new Exception($"Equipamento com {id} não encontrado");
             session.Delete(equipamento);
             session.SaveChanges();
         }
@@ -49,10 +51,10 @@ namespace TestInvent.Repositories
         {
             using var session = _store.OpenSession();
             
-            var equipamento = BuscarPorId(id.DecodificarURL());
+            var equipamento = session.Load<EquipamentoEletronicoModel>(id) ?? throw new Exception($"Equipamento com {id} não encontrado"); ;
 
             equipamento.Nome = entity.Nome;
-            equipamento.Tipo = entity.Tipo;
+            equipamento.Tipo = ExtensaoDeStrings.PrimeiraLetraEmCaixaAlta(entity.Tipo);
             equipamento.QuantidadeEmEstoque = entity.QuantidadeEmEstoque;
             equipamento.Descricao = entity.Descricao;
 
