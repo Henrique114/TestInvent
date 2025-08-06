@@ -6,9 +6,17 @@
    <Page >
    <customHeader>
         <Bar>
-            <contentRight>
-                <Title text="{i18n>homePageTitle}" level="H1"/>
-            </contentRight>
+            <contentLeft>
+                <Title 
+					text="{i18n>homePageTitle}" 
+					level="H1"/>
+            </contentLeft>
+			<contentRight>
+				<Button
+					id="btnNovoEquipamento"
+					text="{i18n>btnNovoEquipamento}"
+					press=".aoCriarNovoEquipamento"/>
+			</contentRight>
         </Bar>
     </customHeader>
 		<content>
@@ -22,11 +30,6 @@
 							id="inputFiltro"
 							class="leftAlignedSearch"/>
 						<ToolbarSpacer/>
-						<Button
-							id="btnNovoEquipamento"
-							text="{i18n>btnNovoEquipamento}"
-							press=".aoCriarNovoEquipamento"/>
-						
 					</Toolbar>
 				</headerToolbar>
 				<Table
@@ -55,11 +58,14 @@
 						<Column>
 							<Text text="{i18n>dataInclusao}" wrapping="false"/>
 						</Column>
+						<Column>
+							<Text text="{i18n>acoes}" wrapping="false"/>
+						</Column>
 					</columns>
 
 					<items>
 						<ColumnListItem
-							type="Navigation"
+							type="Active"
 							press=".aoIrParaDetalhes">
 							<cells>
 								<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
@@ -73,6 +79,11 @@
 											
 										}
 								}"/>
+								<Button
+									press=".aoAtualizarEquipamento"
+									icon="sap-icon://edit"
+									type="Emphasized"
+									class="sapUiTinyMarginBegin"/>
 							</cells>
 						</ColumnListItem>
 					</items>
