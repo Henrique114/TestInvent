@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
+﻿
 namespace TestInvent.Models
 {
     public class EquipamentoEletronicoModel : IEntity
@@ -11,7 +8,7 @@ namespace TestInvent.Models
 
         public string? Nome { get; set; }
 
-        public string? Tipo { get; set; }
+       public Tipos? Tipo { get; set; }
 
         public int? QuantidadeEmEstoque { get; set; }
 
@@ -21,7 +18,19 @@ namespace TestInvent.Models
 
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 
-       
+
+        public enum Tipos
+        {
+
+            Notebook = 1,
+            Teclado = 2,
+            Mouse = 3,
+            Monitor = 4,
+            Headset = 5
+          
+
+        }
+
 
 
     }
