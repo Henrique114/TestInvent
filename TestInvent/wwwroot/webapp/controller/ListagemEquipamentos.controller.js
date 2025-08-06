@@ -1,7 +1,7 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
 ],(Controller, JSONModel, Fragment) => {
     "use strict";
 
@@ -50,10 +50,25 @@ sap.ui.define([
             const equipamentoSelecionado = event.getSource().getBindingContext(MODELO_EQUIPAMENTOS).getObject();
             const oModelEquipamento = new JSONModel(equipamentoSelecionado);
             this.getView().setModel(oModelEquipamento, "modeloDialogo");
-            this.aoAbrirFragmentoDialogo();
+            this.AoAbrirTelaDeDetalhes();
         },
 
-        criarDialogo: function(view) {
+        AoAbrirTelaDeDetalhes: function() {
+           var view = this.getView();
+
+            if (!this.byId("idDialog")) {
+                this.criarTelaDeDetalhes(view)
+                .then((dialog) => {
+                    dialog.open();
+                });
+            } else {
+                this.byId("idDialog").open();
+            }
+        },
+
+        criarTelaDeDetalhes: function(view) {
+            debugger;
+            
             return Fragment.load({
                 id: view.getId(),
                 name: "ui5.testinvent.view.DetalhesEquipamento",
@@ -67,26 +82,66 @@ sap.ui.define([
             });
         },
 
-        aoAbrirFragmentoDialogo: function() {
-           var view = this.getView();
+         aoIrParaNovoEquipamento: function() {
+          debugger;
+            this.AoAbrirTelaDeNovoEquipamento();
+           
+        },
 
-            if (!this.byId("idDialog")) {
-                this.criarDialogo(view)
+         AoAbrirTelaDeNovoEquipamento: function() {
+           var view = this.getView();
+           debugger;
+
+            if (!this.byId("idCadastroEAlterar")) {
+                this.criarTelaDeNovoEquipamento(view)
                 .then((dialog) => {
                     dialog.open();
                 });
             } else {
-                this.byId("idDialog").open();
+                this.byId("idCadastroEAlterar").open();
             }
+        },
+
+         criarTelaDeNovoEquipamento: function(view) {
+            debugger;
+            
+            return Fragment.load({
+                id: view.getId(),
+                name: "ui5.testinvent.view.AdicionarEAtualizarEquipamento",
+                controller: this
+            }).then((dialog) => {
+                this.getOwnerComponent().getModel("i18n").getResourceBundle();   
+                view.addDependent(dialog);
+                this.oDialog = dialog;
+                return dialog;
+            });
         },
 
          aoPrecionarFechar: function(evento) {
         this.oDialog.close();
         },
 
-        aoCriarNovoEquipamento: function() {
-           
-        },
+        aoPrecionarSalvar: function(evento) {
+            const dialog = this.byId("idCadastroEAlterar");
+            const dados = dialog.getModel("modeloDialogo").getData();
+            const url = `${ENDPOINT_BASE}/${dados.id || ''}`;
+            const metodo = dados.id ? 'PUT' : 'POST';
+
+            fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(() => {
+                dialog.close();
+            })
+            .catch(error => {
+                console.error('Erro ao salvar equipamento:', error);
+            });
+        },       
 
         _mapearTipoDoEquipamneto: function(tipo) {
             var tipoS = "";

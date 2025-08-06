@@ -15,7 +15,7 @@
 				<Button
 					id="btnNovoEquipamento"
 					text="{i18n>btnNovoEquipamento}"
-					press=".aoCriarNovoEquipamento"/>
+					press=".aoIrParaNovoEquipamento"/>
 			</contentRight>
         </Bar>
     </customHeader>

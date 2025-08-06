@@ -3,7 +3,22 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialog" title="{modeloDialogo>/nome}" afterClose="onDialogClose" >
+    <Dialog id="idDialog" afterClose="onDialogClose" >
+    <customHeader>
+        <Bar>
+            <contentLeft>
+                <Title 
+					text="{modeloDialogo>/nome}" 
+					level="H1"/>
+            </contentLeft>
+			<contentRight>
+				<Button
+					id="btnNovoEquipamentoPgDetalhes"
+					text="{i18n>btnNovoEquipamento}"
+					press=".aoIrParaNovoEquipamento"/>
+			</contentRight>
+        </Bar>
+    </customHeader>
         <content>
        	    <VBox class="sapUiSmallMargin">
                 <f:Form id="FormDisplay354"
