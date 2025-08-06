@@ -30,6 +30,7 @@ sap.ui.define([
                 .then(dados => {
                     dados.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
+                        element.tipo = this._mapearTipoDoEquipamneto(element.tipo);
                     });
 
                     const model = new JSONModel(dados);
@@ -85,6 +86,33 @@ sap.ui.define([
 
         aoCriarNovoEquipamento: function() {
            
+        },
+
+        _mapearTipoDoEquipamneto: function(tipo) {
+            var tipoS = "";
+            switch (tipo) {
+                case 1:
+                    tipoS = "Notebook";
+                    break;
+                case 2:
+                    tipoS = "Teclado";
+                    break;
+                case 3:
+                    tipoS = "Mouse";
+                    break;
+                case 4:
+                    tipoS = "Monitor";
+                    break;
+                case 5:
+                    tipoS = "Headset";
+                    break;
+                // Adicione outros casos conforme necessário
+                default:
+                    tipoS = "Outros";
+            }
+            return tipoS;
         }
+
+        
    });
 });
