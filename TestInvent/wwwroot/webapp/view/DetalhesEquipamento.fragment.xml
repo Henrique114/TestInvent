@@ -14,8 +14,8 @@
 			<contentRight>
 				<Button
 					id="btnNovoEquipamentoPgDetalhes"
-					text="{i18n>btnNovoEquipamento}"
-					press=".aoIrParaNovoEquipamento"/>
+					text="{i18n>btnEditarEquipamento}"
+					press=".aoIrParaEditarEquipamento"/>
 			</contentRight>
         </Bar>
     </customHeader>

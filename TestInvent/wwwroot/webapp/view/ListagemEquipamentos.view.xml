@@ -80,7 +80,7 @@
 										}
 								}"/>
 								<Button
-									press=".aoAtualizarEquipamento"
+									press=".aoIrParaEditarEquipamento"
 									icon="sap-icon://edit"
 									type="Emphasized"
 									class="sapUiTinyMarginBegin"/>
