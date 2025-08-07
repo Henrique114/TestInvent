@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idCadastroEAlterar" title="{modeloDialogo>/nome}" afterClose="onDialogClose" >
+    <Dialog id="idCadastroEAlterar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
         <content>
        	    <VBox class="sapUiSmallMargin">
                 <f:Form id="FormDisplayAddEdit"
@@ -27,19 +27,24 @@
                     <f:formContainers>
                         <f:FormContainer>
                             <f:formElements>
-                                <f:FormElement label="Tipo">
+                             <f:FormElement label="{i18n>labelNome}">
                                     <f:fields>
-                                        <Input value="{modeloDialogo>/tipo}" id="1"  />
+                                        <Input value="" id="formularionome"  />
                                     </f:fields>
                                 </f:FormElement>
-                                <f:FormElement label="{i18n>tituloquantidade}">
+                                <f:FormElement label="{i18n>labelTipo}">
                                     <f:fields>
-                                        <Input value="{modeloDialogo>/quantidadeEmEstoque} {i18n>unidade}" />
+                                        <Input value="" id="formulariotipo"  />
                                     </f:fields>
                                 </f:FormElement>
-                                <f:FormElement label="{i18n>descricaoEquipamento}">
+                                <f:FormElement label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input value="" />
+                                        <Input value="" id="formularioquantidade"/>
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>labelDescricao}">
+                                    <f:fields>
+                                        <Input value="" id="formulariodescricao" />
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -49,7 +54,8 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" id="btnCancelarTelaCadastro" press="aoPrecionarFechar"/>
+            <Button text="{i18n>btnSalvar}" id="btnSalvarTelaCadastro" press="aoPrecionarSalvar"/>
+            <Button text="{i18n>btnCancelar}" id="btnCancelarTelaCadastro" press="aoPrecionarFechar"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

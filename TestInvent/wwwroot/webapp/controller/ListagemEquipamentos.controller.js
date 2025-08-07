@@ -67,8 +67,7 @@ sap.ui.define([
         },
 
         criarTelaDeDetalhes: function(view) {
-            debugger;
-            
+          
             return Fragment.load({
                 id: view.getId(),
                 name: "ui5.testinvent.view.DetalhesEquipamento",
@@ -83,14 +82,13 @@ sap.ui.define([
         },
 
          aoIrParaNovoEquipamento: function() {
-          debugger;
+         
             this.AoAbrirTelaDeNovoEquipamento();
            
         },
 
          AoAbrirTelaDeNovoEquipamento: function() {
            var view = this.getView();
-           debugger;
 
             if (!this.byId("idCadastroEAlterar")) {
                 this.criarTelaDeNovoEquipamento(view)
@@ -103,7 +101,6 @@ sap.ui.define([
         },
 
          criarTelaDeNovoEquipamento: function(view) {
-            debugger;
             
             return Fragment.load({
                 id: view.getId(),
