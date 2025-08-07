@@ -73,7 +73,7 @@ sap.ui.define([
                 name: "ui5.testinvent.view.DetalhesEquipamento",
                 controller: this
             }).then((dialog) => {
-                dialog.setModel(); // você pode passar o modelo necessário como argumento, se desejar
+                dialog.setModel(); 
                 this.getOwnerComponent().getModel("i18n").getResourceBundle();   
                 view.addDependent(dialog);
                 this.oDialog = dialog;
@@ -145,7 +145,7 @@ sap.ui.define([
         },    
         
         _carregarTiposEquipamento: function() {
-                // Cria um modelo JSON com os tipos de equipamentos
+                
                 var modeloTipoEquipamento = new sap.ui.model.json.JSONModel({
                 tipos: [
                     { Tipo: "1", Descricao: "Notebook" },
@@ -154,7 +154,7 @@ sap.ui.define([
                     { Tipo: "4", Descricao: "Monitor" },
                     { Tipo: "5", Descricao: "Headset" },
                 ],
-                tipoSelecionado: "Notebook" // ou um valor padrão como "notebook"
+                tipoSelecionado: "Notebook" 
             });
 
             this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
