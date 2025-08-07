@@ -58,7 +58,7 @@ sap.ui.define([
                 name: "ui5.testinvent.view.DetalhesEquipamento",
                 controller: this
             }).then((dialog) => {
-                dialog.setModel(); // você pode passar o modelo necessário como argumento, se desejar
+                dialog.setModel(); 
                 this.getOwnerComponent().getModel("i18n").getResourceBundle();   
                 view.addDependent(dialog);
                 this.oDialog = dialog;
