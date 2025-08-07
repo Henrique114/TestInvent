@@ -101,7 +101,7 @@ sap.ui.define([
         },
 
          criarTelaDeNovoEquipamento: function(view) {
-            debugger;
+            
             
             return Fragment.load({
                 id: view.getId(),
