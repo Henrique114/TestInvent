@@ -17,6 +17,8 @@ namespace TestInvent.Models
 
         public DateTimeOffset DataDeInclusao { get; set; }
 
+        public string? Descricao { get; set; }
+
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 
        

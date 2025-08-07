@@ -1,0 +1,72 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form">
+    <Dialog id="idDialog" title="{modeloDialogo>/nome}" afterClose="onDialogClose" >
+        <content>
+       	    <VBox class="sapUiSmallMargin">
+                <f:Form id="FormDisplay354"
+                    editable="false">
+                    <f:layout>
+                        <f:ResponsiveGridLayout
+                            labelSpanXL="3"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false" />
+                    </f:layout>
+                    <f:formContainers>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="Tipo">
+                                    <f:fields>
+                                        <Text text="{modeloDialogo>/tipo}" id="nameText"  />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>tituloquantidade}">
+                                    <f:fields>
+                                        <Text text="{modeloDialogo>/quantidadeEmEstoque} {i18n>unidade}" />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>dataInclusao}">
+                                    <f:fields>
+                                        <Text
+                                            text="{
+                                                path: 'modeloDialogo>/dataDeInclusao',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    style: 'short'
+                                                }
+                                        }"/>
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>descricaoEquipamento}">
+                                    <f:fields>
+                                        <Text text="{modeloDialogo>/descricao}" />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>disponibilidadeEquipamento}">
+                                    <f:fields>
+                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Disponível' : 'Não Disponível' }" />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:formContainers>
+                </f:Form>
+	        </VBox>
+        </content>
+        <buttons>
+            <Button text="{i18n>btnFechar}" press="aoPrecionarFechar"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

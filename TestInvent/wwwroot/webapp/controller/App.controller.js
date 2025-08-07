@@ -1,11 +1,9 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
-   "sap/m/MessageToast",
-], (Controller, MessageToast) => {
+], (Controller) => {
    "use strict";
 
    return Controller.extend("ui5.testinvent.controller.App", {
-     
      
    });
 });
