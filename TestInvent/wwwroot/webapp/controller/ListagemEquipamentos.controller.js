@@ -81,7 +81,7 @@ sap.ui.define([
             });
         },
 
-         aoIrParaNovoEquipamento: function() {
+        aoIrParaNovoEquipamento: function() {
          
             this.AoAbrirTelaDeNovoEquipamento();
            
