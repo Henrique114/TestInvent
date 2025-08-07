@@ -37,6 +37,18 @@
                                         <Text text="{modeloDialogo>/quantidadeEmEstoque} {i18n>unidade}" />
                                     </f:fields>
                                 </f:FormElement>
+                                <f:FormElement label="{i18n>dataInclusao}">
+                                    <f:fields>
+                                        <Text
+                                            text="{
+                                                path: 'modeloDialogo>/dataDeInclusao',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    style: 'short'
+                                                }
+                                        }"/>
+                                    </f:fields>
+                                </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
                                     <f:fields>
                                         <Text text="{modeloDialogo>/descricao}" />
@@ -44,7 +56,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
-                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Sim' : 'Não' }" />
+                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Disponível' : 'Não Disponível' }" />
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
