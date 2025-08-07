@@ -36,14 +36,14 @@
                                     <f:fields>
                                         <Select
                                             forceSelection="false"
-                                            selectedKey="{modeloTipoEquipamento>Tipo}"
+                                            selectedKey="{modeloTipoEquipamento>/tipoSelecionado}"
                                             items="{
-                                                path: '/modeloTipoEquipamento',
+                                                path: 'modeloTipoEquipamento>/tipos',
                                                 sorter: { path: 'Descricao' }
                                             }"
                                             id="formulariotipo"
                                             required="true">
-                                            <core:Item key="{Tipo}" text="{Descricao}" />
+                                            <core:Item key="{modeloTipoEquipamento>Tipo}" text="{modeloTipoEquipamento>Descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>

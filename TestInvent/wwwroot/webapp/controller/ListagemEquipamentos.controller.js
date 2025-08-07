@@ -101,6 +101,7 @@ sap.ui.define([
         },
 
          criarTelaDeNovoEquipamento: function(view) {
+            debugger;
             
             return Fragment.load({
                 id: view.getId(),
@@ -108,7 +109,8 @@ sap.ui.define([
                 controller: this
             }).then((dialog) => {
                 this._carregarTiposEquipamento();
-                 dialog.setModel(this.getView().getModel("modeloTipoEquipamento")); 
+                console.log(this.getView().getModel("modeloTipoEquipamento").getData());
+                dialog.setModel(this.getView().getModel("modeloTipoEquipamento")); 
                 this.getOwnerComponent().getModel("i18n").getResourceBundle();   
                 view.addDependent(dialog);
                 this.oDialog = dialog;
