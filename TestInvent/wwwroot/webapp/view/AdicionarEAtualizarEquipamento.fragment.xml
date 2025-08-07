@@ -27,24 +27,34 @@
                     <f:formContainers>
                         <f:FormContainer>
                             <f:formElements>
-                             <f:FormElement label="{i18n>labelNome}">
+                             <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
-                                        <Input value="" id="formularionome"  />
+                                        <Input value="" id="formularionome"  required="true"  class="sapUiTinyMarginBegin"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelTipo}">
                                     <f:fields>
-                                        <Input value="" id="formulariotipo"  />
+                                        <Select
+                                            forceSelection="false"
+                                            selectedKey="{modeloTipoEquipamento>Tipo}"
+                                            items="{
+                                                path: '/modeloTipoEquipamento',
+                                                sorter: { path: 'Descricao' }
+                                            }"
+                                            id="formulariotipo"
+                                            required="true">
+                                            <core:Item key="{Tipo}" text="{Descricao}" />
+                                        </Select>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input value="" id="formularioquantidade"/>
+                                        <Input value="" id="formularioquantidade"  required="true"  class="sapUiTinyMarginBegin"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input value="" id="formulariodescricao" />
+                                        <Input value="" id="formulariodescricao"  required="true"  class="sapUiTinyMarginBegin"/>
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -54,8 +64,8 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnSalvar}" id="btnSalvarTelaCadastro" press="aoPrecionarSalvar"/>
-            <Button text="{i18n>btnCancelar}" id="btnCancelarTelaCadastro" press="aoPrecionarFechar"/>
+            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoPrecionarSalvar"/>
+            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoPrecionarFechar"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

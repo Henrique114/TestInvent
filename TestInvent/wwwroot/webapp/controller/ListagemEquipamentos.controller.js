@@ -107,6 +107,8 @@ sap.ui.define([
                 name: "ui5.testinvent.view.AdicionarEAtualizarEquipamento",
                 controller: this
             }).then((dialog) => {
+                this._carregarTiposEquipamento();
+                 dialog.setModel(this.getView().getModel("modeloTipoEquipamento")); 
                 this.getOwnerComponent().getModel("i18n").getResourceBundle();   
                 view.addDependent(dialog);
                 this.oDialog = dialog;
@@ -138,7 +140,23 @@ sap.ui.define([
             .catch(error => {
                 console.error('Erro ao salvar equipamento:', error);
             });
-        },       
+        },    
+        
+        _carregarTiposEquipamento: function() {
+                // Cria um modelo JSON com os tipos de equipamentos
+                var modeloTipoEquipamento = new sap.ui.model.json.JSONModel({
+                tipos: [
+                    { Tipo: "1", Descricao: "Notebook" },
+                    { Tipo: "2", Descricao: "Teclado" },
+                    { Tipo: "3", Descricao: "Mouse" },
+                    { Tipo: "4", Descricao: "Monitor" },
+                    { Tipo: "5", Descricao: "Headset" },
+                ],
+                tipoSelecionado: "Notebook" // ou um valor padrão como "notebook"
+            });
+
+            this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
+        },
 
         _mapearTipoDoEquipamneto: function(tipo) {
             var tipoS = "";
