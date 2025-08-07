@@ -46,10 +46,10 @@
                                                     sorter: { path: 'Descricao' }
                                                 }"
                                                 id="formulariotipo"
-                                                change="aoSelecionarTipo"
                                                 required="true"
-                                                >
-                                                <core:Item key="{modeloTipoEquipamento>tipos/Tipo}" text="{modeloTipoEquipamento>tipos/Descricao}" />
+                                                
+					                            >
+                                                <core:Item key="{modeloTipoEquipamento>Tipo}" text="{modeloTipoEquipamento>Descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>
@@ -65,7 +65,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/descricao}" 
+                                        <Input  value="{modeloEquipamento>/Descricao}" 
                                                 id="formulariodescricao"  
                                                 required="true"  
                                                 class="sapUiTinyMarginBegin"

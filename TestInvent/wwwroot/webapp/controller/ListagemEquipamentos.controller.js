@@ -127,6 +127,8 @@ sap.ui.define([
             debugger;
             const dialog = this.byId("idCadastroEAlterar");
             const dados = dialog.getModel("modeloEquipamento").getData();
+            const dadosTipo = dialog.getModel("modeloTipoEquipamento").getData();
+            dados.tipo = dadosTipo.tipoSelecionado; 
             console.log(dados);
             const url = `${ENDPOINT_BASE}/${dados.id || ''}`;
             const metodo = dados.id ? 'PUT' : 'POST';
@@ -149,13 +151,13 @@ sap.ui.define([
         
         _carregarTiposEquipamento: function() {
                 
-                var modeloTipoEquipamento = new sap.ui.model.json.JSONModel({
+                var modeloTipoEquipamento = new JSONModel({
                 tipos: [
-                    { Tipo: "1", Descricao: "Notebook" },
-                    { Tipo: "2", Descricao: "Teclado" },
-                    { Tipo: "3", Descricao: "Mouse" },
-                    { Tipo: "4", Descricao: "Monitor" },
-                    { Tipo: "5", Descricao: "Headset" },
+                    { Tipo: 1, Descricao: "Notebook" },
+                    { Tipo: 2, Descricao: "Teclado" },
+                    { Tipo: 3, Descricao: "Mouse" },
+                    { Tipo: 4, Descricao: "Monitor" },
+                    { Tipo: 5, Descricao: "Headset" },
                 ],
                 tipoSelecionado: "Notebook" 
             });
