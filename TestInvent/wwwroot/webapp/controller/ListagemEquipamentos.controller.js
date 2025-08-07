@@ -82,7 +82,7 @@ sap.ui.define([
         },
 
         aoIrParaNovoEquipamento: function() {
-         
+                   
             this.AoAbrirTelaDeNovoEquipamento();
            
         },
@@ -108,8 +108,9 @@ sap.ui.define([
                 name: "ui5.testinvent.view.AdicionarEAtualizarEquipamento",
                 controller: this
             }).then((dialog) => {
+
+                dialog.setModel(new JSONModel({}), "modeloEquipamento");
                 this._carregarTiposEquipamento();
-                console.log(this.getView().getModel("modeloTipoEquipamento").getData());
                 dialog.setModel(this.getView().getModel("modeloTipoEquipamento")); 
                 this.getOwnerComponent().getModel("i18n").getResourceBundle();   
                 view.addDependent(dialog);
@@ -123,8 +124,10 @@ sap.ui.define([
         },
 
         aoPrecionarSalvar: function(evento) {
+            debugger;
             const dialog = this.byId("idCadastroEAlterar");
-            const dados = dialog.getModel("modeloDialogo").getData();
+            const dados = dialog.getModel("modeloEquipamento").getData();
+            console.log(dados);
             const url = `${ENDPOINT_BASE}/${dados.id || ''}`;
             const metodo = dados.id ? 'PUT' : 'POST';
 
@@ -183,6 +186,21 @@ sap.ui.define([
                     tipoS = "Outros";
             }
             return tipoS;
+        }, 
+
+        aoSelecionarTipo: function (evento) {
+            const oSelectedItem = evento.getSource().getSelectedItem();
+            const sSelectedKey = evento.getSource().getSelectedKey();
+            const sSelectedText = oSelectedItem.getText();
+            console.log("Chave selecionada:", sSelectedKey);
+            console.log("Texto selecionado:", sSelectedText); 
+            console.log("Item selecionado:", oSelectedItem);  
+
+
+            const oText = this.getView().byId("selectedText");
+            oText.setText("Chave selecionada: " + sSelectedKey + ", Texto selecionado: " + sSelectedText);
+
+            MessageToast.show("Você selecionou: " + sSelectedText);
         }
 
         

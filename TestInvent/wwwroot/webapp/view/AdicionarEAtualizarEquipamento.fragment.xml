@@ -29,32 +29,47 @@
                             <f:formElements>
                              <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
-                                        <Input value="" id="formularionome"  required="true"  class="sapUiTinyMarginBegin"/>
+                                        <Input  value="{modeloEquipamento>/nome}" 
+                                                id="formularionome"  
+                                                required="true"  
+                                                class="sapUiTinyMarginBegin"
+                                                placeholder="Digite o nome do equipamento."/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelTipo}">
                                     <f:fields>
                                         <Select
-                                            forceSelection="false"
-                                            selectedKey="{modeloTipoEquipamento>/tipoSelecionado}"
-                                            items="{
-                                                path: 'modeloTipoEquipamento>/tipos',
-                                                sorter: { path: 'Descricao' }
-                                            }"
-                                            id="formulariotipo"
-                                            required="true">
-                                            <core:Item key="{modeloTipoEquipamento>Tipo}" text="{modeloTipoEquipamento>Descricao}" />
+                                                forceSelection="false"
+                                                selectedKey="{modeloTipoEquipamento>/tipoSelecionado}"
+                                                items="{
+                                                    path: 'modeloTipoEquipamento>/tipos',
+                                                    sorter: { path: 'Descricao' }
+                                                }"
+                                                id="formulariotipo"
+                                                change="aoSelecionarTipo"
+                                                required="true"
+                                                >
+                                                <core:Item key="{modeloTipoEquipamento>tipos/Tipo}" text="{modeloTipoEquipamento>tipos/Descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>
-                                <f:FormElement label="{i18n>labelQuantidade}">
+                                <f:FormElement  label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input value="" id="formularioquantidade"  required="true"  class="sapUiTinyMarginBegin"/>
+                                        <Input  value="{modeloEquipamento>/quantidadeEmEstoque}" 
+                                                id="formularioquantidade"  
+                                                required="true"  
+                                                class="sapUiTinyMarginBegin" 
+                                                type="Number" 
+                                                placeholder="Digite a quantidade."/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input value="" id="formulariodescricao"  required="true"  class="sapUiTinyMarginBegin"/>
+                                        <Input  value="{modeloEquipamento>/descricao}" 
+                                                id="formulariodescricao"  
+                                                required="true"  
+                                                class="sapUiTinyMarginBegin"
+                                                placeholder="Digite a quantidade."/>
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
