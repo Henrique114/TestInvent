@@ -1,4 +1,5 @@
-﻿
+﻿using static TestInvent.Models.Tipos;
+
 namespace TestInvent.Models
 {
     public class EquipamentoEletronicoModel : IEntity
@@ -19,17 +20,7 @@ namespace TestInvent.Models
         public bool TemEmEstoque { get { return QuantidadeEmEstoque > 0; } }
 
 
-        public enum Tipos
-        {
-
-            Notebook = 1,
-            Teclado = 2,
-            Mouse = 3,
-            Monitor = 4,
-            Headset = 5
-          
-
-        }
+       
 
 
 
