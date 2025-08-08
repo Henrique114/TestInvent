@@ -15,7 +15,8 @@
 				<Button
 					id="btnNovoEquipamento"
 					text="{i18n>btnNovoEquipamento}"
-					press=".aoIrParaNovoEquipamento"/>
+					press=".aoIrParaNovoEquipamento"
+					type="Ghost"/>
 			</contentRight>
         </Bar>
     </customHeader>
@@ -42,7 +43,8 @@
 						sorter : {
 							path : 'tipo',
 							group : true
-						} }">
+						}
+						 }">
 
 					<columns>
 						<Column
@@ -58,7 +60,7 @@
 						<Column>
 							<Text text="{i18n>dataInclusao}" wrapping="false"/>
 						</Column>
-						<Column>
+						<Column hAlign="End">
 							<Text text="{i18n>acoes}" wrapping="false"/>
 						</Column>
 					</columns>
@@ -79,7 +81,8 @@
 											
 										}
 								}"/>
-								<Button
+								<Button 
+									hAlign="End"
 									press=".aoIrParaEditarEquipamento"
 									icon="sap-icon://edit"
 									type="Emphasized"
