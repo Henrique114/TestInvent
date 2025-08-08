@@ -40,7 +40,7 @@ sap.ui.define([
                         //element.tipo = this._mapearTipoDoEquipamneto(element.tipo);
                     });
 
-                    console.log(dados);
+                    
 
                     const model = new JSONModel(dados);
                     this.getView().setModel(model, MODELO_EQUIPAMENTOS);
@@ -157,47 +157,48 @@ sap.ui.define([
             .then(dialog => {
                 this.oDialog.close();
             });
-        },    
-        
-        _carregarTiposEquipamento: function() {
-                
-                var modeloTipoEquipamento = new JSONModel({
-                tipos: [
-                    { tipo: 1, descricao: "Notebook" },
-                    { tipo: 2, descricao: "Teclado" },
-                    { tipo: 3, descricao: "Mouse" },
-                    { tipo: 4, descricao: "Monitor" },
-                    { tipo: 5, descricao: "Headset" },
-                ],
-                tipoSelecionado: "Notebook" 
-            });
-
-            this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
-        },
-
-        _mapearTipoDoEquipamneto: function(tipo) {
-            var tipoS = "";
-            switch (tipo) {
-                case 1:
-                    tipoS = "Notebook";
-                    break;
-                case 2:
-                    tipoS = "Teclado";
-                    break;
-                case 3:
-                    tipoS = "Mouse";
-                    break;
-                case 4:
-                    tipoS = "Monitor";
-                    break;
-                case 5:
-                    tipoS = "Headset";
-                    break;
-               
-                default:
-                    tipoS = "Outros";
-            }
-            return tipoS;
         }, 
+        
+         _carregarTiposEquipamento: function() {
+
+            let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
+
+            fetch(urlRequisicaoTiposEquipamento)
+                .then(response => response.json())
+                .then(dados => {
+                   
+                    const modeloTipoEquipamento = new JSONModel({dados, tipoSelecionado: "Notebook"});
+                    console.log(modeloTipoEquipamento);
+                    this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
+            })
+        },
+        
+        
+       
+
+        // _mapearTipoDoEquipamneto: function(tipo) {
+        //     var tipoS = "";
+        //     switch (tipo) {
+        //         case 1:
+        //             tipoS = "Notebook";
+        //             break;
+        //         case 2:
+        //             tipoS = "Teclado";
+        //             break;
+        //         case 3:
+        //             tipoS = "Mouse";
+        //             break;
+        //         case 4:
+        //             tipoS = "Monitor";
+        //             break;
+        //         case 5:
+        //             tipoS = "Headset";
+        //             break;
+               
+        //         default:
+        //             tipoS = "Outros";
+        //     }
+        //     return tipoS;
+        // }, 
    });
 });
