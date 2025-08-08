@@ -102,7 +102,6 @@ sap.ui.define([
 
          criarTelaDeNovoEquipamento: function(view) {
             
-            
             return Fragment.load({
                 id: view.getId(),
                 name: "ui5.testinvent.view.AdicionarEAtualizarEquipamento",
@@ -134,8 +133,6 @@ sap.ui.define([
                 quantidadeEmEstoque: parseInt(dados.quantidadeEmEstoque),
                 descricao: dados.descricao
             };
-
-            console.log(objeto)
 
             const url = `${ENDPOINT_BASE}`;
             const metodo = 'POST';
@@ -193,22 +190,5 @@ sap.ui.define([
             }
             return tipoS;
         }, 
-
-        aoSelecionarTipo: function (evento) {
-            const oSelectedItem = evento.getSource().getSelectedItem();
-            const sSelectedKey = evento.getSource().getSelectedKey();
-            const sSelectedText = oSelectedItem.getText();
-            console.log("Chave selecionada:", sSelectedKey);
-            console.log("Texto selecionado:", sSelectedText); 
-            console.log("Item selecionado:", oSelectedItem);  
-
-
-            const oText = this.getView().byId("selectedText");
-            oText.setText("Chave selecionada: " + sSelectedKey + ", Texto selecionado: " + sSelectedText);
-
-            MessageToast.show("Você selecionou: " + sSelectedText);
-        }
-
-        
    });
 });
