@@ -119,33 +119,37 @@ sap.ui.define([
             });
         },
 
-         aoPrecionarFechar: function(evento) {
-        this.oDialog.close();
+        aoPrecionarFechar: function(evento) {
+            this.oDialog.close();
         },
 
         aoPrecionarSalvar: function(evento) {
-            debugger;
             const dialog = this.byId("idCadastroEAlterar");
             const dados = dialog.getModel("modeloEquipamento").getData();
             const dadosTipo = dialog.getModel("modeloTipoEquipamento").getData();
-            dados.tipo = dadosTipo.tipoSelecionado; 
-            console.log(dados);
-            const url = `${ENDPOINT_BASE}/${dados.id || ''}`;
-            const metodo = dados.id ? 'PUT' : 'POST';
 
-            fetch(url, {
+            const objeto = {
+                nome: dados.nome,
+                tipo: parseInt(dadosTipo.tipoSelecionado),
+                quantidadeEmEstoque: parseInt(dados.quantidadeEmEstoque),
+                descricao: dados.descricao
+            };
+
+            console.log(objeto)
+
+            const url = `${ENDPOINT_BASE}`;
+            const metodo = 'POST';
+
+            const resposta = fetch(url, {
                 method: metodo,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dados)
+                body: JSON.stringify(objeto)
             })
-            .then(response => response.json())
-            .then(() => {
-                dialog.close();
-            })
-            .catch(error => {
-                console.error('Erro ao salvar equipamento:', error);
+            .then(resposta => resposta.json())
+            .then(dialog => {
+                this.oDialog.close();
             });
         },    
         
@@ -153,11 +157,11 @@ sap.ui.define([
                 
                 var modeloTipoEquipamento = new JSONModel({
                 tipos: [
-                    { Tipo: 1, Descricao: "Notebook" },
-                    { Tipo: 2, Descricao: "Teclado" },
-                    { Tipo: 3, Descricao: "Mouse" },
-                    { Tipo: 4, Descricao: "Monitor" },
-                    { Tipo: 5, Descricao: "Headset" },
+                    { tipo: 1, descricao: "Notebook" },
+                    { tipo: 2, descricao: "Teclado" },
+                    { tipo: 3, descricao: "Mouse" },
+                    { tipo: 4, descricao: "Monitor" },
+                    { tipo: 5, descricao: "Headset" },
                 ],
                 tipoSelecionado: "Notebook" 
             });
