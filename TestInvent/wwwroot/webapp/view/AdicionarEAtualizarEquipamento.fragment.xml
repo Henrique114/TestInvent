@@ -42,14 +42,14 @@
                                                 forceSelection="false"
                                                 selectedKey="{modeloTipoEquipamento>/tipoSelecionado}"
                                                 items="{
-                                                    path: 'modeloTipoEquipamento>/tipos',
+                                                    path: 'modeloTipoEquipamento>/dados',
                                                     sorter: { path: 'descricao' }
                                                 }"
                                                 id="formulariotipo"
                                                 required="true"
                                                 
 					                            >
-                                                <core:Item key="{modeloTipoEquipamento>tipo}" text="{modeloTipoEquipamento>descricao}" />
+                                                <core:Item key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>
