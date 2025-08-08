@@ -57,7 +57,7 @@ namespace TestInvent.Controllers
         [HttpGet("tipos")]
         public OkObjectResult PegarListaTiposEquipamento()
         {
-            var listaParaFrontEnd = ExtencoesEnum.CriarListaDeTiposParaSelectDoFormulario<Tipos>();
+            var listaParaFrontEnd = ExtencoesEnum.CriarListaDeTiposParaSelectDoFormulario<EnumeracaoTipos>();
 
             
             return Ok(listaParaFrontEnd);

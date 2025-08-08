@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 using TestInvent.Data;
 using TestInvent.Models;
 using TestInvent.Repositories;

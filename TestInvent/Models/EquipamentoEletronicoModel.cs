@@ -1,4 +1,4 @@
-﻿using static TestInvent.Models.Tipos;
+﻿using static TestInvent.Models.EnumeracaoTipos;
 
 namespace TestInvent.Models
 {
@@ -9,7 +9,7 @@ namespace TestInvent.Models
 
         public string? Nome { get; set; }
 
-       public Tipos? Tipo { get; set; }
+       public EnumeracaoTipos? Tipo { get; set; }
 
         public int? QuantidadeEmEstoque { get; set; }
 
