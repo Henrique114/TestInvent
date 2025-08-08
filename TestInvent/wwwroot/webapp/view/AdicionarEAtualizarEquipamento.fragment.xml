@@ -33,7 +33,7 @@
                                                 id="formularionome"  
                                                 required="true"  
                                                 class="sapUiTinyMarginBegin"
-                                                placeholder="Digite o nome do equipamento."/>
+                                                placeholder="{i18n>preencherNome}"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelTipo}">
@@ -60,7 +60,7 @@
                                                 required="true"  
                                                 class="sapUiTinyMarginBegin" 
                                                 type="Number" 
-                                                placeholder="Digite a quantidade."/>
+                                                placeholder="{i18n>preencherQuantidade}"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
@@ -69,7 +69,7 @@
                                                 id="formulariodescricao"  
                                                 required="true"  
                                                 class="sapUiTinyMarginBegin"
-                                                placeholder="Digite a quantidade."/>
+                                                placeholder="{i18n>preencherDescricao}"/>
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -79,8 +79,8 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoPrecionarSalvar"/>
-            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoPrecionarFechar"/>
+            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoPressionarSalvar"/>
+            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoPressionarFechar"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
