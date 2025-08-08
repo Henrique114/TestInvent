@@ -12,7 +12,7 @@ namespace TestInvent.Models
 
         public int? QuantidadeEmEstoque { get; set; }
 
-        public DateTimeOffset DataDeInclusao { get; set; }
+        public DateTimeOffset? DataDeInclusao { get; set; }
 
         public string? Descricao { get; set; }
 

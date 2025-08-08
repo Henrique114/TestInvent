@@ -123,25 +123,53 @@ sap.ui.define([
 
         aoPrecionarSalvar: function(evento) {
             const dialog = this.byId("idCadastroEAlterar");
-            const dados = dialog.getModel("modeloDialogo").getData();
-            const url = `${ENDPOINT_BASE}/${dados.id || ''}`;
+
+            const dados = dialog.getModel("modeloEquipamento").getData();
+            const dadosTipo = dialog.getModel("modeloTipoEquipamento").getData();
+
+            console.log(dadosTipo);
+
+            // Monta objeto manualmente para evitar campos indesejados
+            const objeto = {
+                nome: dados.nome,
+                tipo: parseInt(dadosTipo.tipoSelecionado),
+                quantidadeEmEstoque: parseInt(dados.quantidadeEmEstoque),
+                descricao: dados.descricao
+            };
+
+            console.log(objeto)
+
+            const url = `${ENDPOINT_BASE}${dados.id ? '/' + dados.id : ''}`;
             const metodo = dados.id ? 'PUT' : 'POST';
 
-            fetch(url, {
+            const resposta = fetch(url, {
                 method: metodo,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dados)
+                body: JSON.stringify(objeto)
             })
-            .then(response => response.json())
-            .then(() => {
+            .then(resposta => responseta.json())
+            .then(data => {
                 dialog.close();
-            })
-            .catch(error => {
-                console.error('Erro ao salvar equipamento:', error);
             });
-        },       
+        },
+   
+        _carregarTiposEquipamento: function() {
+                
+                var modeloTipoEquipamento = new JSONModel({
+                tipos: [
+                    { tipo: 1, descricao: "Notebook" },
+                    { tipo: 2, descricao: "Teclado" },
+                    { tipo: 3, descricao: "Mouse" },
+                    { tipo: 4, descricao: "Monitor" },
+                    { tipo: 5, descricao: "Headset" },
+                ],
+                tipoSelecionado: "Notebook" 
+            });
+
+            this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
+        },
 
         _mapearTipoDoEquipamneto: function(tipo) {
             var tipoS = "";

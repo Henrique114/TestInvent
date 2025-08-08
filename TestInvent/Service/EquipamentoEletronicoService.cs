@@ -31,6 +31,7 @@ namespace TestInvent.Service
 
         public void Adicionar(EquipamentoEletronicoModel equipamentoEletronico) 
         {
+            equipamentoEletronico.DataDeInclusao = DateTimeOffset.UtcNow;
             _validator.ValidateAndThrow(equipamentoEletronico); 
             _repository.Adicionar(equipamentoEletronico); 
         }
