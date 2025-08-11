@@ -5,14 +5,15 @@
 	xmlns:f="sap.ui.layout.form">
     <Dialog id="idCadastroEAlterar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
         <content>
-       	    <VBox class="sapUiSmallMargin">
+       	    <VBox >
                 <f:Form id="FormDisplayAddEdit"
-                    editable="false">
+                        editable="true"
+                        class="sapUiResponsiveMargin sapUiMediumMarginTop">
                     <f:layout>
                         <f:ResponsiveGridLayout
-                            labelSpanXL="3"
-                            labelSpanL="3"
-                            labelSpanM="3"
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
                             labelSpanS="12"
                             adjustLabelSpan="false"
                             emptySpanXL="4"
@@ -30,26 +31,26 @@
                              <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
                                         <Input  value="{modeloEquipamento>/nome}" 
+                                                name="nome" 
                                                 id="formularionome"  
                                                 required="true"  
-                                                class="sapUiTinyMarginBegin"
-                                                placeholder="{i18n>preencherNome}"/>
+                                                placeholder="{i18n>preencherNome}"
+                                                liveChange=".aoDigitar"
+                                                />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelTipo}">
                                     <f:fields>
                                         <Select
                                                 forceSelection="false"
-                                                selectedKey="{modeloTipoEquipamento>/tipoSelecionado}"
+                                                selectedKey="{modeloEquipamento>/tipo}"
                                                 items="{
-                                                    path: 'modeloTipoEquipamento>/dados',
+                                                    path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
                                                 }"
                                                 id="formulariotipo"
-                                                required="true"
-                                                
-					                            >
-                                                <core:Item key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
+                                                required="true">
+                                            <core:Item key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>
@@ -58,7 +59,6 @@
                                         <Input  value="{modeloEquipamento>/quantidadeEmEstoque}" 
                                                 id="formularioquantidade"  
                                                 required="true"  
-                                                class="sapUiTinyMarginBegin" 
                                                 type="Number" 
                                                 placeholder="{i18n>preencherQuantidade}"/>
                                     </f:fields>
@@ -67,8 +67,6 @@
                                     <f:fields>
                                         <Input  value="{modeloEquipamento>/descricao}" 
                                                 id="formulariodescricao"  
-                                                required="true"  
-                                                class="sapUiTinyMarginBegin"
                                                 placeholder="{i18n>preencherDescricao}"/>
                                     </f:fields>
                                 </f:FormElement>
