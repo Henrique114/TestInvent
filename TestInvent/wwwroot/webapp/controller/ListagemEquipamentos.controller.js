@@ -1,8 +1,10 @@
 sap.ui.define([
    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
-],(Controller, JSONModel, Fragment) => {
+    "sap/ui/core/Fragment", 
+    "../service/ServicoValidador",
+    "../formatter/formatter"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -15,6 +17,7 @@ sap.ui.define([
     const NOME_FRAGMENT_NOVO_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEAtualizarEquipamento";
     const ITEM_SELECIONADO_LISTA = "modeloDialogo";
     const NOVO_EQUIPAMENTO = "modeloEquipamento";
+    const MODELO_TIPO_EQUIPAMENTO = "modeloTipoEquipamento"; 
 
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
@@ -31,52 +34,67 @@ sap.ui.define([
         _obterDadosEquipamentos: function (nome = "") {
             
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
+            this._carregarTiposEquipamento();
 
             fetch(urlRequisicaoEquipamentos)
                 .then(response => response.json())
-                .then(dados => {
-                    dados.forEach(element => {
+                .then(equipamentos => {
+                    const dadosTipo = this.getView().getModel(MODELO_TIPO_EQUIPAMENTO).getData();
+
+                    equipamentos.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
-                        //element.tipo = this._mapearTipoDoEquipamneto(element.tipo);
+
+                       element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); //passa o que esta buscando e as opcoes
                     });
 
-                    
+                    console.log(equipamentos);
 
-                    const model = new JSONModel(dados);
+                    const model = new JSONModel(equipamentos);
+                   
                     this.getView().setModel(model, MODELO_EQUIPAMENTOS);
             })
                 
         },
 
-        aoFiltrarEquipamentos: function (event) 
-        {
+        // obterDescricaoDoEnum: function (tipo, dadosTipo) {
+        //     let objetoTipoEncontrado = dadosTipo.find(t => t.chave == tipo);
+
+        //     let apenasDescricao = objetoTipoEncontrado?.descricao;
+        //     const tipoNaoEncontrado = "Tipo não encontrado";
+
+        //     return apenasDescricao 
+        //                     ? apenasDescricao 
+        //                     : tipoNaoEncontrado; 
+        // },
+
+        aoFiltrarEquipamentos: function (event){
             const _query = event.getParameter("query");
             this._obterDadosEquipamentos(_query);
         },
         
-        aoIrParaDetalhes: function (event) {
-            
-            const equipamentoSelecionado = event.getSource().getBindingContext(MODELO_EQUIPAMENTOS).getObject();
-            const oModelEquipamento = new JSONModel(equipamentoSelecionado);
-            this.getView().setModel(oModelEquipamento, ITEM_SELECIONADO_LISTA);
+        aoIrParaDetalhes: function (event) {   
+            const equipamentoSelecionado = event
+                .getSource()
+                .getBindingContext(MODELO_EQUIPAMENTOS)
+                .getObject();
+
+            this.getView().setModel(new JSONModel(equipamentoSelecionado), ITEM_SELECIONADO_LISTA);
             this.AoAbrirTelaDeDetalhes();
         },
 
         AoAbrirTelaDeDetalhes: function() {
            var view = this.getView();
+           var id = this.byId(ID_TELA_DETALHES);
 
-            if (!this.byId(ID_TELA_DETALHES)) {
+            if (!id) {
                 this.criarTelaDeDetalhes(view)
-                .then((dialog) => {
-                    dialog.open();
-                });
+                    .then((dialog) => dialog.open());
             } else {
-                this.byId(ID_TELA_DETALHES).open();
+                id.open();
             }
         },
 
         criarTelaDeDetalhes: function(view) {
-          
             return Fragment.load({
                 id: view.getId(),
                 name: NOME_FRAGMENT_DETALHES,
@@ -90,36 +108,31 @@ sap.ui.define([
             });
         },
 
-        aoIrParaNovoEquipamento: function() {
-                   
-            this.AoAbrirTelaDeNovoEquipamento();
-           
+        aoIrParaNovoEquipamento: function() {           
+            this.AoAbrirTelaDeNovoEquipamento(); 
         },
 
          AoAbrirTelaDeNovoEquipamento: function() {
            var view = this.getView();
+           var id = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
 
-            if (!this.byId(ID_TELA_NOVO_EQUIPAMENTO)) {
+            if (!id) {
                 this.criarTelaDeNovoEquipamento(view)
-                .then((dialog) => {
-                    dialog.open();
-                });
+                    .then((dialog) => dialog.open());
             } else {
-                this.byId(ID_TELA_NOVO_EQUIPAMENTO).open();
+                id.open();
             }
         },
 
         criarTelaDeNovoEquipamento: function(view) {
-            
             return Fragment.load({
                 id: view.getId(),
                 name: NOME_FRAGMENT_NOVO_EQUIPAMENTO,
                 controller: this
             }).then((dialog) => {
-
                 dialog.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
                 this._carregarTiposEquipamento();
-                dialog.setModel(this.getView().getModel("modeloTipoEquipamento")); 
+                dialog.setModel(this.getView().getModel(MODELO_TIPO_EQUIPAMENTO)); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
                 view.addDependent(dialog);
                 this.oDialog = dialog;
@@ -127,78 +140,42 @@ sap.ui.define([
             });
         },
 
-        aoPressionarFechar: function(evento) {
+        aoPressionarFechar: function() {
             this.oDialog.close();
         },
 
-        aoPressionarSalvar: function(evento) {
+        aoPressionarSalvar: function() {
             const dialog = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
             const dados = dialog.getModel(NOVO_EQUIPAMENTO).getData();
-            const dadosTipo = dialog.getModel("modeloTipoEquipamento").getData();
 
-            const objeto = {
-                nome: dados.nome,
-                tipo: parseInt(dadosTipo.tipoSelecionado),
-                quantidadeEmEstoque: parseInt(dados.quantidadeEmEstoque),
-                descricao: dados.descricao
-            };
+            if (!ServicoValidador.validarFormulario.call(this)) {
+                return;
+            }
+            dados.tipo = parseInt(dados.tipo),
+            dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
 
             const url = `${ENDPOINT_BASE}`;
             const metodo = 'POST';
 
-            const resposta = fetch(url, {
+            fetch(url, {
                 method: metodo,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(objeto)
+                body: JSON.stringify(dados)
             })
-            .then(resposta => resposta.json())
-            .then(dialog => {
+            .then(() => {
+                this._obterDadosEquipamentos();
                 this.oDialog.close();
             });
         }, 
         
-         _carregarTiposEquipamento: function() {
-
+        _carregarTiposEquipamento: function() {
             let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
 
             fetch(urlRequisicaoTiposEquipamento)
                 .then(response => response.json())
-                .then(dados => {
-                   
-                    const modeloTipoEquipamento = new JSONModel({dados, tipoSelecionado: "Notebook"});
-                    console.log(modeloTipoEquipamento);
-                    this.getView().setModel(modeloTipoEquipamento, "modeloTipoEquipamento");
-            })
+                .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPO_EQUIPAMENTO))
         },
-        
-        
-       
-
-        // _mapearTipoDoEquipamneto: function(tipo) {
-        //     var tipoS = "";
-        //     switch (tipo) {
-        //         case 1:
-        //             tipoS = "Notebook";
-        //             break;
-        //         case 2:
-        //             tipoS = "Teclado";
-        //             break;
-        //         case 3:
-        //             tipoS = "Mouse";
-        //             break;
-        //         case 4:
-        //             tipoS = "Monitor";
-        //             break;
-        //         case 5:
-        //             tipoS = "Headset";
-        //             break;
-               
-        //         default:
-        //             tipoS = "Outros";
-        //     }
-        //     return tipoS;
-        // }, 
    });
 });
