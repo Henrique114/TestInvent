@@ -41,7 +41,7 @@
 					width="auto"
 					items="{ path: 'equipamentos>/',
 						sorter : {
-							path : 'tipo',
+							path : 'descricaoDoTipo',
 							group : true
 						}
 						 }">
