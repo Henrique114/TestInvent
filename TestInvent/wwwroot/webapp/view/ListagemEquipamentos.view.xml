@@ -13,10 +13,10 @@
             </contentLeft>
 			<contentRight>
 				<Button
-					id="btnNovoEquipamento"
-					text="{i18n>btnNovoEquipamento}"
+					id="btnAdicionarEquipamento"
+					text="{i18n>btnAdicionarEquipamento}"
 					press=".aoIrParaNovoEquipamento"
-					type="Ghost"/>
+					type="Emphasized"  />
 			</contentRight>
         </Bar>
     </customHeader>
@@ -29,68 +29,68 @@
 							width="50%"
 							search=".aoFiltrarEquipamentos"
 							id="inputFiltro"
-							class="leftAlignedSearch"/>
+							class="sapUiResponsiveMargin sapUiSizeCompact leftAlignedSearch"/>
 						<ToolbarSpacer/>
 					</Toolbar>
 				</headerToolbar>
-				<Table
-					id="listaEquipamentos"
-					headerText="{i18n>listPageTitle}"
-					class="sapUiResponsiveMargin sapUiSizeCompact"
-					inset="false"
-					width="auto"
-					items="{ path: 'equipamentos>/',
-						sorter : {
-							path : 'descricaoDoTipo',
-							group : true
-						}
-						 }">
-
-					<columns>
-						<Column
-							hAlign="End"
-							minScreenWidth="Small"
-							demandPopin="true"
-							width="8em">
-							<Text text="{i18n>colunaQuantidade}" wrapping="false"/>
-						</Column>
-						<Column>
-							<Text text="{i18n>colunaNome}" wrapping="false"/>
-						</Column>
-						<Column>
-							<Text text="{i18n>dataInclusao}" wrapping="false"/>
-						</Column>
-						<Column hAlign="End">
-							<Text text="{i18n>acoes}" wrapping="false"/>
-						</Column>
-					</columns>
-
-					<items>
-						<ColumnListItem
-							type="Active"
-							press=".aoIrParaDetalhes">
-							<cells>
-								<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
-								<Text text="{equipamentos>nome}" />
-								<Text
-									text="{
-										path: 'equipamentos>dataDeInclusao',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											style: 'short'
-											
-										}
-								}"/>
-								<Button 
-									press=".aoIrParaEditarEquipamento"
-									icon="sap-icon://edit"
-									type="Emphasized"
-									class="sapUiTinyMarginBegin"/>
-							</cells>
-						</ColumnListItem>
-					</items>
-				</Table>
 			</Panel>
+			<Table
+				id="listaEquipamentos"
+				headerText="{i18n>listPageTitle}"
+				class="sapUiResponsiveMargin sapUiSizeCompact"
+				inset="false"
+				width="auto"
+				items="{ path: 'equipamentos>/',
+					sorter : {
+						path : 'descricaoDoTipo',
+						group : true
+					}
+						}">
+
+				<columns>
+					<Column
+						hAlign="End"
+						minScreenWidth="Small"
+						demandPopin="true"
+						width="8em">
+						<Text text="{i18n>colunaQuantidade}" wrapping="false"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>colunaNome}" wrapping="false"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>dataInclusao}" wrapping="false"/>
+					</Column>
+					<Column hAlign="End">
+						<Text text="{i18n>acoes}" wrapping="false"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Active"
+						press=".aoIrParaDetalhes">
+						<cells>
+							<Text text="{equipamentos>quantidadeEmEstoque}" textAlign="End"/>
+							<Text text="{equipamentos>nome}" />
+							<Text
+								text="{
+									path: 'equipamentos>dataDeInclusao',
+									type: 'sap.ui.model.type.Date',
+									formatOptions: {
+										style: 'short'
+										
+									}
+							}"/>
+							<Button 
+								press=".aoIrParaEditarEquipamento"
+								icon="sap-icon://edit"
+								class="sapUiTinyMarginBegin"
+								type="Transparent"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
 		</content>
 	</Page>
 </mvc:View>
