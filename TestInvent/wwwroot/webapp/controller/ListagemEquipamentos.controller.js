@@ -24,7 +24,6 @@ sap.ui.define([
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
-        
         },
 
         _aoAcessarListar: function () {
@@ -32,7 +31,6 @@ sap.ui.define([
         },
 
         _obterDadosEquipamentos: function (nome = "") {
-            
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
             this._carregarTiposEquipamento();
 
@@ -43,29 +41,13 @@ sap.ui.define([
 
                     equipamentos.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
-
-                       element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); //passa o que esta buscando e as opcoes
+                       element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
                     });
 
-                    console.log(equipamentos);
-
                     const model = new JSONModel(equipamentos);
-                   
                     this.getView().setModel(model, MODELO_EQUIPAMENTOS);
             })
-                
         },
-
-        // obterDescricaoDoEnum: function (tipo, dadosTipo) {
-        //     let objetoTipoEncontrado = dadosTipo.find(t => t.chave == tipo);
-
-        //     let apenasDescricao = objetoTipoEncontrado?.descricao;
-        //     const tipoNaoEncontrado = "Tipo não encontrado";
-
-        //     return apenasDescricao 
-        //                     ? apenasDescricao 
-        //                     : tipoNaoEncontrado; 
-        // },
 
         aoFiltrarEquipamentos: function (event){
             const _query = event.getParameter("query");
@@ -87,9 +69,9 @@ sap.ui.define([
            var id = this.byId(ID_TELA_DETALHES);
 
             if (!id) {
-                this.criarTelaDeDetalhes(view)
+               return this.criarTelaDeDetalhes(view)
                     .then((dialog) => dialog.open());
-            } else {
+            }else{            
                 id.open();
             }
         },
@@ -112,14 +94,14 @@ sap.ui.define([
             this.AoAbrirTelaDeNovoEquipamento(); 
         },
 
-         AoAbrirTelaDeNovoEquipamento: function() {
+        AoAbrirTelaDeNovoEquipamento: function() {
            var view = this.getView();
            var id = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
 
             if (!id) {
-                this.criarTelaDeNovoEquipamento(view)
+                return this.criarTelaDeNovoEquipamento(view)
                     .then((dialog) => dialog.open());
-            } else {
+            } else{
                 id.open();
             }
         },
@@ -151,24 +133,29 @@ sap.ui.define([
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
+
             dados.tipo = parseInt(dados.tipo),
             dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
-
-            const url = `${ENDPOINT_BASE}`;
-            const metodo = 'POST';
-
-            fetch(url, {
-                method: metodo,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            })
+          
+            this._salvarEquipamento(dados)
             .then(() => {
                 this._obterDadosEquipamentos();
                 this.oDialog.close();
             });
         }, 
+
+        _salvarEquipamento: function(dados) {
+            const url = `${ENDPOINT_BASE}`;
+            const metodo = 'POST';
+
+            return fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+        },
         
         _carregarTiposEquipamento: function() {
             let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
