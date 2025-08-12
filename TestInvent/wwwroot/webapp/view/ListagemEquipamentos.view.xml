@@ -24,7 +24,6 @@
 			<Panel accessibleRole="Region">
 				<headerToolbar>
 					<Toolbar>
-						
 						<SearchField 
 							width="50%"
 							search=".aoFiltrarEquipamentos"
@@ -46,7 +45,6 @@
 						group : true
 					}
 						}">
-
 				<columns>
 					<Column
 						hAlign="End"
@@ -65,7 +63,6 @@
 						<Text text="{i18n>acoes}" wrapping="false"/>
 					</Column>
 				</columns>
-
 				<items>
 					<ColumnListItem
 						type="Active"
