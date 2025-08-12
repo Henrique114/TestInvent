@@ -14,7 +14,7 @@
 			<contentRight>
 				<Button
 					id="btnNovoEquipamentoPgDetalhes"
-					text="{i18n>btnEditarEquipamento}"
+					icon="sap-icon://edit"
 					press=".aoIrParaEditarEquipamento"/>
 			</contentRight>
         </Bar>
@@ -44,7 +44,7 @@
                             <f:formElements>
                                 <f:FormElement label="Tipo">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/tipo}" id="nameText"  />
+                                        <Text text="{modeloDialogo>/descricaoDoTipo}" id="nameText"  />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>tituloquantidade}">
