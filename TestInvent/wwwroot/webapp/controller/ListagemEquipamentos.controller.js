@@ -81,13 +81,17 @@ sap.ui.define([
                 id: view.getId(),
                 name: NOME_FRAGMENT_DETALHES,
                 controller: this
-            }).then((dialog) => {
-                dialog.setModel(); 
+            }).then((dialogDetalhes) => {
+                dialogDetalhes.setModel(); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                view.addDependent(dialog);
-                this.oDialog = dialog;
-                return dialog;
+                view.addDependent(dialogDetalhes);
+                this.oDialogDetalhes = dialogDetalhes;
+                return dialogDetalhes;
             });
+        },
+        
+        aoPressionarFecharDetalhes: function() {
+            this.oDialogDetalhes.close();
         },
 
         aoIrParaNovoEquipamento: function() {           
@@ -122,9 +126,10 @@ sap.ui.define([
             });
         },
 
-        aoPressionarFechar: function() {
+         aoPressionarFechar: function() {
             this.oDialog.close();
         },
+
 
         aoPressionarSalvar: function() {
             const dialog = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
