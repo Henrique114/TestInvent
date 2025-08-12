@@ -31,7 +31,6 @@ sap.ui.define([
                 this.byId(campo.id).setValueState(ValueState.None);
             });
 
-            // Se houver mensagens de erro, exibir um alerta
             if (mensagensErros.length > 0) {
 
                 return false;
