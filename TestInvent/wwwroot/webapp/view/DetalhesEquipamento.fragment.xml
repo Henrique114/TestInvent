@@ -80,7 +80,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPressionarFechar"/>
+            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
