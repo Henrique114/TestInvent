@@ -106,6 +106,7 @@ sap.ui.define([
                 return this.criarTelaDeNovoEquipamento(view)
                     .then((dialog) => dialog.open());
             } else{
+                id.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
                 id.open();
             }
         },
