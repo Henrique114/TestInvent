@@ -29,7 +29,7 @@
 							width="50%"
 							search=".aoFiltrarEquipamentos"
 							id="inputFiltro"
-							class="sapUiResponsiveMargin sapUiSizeCompact leftAlignedSearch"/>
+							class="sapUiSizeCompact leftAlignedSearch"/>
 						<ToolbarSpacer/>
 					</Toolbar>
 				</headerToolbar>
@@ -37,7 +37,7 @@
 			<Table
 				id="listaEquipamentos"
 				headerText="{i18n>listPageTitle}"
-				class="sapUiResponsiveMargin sapUiSizeCompact"
+				class="sapUiSizeCompact"
 				inset="false"
 				width="auto"
 				items="{ path: 'equipamentos>/',
