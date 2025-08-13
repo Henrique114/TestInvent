@@ -30,7 +30,7 @@
                             <f:formElements>
                              <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/nome}" 
+                                        <Input  value="{equipamentoSelecionadoLista>/nome}" 
                                                 name="nome" 
                                                 id="formularionome"  
                                                 required="true"  
@@ -43,7 +43,7 @@
                                     <f:fields>
                                         <Select
                                                 forceSelection="false"
-                                                selectedKey="{modeloEquipamento>/tipo}"
+                                                selectedKey="{equipamentoSelecionadoLista>/tipo}"
                                                 items="{
                                                     path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
@@ -56,7 +56,7 @@
                                 </f:FormElement>
                                 <f:FormElement  label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/quantidadeEmEstoque}" 
+                                        <Input  value="{equipamentoSelecionadoLista>/quantidadeEmEstoque}" 
                                                 id="formularioquantidade"  
                                                 required="true"  
                                                 type="Number" 
@@ -65,7 +65,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/descricao}" 
+                                        <Input  value="{equipamentoSelecionadoLista>/descricao}" 
                                                 id="formulariodescricao"  
                                                 placeholder="{i18n>preencherDescricao}"/>
                                     </f:fields>
