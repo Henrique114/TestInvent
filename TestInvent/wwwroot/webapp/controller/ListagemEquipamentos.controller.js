@@ -101,39 +101,52 @@ sap.ui.define([
             if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
                 this.dialogDetalhes.close();
             }
-            debugger
-            console.log("Evento: ", evento);
-            let idEquipamento;
+            
+            let idEquipamento = null;
             if ( evento.getSource().getBindingContext()) {
                 idEquipamento = evento.getSource()
                     .getBindingContext(MODELO_EQUIPAMENTOS)
                     .getObject().id;
             }
 
-            const modeloDialogo = this.getView().getModel(ITEM_SELECIONADO_LISTA);
-            if (modeloDialogo) {
-                idEquipamento = modeloDialogo.getData().id;
+            const equipamentoSelecionadoLista = this.getView().getModel(ITEM_SELECIONADO_LISTA);
+            if (equipamentoSelecionadoLista) {
+                idEquipamento = equipamentoSelecionadoLista.getData().id;
+
             }
             
-            
+            debugger;
             this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
         },
 
         _AbrirTelaAdicionarEEditarEquipamento: function(idEquipamento) {
            var view = this.getView();
            var dialogAdicionarEditar = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
+           let dadosEquipamento = {};
 
             if (!dialogAdicionarEditar) {
                  this._criarTelaAdicionarEEditarEquipamento(view)
-                    .then((dialogAdicionarEditarp) => dialogAdicionarEditarp.open());
+                    .then((dialogAdicionarEditar) => dialogAdicionarEditar.open());
             } else{
-                dialogAdicionarEditar.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
-                dialogAdicionarEditar.open();
+                dialogAdicionarEditar.setModel(new JSONModel(dadosEquipamento), NOVO_EQUIPAMENTO);
+                
             }
-
+            // Se houver um ID, carrega os dados para edição
             if (idEquipamento) {
-                this._carregarEquipamentoParaEdicao(idEquipamento);
+                try {
+                    dadosEquipamento =  this._carregarEquipamentoParaEdicao(idEquipamento);
+                    dialogAdicionarEditar.setModel(new JSONModel(dadosEquipamento), NOVO_EQUIPAMENTO);
+                } catch (error) {
+                    // Trata erros, como exibir uma mensagem para o usuário
+                    console.error("Erro ao carregar equipamento:", error);
+                }
             }
+            
+            
+
+            // Abre o diálogo
+            //dialog.open();
+        
         },
 
         _criarTelaAdicionarEEditarEquipamento: function(view) {
@@ -161,7 +174,6 @@ sap.ui.define([
                     modelo.setData(dados);
                     modelo.refresh(true);
                 });
-
         },
 
         aoPressionarSalvar: function() {
@@ -181,7 +193,6 @@ sap.ui.define([
 
             });
         }, 
-        
         
         _carregarTiposEquipamento: function() {
             let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
