@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialog" afterClose="onDialogClose" >
+    <Dialog id="idDialogDetalhes" afterClose="onDialogClose" >
     <customHeader>
         <Bar>
             <contentLeft>
@@ -13,7 +13,7 @@
             </contentLeft>
 			<contentRight>
 				<Button
-					id="btnNovoEquipamentoPgDetalhes"
+					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
 					press=".aoIrParaAdicionarEEditarEquipamento"/>
 			</contentRight>
@@ -42,7 +42,7 @@
                     <f:formContainers>
                         <f:FormContainer>
                             <f:formElements>
-                                <f:FormElement label="Tipo">
+                                <f:FormElement label="{i18n>tipo}">
                                     <f:fields>
                                         <Text text="{modeloDialogo>/descricaoDoTipo}" id="nameText"  />
                                     </f:fields>
