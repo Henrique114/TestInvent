@@ -15,7 +15,7 @@
 				<Button
 					id="btnNovoEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoIrParaEditarEquipamento"/>
+					press=".aoIrParaAdicionarEEditarEquipamento"/>
 			</contentRight>
         </Bar>
     </customHeader>

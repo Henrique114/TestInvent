@@ -94,24 +94,39 @@ sap.ui.define([
             this.oDialogDetalhes.close();
         },
 
-        aoIrParaNovoEquipamento: function() {           
-            this.AoAbrirTelaDeNovoEquipamento(); 
+        aoIrParaAdicionarEEditarEquipamento: function(evento) { 
+            const idEquipamento = evento.getSource()
+                        .getBindingContext(MODELO_EQUIPAMENTOS)
+                        .getObject().id;
+                         console.log(idEquipamento);
+
+                        
+                        
+
+            this.AoAbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
         },
 
-        AoAbrirTelaDeNovoEquipamento: function() {
+        AoAbrirTelaAdicionarEEditarEquipamento: function(idEquipamento) {
            var view = this.getView();
            var id = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
 
+           console.log(idEquipamento, id ,);
+           debugger;
+
             if (!id) {
-                return this.criarTelaDeNovoEquipamento(view)
+                 this.criarTelaAdicionarEEditarEquipamento(view)
                     .then((dialog) => dialog.open());
             } else{
                 id.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
                 id.open();
             }
+
+            if (idEquipamento) {
+                this._carregarEquipamentoParaEdicao(idEquipamento);
+            }
         },
 
-        criarTelaDeNovoEquipamento: function(view) {
+        criarTelaAdicionarEEditarEquipamento: function(view) {
             return Fragment.load({
                 id: view.getId(),
                 name: NOME_FRAGMENT_NOVO_EQUIPAMENTO,
@@ -127,33 +142,57 @@ sap.ui.define([
             });
         },
 
-         aoPressionarFechar: function() {
-            this.oDialog.close();
-        },
+        _carregarEquipamentoParaEdicao: function(idEquipamento) {
+            const url = `${ENDPOINT_BASE}/${idEquipamento}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(dados => {
+                    const modelo = this.byId(ID_TELA_NOVO_EQUIPAMENTO).getModel(NOVO_EQUIPAMENTO);
+                    modelo.setData(dados);
+                    modelo.refresh(true);
+                });
 
+        },
 
         aoPressionarSalvar: function() {
             const dialog = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
             const dados = dialog.getModel(NOVO_EQUIPAMENTO).getData();
-
+            
+            
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
-
+            
             dados.tipo = parseInt(dados.tipo),
             dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
-          
+            
             this._salvarEquipamento(dados)
             .then(() => {
                 this._obterDadosEquipamentos();
                 this.oDialog.close();
             });
         }, 
-
+        
+        
+        _carregarTiposEquipamento: function() {
+            let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
+            
+            fetch(urlRequisicaoTiposEquipamento)
+            .then(response => response.json())
+            .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPO_EQUIPAMENTO))
+        },
+        
         _salvarEquipamento: function(dados) {
-            const url = `${ENDPOINT_BASE}`;
-            const metodo = 'POST';
+            let url = `${ENDPOINT_BASE}`;
+            let metodo = 'POST';
+            const idEquipamento = dados.id;
 
+            if (idEquipamento) {
+                debugger;
+                url =  `${url}/${idEquipamento}`;
+                metodo = 'PUT';
+            }
+            
             return fetch(url, {
                 method: metodo,
                 headers: {
@@ -163,12 +202,8 @@ sap.ui.define([
             });
         },
         
-        _carregarTiposEquipamento: function() {
-            let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
-
-            fetch(urlRequisicaoTiposEquipamento)
-                .then(response => response.json())
-                .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPO_EQUIPAMENTO))
+        aoPressionarFechar: function() {
+           this.oDialog.close();
         },
-   });
+    });
 });

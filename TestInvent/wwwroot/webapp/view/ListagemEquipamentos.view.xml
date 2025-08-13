@@ -15,7 +15,7 @@
 				<Button
 					id="btnAdicionarEquipamento"
 					text="{i18n>btnAdicionarEquipamento}"
-					press=".aoIrParaNovoEquipamento"
+					press=".aoIrParaAdicionarEEditarEquipamento"
 					type="Emphasized"  />
 			</contentRight>
         </Bar>
@@ -80,7 +80,7 @@
 									}
 							}"/>
 							<Button 
-								press=".aoIrParaEditarEquipamento"
+								press=".aoIrParaAdicionarEEditarEquipamento"
 								icon="sap-icon://edit"
 								class="sapUiTinyMarginBegin"
 								type="Transparent"/>
