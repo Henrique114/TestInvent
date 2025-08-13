@@ -15,8 +15,9 @@ sap.ui.define([
     const ID_TELA_NOVO_EQUIPAMENTO = "idCadastroEAlterar";
     const NOME_FRAGMENT_DETALHES = "ui5.testinvent.view.DetalhesEquipamento";
     const NOME_FRAGMENT_NOVO_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEditarEquipamento";
-    const ITEM_SELECIONADO_LISTA = "modeloDialogo";
-    const NOVO_EQUIPAMENTO = "modeloEquipamento";
+    const ITEM_SELECIONADO_LISTA = "equipamentoSelecionadoLista";
+    const EQUIPAMENTO_EDITAR = "equipamentoEditar";
+    const NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TIPO_EQUIPAMENTO = "modeloTipoEquipamento"; 
 
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
@@ -176,7 +177,7 @@ sap.ui.define([
             this._salvarEquipamento(dados)
             .then(() => {
                 this._obterDadosEquipamentos();
-                this.dialogAdicionarEditar.close();
+                this.dialogAdicionarEditar.destroy();
 
             });
         }, 
@@ -210,7 +211,6 @@ sap.ui.define([
         },
         
         aoPressionarFecharTelaAdicionarEditar: function() {
-            
            this.dialogAdicionarEditar.close();
         },
     });
