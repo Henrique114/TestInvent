@@ -15,7 +15,11 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoIrParaAdicionarEEditarEquipamento"/>
+					press=".aoPressionarEditar">
+                    <customData>
+                        <core:CustomData key="itemId" value="{equipamentoSelecionadoLista>/id}" />
+                        </customData>
+                </Button>
 			</contentRight>
         </Bar>
     </customHeader>
@@ -49,7 +53,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>tituloquantidade}">
                                     <f:fields>
-                                        <Text text="{equipamentoSelecionadoLista>/quantidadeEmEstoque} {i18n>unidade}" />
+                                        <Text text="{equipamentoSelecionadoLista>/quantidadeEmEstoque} {i18n>unidade}"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
