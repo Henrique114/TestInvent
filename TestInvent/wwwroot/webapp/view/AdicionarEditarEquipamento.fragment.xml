@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idCadastroEAlterar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
+    <Dialog id="idAdicionarEditar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
         <content>
        	    <VBox >
                 <f:Form id="FormDisplayAddEdit"
@@ -30,7 +30,7 @@
                             <f:formElements>
                              <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
-                                        <Input  value="{equipamentoSelecionadoLista>/nome}" 
+                                        <Input  value="{novoEquipamento>/nome}" 
                                                 name="nome" 
                                                 id="formularionome"  
                                                 required="true"  
@@ -43,7 +43,7 @@
                                     <f:fields>
                                         <Select
                                                 forceSelection="false"
-                                                selectedKey="{equipamentoSelecionadoLista>/tipo}"
+                                                selectedKey="{novoEquipamento>/tipo}"
                                                 items="{
                                                     path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
@@ -56,7 +56,7 @@
                                 </f:FormElement>
                                 <f:FormElement  label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input  value="{equipamentoSelecionadoLista>/quantidadeEmEstoque}" 
+                                        <Input  value="{novoEquipamento>/quantidadeEmEstoque}" 
                                                 id="formularioquantidade"  
                                                 required="true"  
                                                 type="Number" 
@@ -65,7 +65,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input  value="{equipamentoSelecionadoLista>/descricao}" 
+                                        <Input  value="{novoEquipamento>/descricao}" 
                                                 id="formulariodescricao"  
                                                 placeholder="{i18n>preencherDescricao}"/>
                                     </f:fields>
