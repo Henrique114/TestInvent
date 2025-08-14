@@ -17,7 +17,7 @@
 					icon="sap-icon://edit"
 					press=".aoPressionarEditar">
                     <customData>
-                        <core:CustomData key="itemId" value="{equipamentoSelecionadoLista>/id}" />
+                        <core:CustomData key="itemIdE" value="{equipamentoSelecionadoLista>/id}" />
                         </customData>
                 </Button>
                 <Button 
@@ -28,7 +28,7 @@
                     type="Transparent"
                     >
                     <customData>
-                        <core:CustomData key="itemId" value="{equipamentos>id}" />
+                        <core:CustomData key="itemIdD" value="{equipamentoSelecionadoLista>/id}" />
                     </customData>
                 </Button>
 			</contentRight>

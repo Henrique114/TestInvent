@@ -59,11 +59,8 @@
 					<Column>
 						<Text text="{i18n>dataInclusao}" wrapping="false"/>
 					</Column>
-					<Column >
-						<Text  wrapping="false"/>
-					</Column>
-					<Column >
-						<Text  wrapping="false"/>
+					<Column hAlign="End">
+						<Text text="{i18n>acoes}" wrapping="false" />
 					</Column>
 				</columns>
 				<items>
@@ -82,29 +79,27 @@
 										
 									}
 							}"/>
-							<Button 
-								id= "btnEditarLinhaListaEquipamento"
-								press=".aoPressionarEditar"
-								icon="sap-icon://edit"
-								class=""
-								type="Transparent">
-								<customData>
-									<core:CustomData key="itemId" value="{equipamentos>id}" />
-								</customData>
-							</Button>
-							<Button 
-								id= "btnDeletarLinhaListaEquipamento"
-								press=".aoPressionarDeletar"
-								icon="sap-icon://delete"
-								class=""
-								type="Transparent"
-								ariaDescribedBy="rejectButtonDescription genericButtonDescription"
-								
-								>
-								<customData>
-									<core:CustomData key="itemId" value="{equipamentos>id}" />
-								</customData>
-							</Button>
+							<HBox justifyContent="End">
+								<Button 
+									id="btnEditarLinhaListaEquipamento"
+									press=".aoPressionarEditar"
+									icon="sap-icon://edit"
+									type="Transparent">
+									<customData>
+										<core:CustomData key="itemId" value="{equipamentos>id}" />
+									</customData>
+								</Button>
+								<Button 
+									id="btnDeletarLinhaListaEquipamento"
+									press=".aoPressionarDeletar"
+									icon="sap-icon://delete"
+									type="Transparent"
+									ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+									<customData>
+										<core:CustomData key="itemId" value="{equipamentos>id}" />
+									</customData>
+								</Button>
+							</HBox>
 						</cells>
 					</ColumnListItem>
 				</items>
