@@ -116,15 +116,13 @@ sap.ui.define([
                                 .getValue();
             }
 
-                     this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
+            this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
         },
 
         _AbrirTelaAdicionarEEditarEquipamento: function(idEquipamento) {
            var view = this.getView();
            var dialogAdicionarEditar = this.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
            
-
-           debugger;
             if (!dialogAdicionarEditar) {
                  this._criarTelaAdicionarEEditarEquipamento(view)
                     .then((dialogAdicionarEditar) => dialogAdicionarEditar.open());
@@ -134,20 +132,15 @@ sap.ui.define([
                 dialogAdicionarEditar.open();
                 
             }
-            // Se houver um ID, carrega os dados para edição
             if (idEquipamento) {
                 try {
                     let dadosEquipamento =  this._carregarEquipamentoParaEdicao(idEquipamento)
                     .then(() => dialogAdicionarEditar.setModel(new JSONModel({dadosEquipamento}), MODELO_NOVO_EQUIPAMENTO) );
                     
                 } catch (error) {
-                    // Trata erros, como exibir uma mensagem para o usuário
                     console.error("Erro ao carregar equipamento:", error);
                 }
             }
-            
-           
-        
         },
 
         _criarTelaAdicionarEEditarEquipamento: function(view) {
