@@ -59,8 +59,11 @@
 					<Column>
 						<Text text="{i18n>dataInclusao}" wrapping="false"/>
 					</Column>
-					<Column hAlign="End">
-						<Text text="{i18n>acoes}" wrapping="false"/>
+					<Column >
+						<Text  wrapping="false"/>
+					</Column>
+					<Column >
+						<Text  wrapping="false"/>
 					</Column>
 				</columns>
 				<items>
@@ -83,12 +86,25 @@
 								id= "btnEditarLinhaListaEquipamento"
 								press=".aoPressionarEditar"
 								icon="sap-icon://edit"
-								class="sapUiTinyMarginBegin"
+								class=""
 								type="Transparent">
 								<customData>
 									<core:CustomData key="itemId" value="{equipamentos>id}" />
-									</customData>
-								</Button>
+								</customData>
+							</Button>
+							<Button 
+								id= "btnDeletarLinhaListaEquipamento"
+								press=".aoPressionarDeletar"
+								icon="sap-icon://delete"
+								class=""
+								type="Transparent"
+								ariaDescribedBy="rejectButtonDescription genericButtonDescription"
+								
+								>
+								<customData>
+									<core:CustomData key="itemId" value="{equipamentos>id}" />
+								</customData>
+							</Button>
 						</cells>
 					</ColumnListItem>
 				</items>

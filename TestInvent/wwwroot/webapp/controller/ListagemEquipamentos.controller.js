@@ -3,8 +3,11 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment", 
     "../service/ServicoValidador",
-    "../formatter/formatter"
-],(Controller, JSONModel, Fragment, ServicoValidador, formatter) => {
+    "../formatter/formatter",
+    "sap/m/MessageToast",
+    "sap/m/Dialog",
+	"sap/m/Button"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter, MessageToast, Dialog, Button) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -219,5 +222,88 @@ sap.ui.define([
         aoPressionarFecharTelaAdicionarEditar: function() {
            this.dialogAdicionarEditar.close();
         },
+
+        aoPressionarDeletar: function(evento){
+             let idEquipamento = null;
+            
+            if ( evento.getSource().getCustomData()) {
+               
+                idEquipamento = evento
+                                .getSource()
+                                .getCustomData()[0]
+                                .getValue();
+            }
+
+            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
+
+            // this._deletarEquipamento(idEquipamento) 
+            //     .then(() => {
+            //         this._obterDadosEquipamentos();
+            //         MessageToast.show("Equipamento deletado!");
+                    
+            // });
+
+            if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
+                this.dialogDetalhes.close();
+            }
+        },
+
+        _abrirConfirmcaoDeletarEquipamento: function(idEquipamento){
+
+            	let dialogConfitmacaoDeletarEquipamento = new Dialog({
+				resizable: true,
+				content: this.oMessageView,
+				state: 'Warning',
+				beginButton: new Button({
+					press: function () {
+						this.getParent().close();
+					},
+					text: "Close"
+				}),
+                endButton: new Button({
+					press: function () {
+                        this._deletarEquipamento(idEquipamento) 
+                            .then(() => {
+                            this._obterDadosEquipamentos();
+                            MessageToast.show("Equipamento deletado!");
+                            });
+						this.getParent().close();
+					},
+					text: "Confirmar"
+				}),
+				customHeader: new Bar({
+					contentLeft: [oBackButton],
+					contentMiddle: [
+						new Title({
+							text: "Messages",
+							level: TitleLevel.H1
+						})
+					]
+				}),
+				contentHeight: "50%",
+				contentWidth: "50%",
+				verticalScrolling: false
+			});
+
+			dialogConfitmacaoDeletarEquipamento.open();
+
+		},
+
+        _deletarEquipamento: function(id){
+            let url = `${ENDPOINT_BASE}/${id}`;
+            let metodo = 'DELETE';
+            
+
+            return fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+        }
+
+
+
+        
     });
 });

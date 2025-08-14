@@ -20,6 +20,17 @@
                         <core:CustomData key="itemId" value="{equipamentoSelecionadoLista>/id}" />
                         </customData>
                 </Button>
+                <Button 
+                    id= "btnDeletarDetalhesEquipamento"
+                    press=".aoPressionarDeletar"
+                    icon="sap-icon://delete"
+                    class="sapUiTinyMarginBegin"
+                    type="Transparent"
+                    >
+                    <customData>
+                        <core:CustomData key="itemId" value="{equipamentos>id}" />
+                    </customData>
+                </Button>
 			</contentRight>
         </Bar>
     </customHeader>
