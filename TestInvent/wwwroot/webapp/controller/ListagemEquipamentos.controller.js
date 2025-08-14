@@ -9,17 +9,16 @@ sap.ui.define([
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
-    const MODELO_EQUIPAMENTOS = "equipamentos";
-    const MODELO_TRADUCAO = "i18n";
-    const ID_TELA_DETALHES = "idDialogDetalhes";
-    const ID_TELA_NOVO_EQUIPAMENTO = "idCadastroEAlterar";
+    const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
+    const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
     const NOME_FRAGMENT_DETALHES = "ui5.testinvent.view.DetalhesEquipamento";
-    const NOME_FRAGMENT_NOVO_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEditarEquipamento";
-    const ITEM_SELECIONADO_LISTA = "equipamentoSelecionadoLista";
-    const EQUIPAMENTO_EDITAR = "equipamentoEditar";
-    const NOVO_EQUIPAMENTO = "novoEquipamento";
-    const MODELO_TIPO_EQUIPAMENTO = "modeloTipoEquipamento"; 
-
+    const NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEditarEquipamento";
+    const MODELO_EQUIPAMENTOS_LISTAGEM = "equipamentos";
+    const MODELO_EQUIPAMENTO_SELECIONADO_LISTA = "equipamentoSelecionadoLista";
+    const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento"; 
+    const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
+    const MODELO_TRADUCAO = "i18n";
+    
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
@@ -38,7 +37,7 @@ sap.ui.define([
             fetch(urlRequisicaoEquipamentos)
                 .then(response => response.json())
                 .then(equipamentos => {
-                    const dadosTipo = this.getView().getModel(MODELO_TIPO_EQUIPAMENTO).getData();
+                    const dadosTipo = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
 
                     equipamentos.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
@@ -46,7 +45,7 @@ sap.ui.define([
                     });
 
                     const model = new JSONModel(equipamentos);
-                    this.getView().setModel(model, MODELO_EQUIPAMENTOS);
+                    this.getView().setModel(model, MODELO_EQUIPAMENTOS_LISTAGEM);
             })
         },
 
@@ -59,16 +58,16 @@ sap.ui.define([
 
             const equipamentoSelecionado = evento
                 .getSource()
-                .getBindingContext(MODELO_EQUIPAMENTOS)
+                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
                 .getObject();
 
-            this.getView().setModel(new JSONModel(equipamentoSelecionado), ITEM_SELECIONADO_LISTA);
+            this.getView().setModel(new JSONModel(equipamentoSelecionado), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
             this._AbrirTelaDeDetalhes();
         },
 
         _AbrirTelaDeDetalhes: function() {
            var view = this.getView();
-           var dialogDetalhes = this.byId(ID_TELA_DETALHES);
+           var dialogDetalhes = this.byId(ID_DETALHES_EQUIPAMENTO);
 
             if (!dialogDetalhes) {
                return this._criarTelaDeDetalhes(view)
@@ -96,68 +95,70 @@ sap.ui.define([
             this.dialogDetalhes.close();
         },
 
-        aoIrParaAdicionarEEditarEquipamento: function(evento) { 
+        aoPressionarAdicionarEquipamento: function() {
+
+            this._AbrirTelaAdicionarEEditarEquipamento(null);
+        },
+
+        aoPressionarEditar: function(evento) { 
 
             if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
                 this.dialogDetalhes.close();
             }
             
             let idEquipamento = null;
-            if ( evento.getSource().getBindingContext()) {
-                idEquipamento = evento.getSource()
-                    .getBindingContext(MODELO_EQUIPAMENTOS)
-                    .getObject().id;
-            }
-
-            const equipamentoSelecionadoLista = this.getView().getModel(ITEM_SELECIONADO_LISTA);
-            if (equipamentoSelecionadoLista) {
-                idEquipamento = equipamentoSelecionadoLista.getData().id;
-
-            }
             
-            debugger;
-            this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
+            if ( evento.getSource().getCustomData()) {
+               
+                idEquipamento = evento
+                                .getSource()
+                                .getCustomData()[0]
+                                .getValue();
+            }
+
+                     this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
         },
 
         _AbrirTelaAdicionarEEditarEquipamento: function(idEquipamento) {
            var view = this.getView();
-           var dialogAdicionarEditar = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
-           let dadosEquipamento = {};
+           var dialogAdicionarEditar = this.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
+           
 
+           debugger;
             if (!dialogAdicionarEditar) {
                  this._criarTelaAdicionarEEditarEquipamento(view)
                     .then((dialogAdicionarEditar) => dialogAdicionarEditar.open());
             } else{
-                dialogAdicionarEditar.setModel(new JSONModel(dadosEquipamento), NOVO_EQUIPAMENTO);
+
+                dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+                dialogAdicionarEditar.open();
                 
             }
             // Se houver um ID, carrega os dados para edição
             if (idEquipamento) {
                 try {
-                    dadosEquipamento =  this._carregarEquipamentoParaEdicao(idEquipamento);
-                    dialogAdicionarEditar.setModel(new JSONModel(dadosEquipamento), NOVO_EQUIPAMENTO);
+                    let dadosEquipamento =  this._carregarEquipamentoParaEdicao(idEquipamento)
+                    .then(() => dialogAdicionarEditar.setModel(new JSONModel({dadosEquipamento}), MODELO_NOVO_EQUIPAMENTO) );
+                    
                 } catch (error) {
                     // Trata erros, como exibir uma mensagem para o usuário
                     console.error("Erro ao carregar equipamento:", error);
                 }
             }
             
-            
-
-            // Abre o diálogo
-            //dialog.open();
+           
         
         },
 
         _criarTelaAdicionarEEditarEquipamento: function(view) {
             return Fragment.load({
                 id: view.getId(),
-                name: NOME_FRAGMENT_NOVO_EQUIPAMENTO,
+                name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
                 controller: this
             }).then((dialogAdicionarEditar) => {
-                dialogAdicionarEditar.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
+                dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
                 this._carregarTiposEquipamento();
-                dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPO_EQUIPAMENTO)); 
+                dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
                 view.addDependent(dialogAdicionarEditar);
                 this.dialogAdicionarEditar = dialogAdicionarEditar;
@@ -170,14 +171,15 @@ sap.ui.define([
             fetch(url)
                 .then(response => response.json())
                 .then(dados => {
-                    const modelo = this.byId(ID_TELA_NOVO_EQUIPAMENTO).getModel(NOVO_EQUIPAMENTO);
+                    const modelo = this.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO).getModel(MODELO_NOVO_EQUIPAMENTO);
                     modelo.setData(dados);
                     modelo.refresh(true);
+                   
                 });
         },
 
         aoPressionarSalvar: function() {
-            const dados = this.dialogAdicionarEditar.getModel(NOVO_EQUIPAMENTO).getData();
+            const dados = this.dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
             
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
@@ -199,7 +201,7 @@ sap.ui.define([
             
             fetch(urlRequisicaoTiposEquipamento)
             .then(response => response.json())
-            .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPO_EQUIPAMENTO))
+            .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPOS_EQUIPAMENTO))
         },
         
         _salvarEquipamento: function(dados) {
