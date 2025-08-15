@@ -13,7 +13,7 @@ namespace TestInvent.Repositories
                                                                             DataDeInclusao = new DateTime(),
                                                                             Nome = "Item abobora",
                                                                             QuantidadeEmEstoque = 15,
-                                                                            Tipo = "tipo string, que esquisito"
+                                                                            Tipo = EnumeracaoTipos.Notebook
                                                                         }
                                                                     };
 

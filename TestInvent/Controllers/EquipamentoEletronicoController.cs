@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Extensions;
+using TestInvent.Extensions;
 using TestInvent.Models;
 using TestInvent.Service;
 
@@ -50,6 +52,15 @@ namespace TestInvent.Controllers
         {
             _service.Deletar(id);
             return NoContent();
+        }
+
+        [HttpGet("tipos")]
+        public OkObjectResult PegarListaTiposEquipamento()
+        {
+            var listaParaFrontEnd = ExtencoesEnum.CriarListaDeTiposParaSelectDoFormulario<EnumeracaoTipos>();
+
+            
+            return Ok(listaParaFrontEnd);
         }
     }
 }

@@ -13,15 +13,12 @@ sap.ui.define([
 		},
 
 		init() {
-			// call the init function of the parent
 			UIComponent.prototype.init.apply(this, arguments);
 
-			// set device model
-			const oDeviceModel = new JSONModel(Device);
-			oDeviceModel.setDefaultBindingMode("OneWay");
-			this.setModel(oDeviceModel, "device");
+			const modeloDoDispositivo = new JSONModel(Device);
+			modeloDoDispositivo.setDefaultBindingMode("OneWay");
+			this.setModel(modeloDoDispositivo, "device");
 
-			// create the views based on the url/hash
 			this.getRouter().initialize();
 			
 		},

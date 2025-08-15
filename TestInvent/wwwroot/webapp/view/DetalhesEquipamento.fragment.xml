@@ -3,7 +3,22 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialog" title="{modeloDialogo>/nome}" afterClose="onDialogClose" >
+    <Dialog id="idDialog" afterClose="onDialogClose" >
+    <customHeader>
+        <Bar>
+            <contentLeft>
+                <Title 
+					text="{modeloDialogo>/nome}" 
+					level="H1"/>
+            </contentLeft>
+			<contentRight>
+				<Button
+					id="btnNovoEquipamentoPgDetalhes"
+					icon="sap-icon://edit"
+					press=".aoIrParaEditarEquipamento"/>
+			</contentRight>
+        </Bar>
+    </customHeader>
         <content>
        	    <VBox class="sapUiSmallMargin">
                 <f:Form id="FormDisplay354"
@@ -29,7 +44,7 @@
                             <f:formElements>
                                 <f:FormElement label="Tipo">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/tipo}" id="nameText"  />
+                                        <Text text="{modeloDialogo>/descricaoDoTipo}" id="nameText"  />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>tituloquantidade}">
@@ -39,14 +54,17 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
                                     <f:fields>
-                                        <Text
-                                            text="{
+
+                                        <Text text="{
+
                                                 path: 'modeloDialogo>/dataDeInclusao',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     style: 'short'
-                                                }
-                                        }"/>
+
+                                                }                                         
+										}" />
+
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
@@ -56,7 +74,9 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
-                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? 'Disponível' : 'Não Disponível' }" />
+
+                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
+
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -66,7 +86,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPrecionarFechar"/>
+            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

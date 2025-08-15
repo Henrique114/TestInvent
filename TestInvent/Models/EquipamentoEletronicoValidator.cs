@@ -6,8 +6,8 @@ namespace TestInvent.Models
     {
         public EquipamentoEletronicoValidator() 
         {
-            RuleFor(equipamento => equipamento.Nome).NotNull().MaximumLength(25);
-            RuleFor(equipamento => equipamento.Tipo).NotNull().MaximumLength(25);
+            RuleFor(equipamento => equipamento.Nome).NotNull();
+            RuleFor(equipamento => equipamento.Tipo).NotNull();
             RuleFor(equipamento => equipamento.QuantidadeEmEstoque).NotNull();
             RuleFor(equipamento => equipamento.DataDeInclusao).NotNull();
         }
