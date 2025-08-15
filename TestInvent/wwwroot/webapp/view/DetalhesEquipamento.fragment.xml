@@ -25,7 +25,7 @@
                     press=".aoPressionarDeletar"
                     icon="sap-icon://delete"
                     class="sapUiTinyMarginBegin"
-                    type="Transparent"
+                    type="Reject"
                     >
                     <customData>
                         <core:CustomData key="itemIdD" value="{equipamentoSelecionadoLista>/id}" />
