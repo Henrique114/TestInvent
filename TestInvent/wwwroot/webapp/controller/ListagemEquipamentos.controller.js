@@ -117,10 +117,12 @@ sap.ui.define([
                 name: NOME_FRAGMENT_NOVO_EQUIPAMENTO,
                 controller: this
             }).then((dialog) => {
+
                 dialog.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
                 this._carregarTiposEquipamento();
                 dialog.setModel(this.getView().getModel(MODELO_TIPO_EQUIPAMENTO)); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
+
                 view.addDependent(dialog);
                 this.oDialog = dialog;
                 return dialog;
