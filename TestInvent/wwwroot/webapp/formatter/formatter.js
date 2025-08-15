@@ -8,11 +8,10 @@ sap.ui.define([
             let objetoTipoEncontrado = dadosTipo.find(t => t.chave == tipo);
 
             let apenasDescricao = objetoTipoEncontrado?.descricao;
-            const tipoNaoEncontrado = "Tipo não encontrado";
 
             return apenasDescricao 
                             ? apenasDescricao 
-                            : tipoNaoEncontrado; 
+                            :  tipo; 
         },
     }
 })
