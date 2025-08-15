@@ -1,8 +1,8 @@
 ﻿namespace TestInvent.Models
 {
-    public class Enumerador
+    public class Enumerador <TEnum>
     {
-        public int? Chave { get; set; }
+        public TEnum Chave { get; set; }
         public string? Descricao { get; set; }
     }
 }
