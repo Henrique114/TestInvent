@@ -1,10 +1,18 @@
-sap.ui.define(["sap/m/Dialog", "sap/m/Button"], function(Dialog, Button) {
+sap.ui.define([
+    "sap/m/Dialog", 
+    "sap/m/Button", 
+    "sap/m/MessageToast",
+    "sap/m/Bar", 
+    "sap/m/Title",
+    "sap/ui/core/TitleLevel", 
+    "sap/m/Text"
+    ], function(Dialog, Button, MessageToast, Bar, Title, TitleLevel, Text) {
     return {
         criarDialogDeConfirmação: function(controller, idEquipamento) {
 
             let dialogConfitmacaoDeletarEquipamento = new Dialog({
                     content: [
-                        new sap.m.Text({
+                        new Text({
                             text: "Tem certeza que deseja apagar este equipamento?"
                         })
                     ],
@@ -26,11 +34,11 @@ sap.ui.define(["sap/m/Dialog", "sap/m/Button"], function(Dialog, Button) {
                         },
                         text: "Confirmar"
                     }),
-                    customHeader: new sap.m.Bar({
+                    customHeader: new Bar({
                         contentMiddle: [
-                            new sap.m.Title({
+                            new Title({
                                 text: "Confirmar exclusão do equipamento",
-                                level: sap.ui.core.TitleLevel.H1
+                                level: TitleLevel.H1
                             })
                         ]
                     }),
