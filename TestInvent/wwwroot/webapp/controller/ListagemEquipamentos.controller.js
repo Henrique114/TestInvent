@@ -4,10 +4,8 @@ sap.ui.define([
     "sap/ui/core/Fragment", 
     "../service/ServicoValidador",
     "../formatter/formatter",
-    "sap/m/MessageToast",
-    "sap/m/Dialog",
-	"sap/m/Button"
-],(Controller, JSONModel, Fragment, ServicoValidador, formatter, MessageToast, Dialog, Button) => {
+    "../fragments/FragmentoConfirmacaoExclusao"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter, FragmentoConfirmacaoExclusao) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -47,8 +45,7 @@ sap.ui.define([
                         element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
                     });
 
-                    const model = new JSONModel(equipamentos);
-                    this.getView().setModel(model, MODELO_EQUIPAMENTOS_LISTAGEM);
+                    this.getView().setModel(new JSONModel(equipamentos), MODELO_EQUIPAMENTOS_LISTAGEM);
             })
         },
 
@@ -243,42 +240,7 @@ sap.ui.define([
 
         _abrirConfirmcaoDeletarEquipamento: function(idEquipamento){
 
-                let dialogConfitmacaoDeletarEquipamento = new Dialog({
-                    content: [
-                        new sap.m.Text({
-                            text: "Tem certeza que deseja apagar este equipamento?"
-                        })
-                    ],
-                    state: 'Warning',
-                    beginButton: new Button({
-                        press: function () {
-                            this.getParent().close();
-                        },
-                        text: "Close"
-                    }),
-                    endButton: new Button({
-                        press: () => {
-                            this._deletarEquipamento(idEquipamento)
-                                .then(() => {
-                                    this._obterDadosEquipamentos();
-                                    MessageToast.show("Equipamento deletado!");
-                                });
-                            dialogConfitmacaoDeletarEquipamento.close();
-                        },
-                        text: "Confirmar"
-                    }),
-                    customHeader: new sap.m.Bar({
-                        contentMiddle: [
-                            new sap.m.Title({
-                                text: "Confirmar exclusão do equipamento",
-                                level: sap.ui.core.TitleLevel.H1
-                            })
-                        ]
-                    }),
-                    contentHeight: "10%",
-                    contentWidth: "25%",
-                    verticalScrolling: false
-                });
+            let dialogConfitmacaoDeletarEquipamento = FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this ,idEquipamento);
 
 			dialogConfitmacaoDeletarEquipamento.open();
 
@@ -296,9 +258,5 @@ sap.ui.define([
                 },
             });
         }
-
-
-
-        
     });
 });
