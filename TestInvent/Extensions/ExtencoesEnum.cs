@@ -21,7 +21,7 @@ namespace TestInvent.Extensions
             {
                 listaDeItens.Add(new Enumerador
                 {
-                    Chave = ((int)(object)item).ToString(),
+                    Chave = ((int)(object)item),
                     Descricao = item.PegarDescrição()
                 });
             }
