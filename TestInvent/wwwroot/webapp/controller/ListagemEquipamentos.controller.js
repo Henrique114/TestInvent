@@ -19,6 +19,8 @@ sap.ui.define([
     const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TRADUCAO = "i18n";
     
+    let _dialogAdicionarEditar = null;
+    
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
@@ -67,7 +69,7 @@ sap.ui.define([
 
         _AbrirTelaDeDetalhes: function() {
            var view = this.getView();
-           var dialogDetalhes = this.byId(ID_DETALHES_EQUIPAMENTO);
+           var dialogDetalhes = view.byId(ID_DETALHES_EQUIPAMENTO);
 
             if (!dialogDetalhes) {
                return this._criarTelaDeDetalhes(view)
@@ -86,13 +88,13 @@ sap.ui.define([
                 dialogDetalhes.setModel(); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
                 view.addDependent(dialogDetalhes);
-                this.dialogDetalhes = dialogDetalhes;
+                this._dialogDetalhes = dialogDetalhes;
                 return dialogDetalhes;
             });
         },
         
         aoPressionarFecharDetalhes: function() {
-            this.dialogDetalhes.close();
+            this._dialogDetalhes.close();
         },
 
         aoPressionarAdicionarEquipamento: function() {
@@ -102,8 +104,8 @@ sap.ui.define([
 
         aoPressionarEditar: function(evento) { 
 
-            if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
-                this.dialogDetalhes.close();
+            if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
+                this._dialogDetalhes.close();
             }
             
             let idEquipamento = null;
@@ -120,26 +122,22 @@ sap.ui.define([
         },
 
         _AbrirTelaAdicionarEEditarEquipamento: function(idEquipamento) {
-           var view = this.getView();
-           var dialogAdicionarEditar = this.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
-           
-            if (!dialogAdicionarEditar) {
-                 this._criarTelaAdicionarEEditarEquipamento(view)
-                    .then((dialogAdicionarEditar) => dialogAdicionarEditar.open());
-            } else{
 
-                dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
-                dialogAdicionarEditar.open();
-                
-            }
-            if (idEquipamento) {
-                try {
-                    let dadosEquipamento =  this._carregarEquipamentoParaEdicao(idEquipamento)
-                    .then(() => dialogAdicionarEditar.setModel(new JSONModel({dadosEquipamento}), MODELO_NOVO_EQUIPAMENTO) );
-                    
-                } catch (error) {
-                    console.error("Erro ao carregar equipamento:", error);
-                }
+            let view = this.getView();
+            this._dialogAdicionarEditar = view.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
+           
+            if (!_dialogAdicionarEditar) {
+                 this._criarTelaAdicionarEEditarEquipamento(view)
+                    .then((dialogAdicionarEditar) => {
+                        dialogAdicionarEditar.open()
+                        if (idEquipamento){
+
+                            return this._carregarEquipamentoParaEdicao(idEquipamento);
+                        }
+                    });
+            } else{
+                this._dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+                this._dialogAdicionarEditar.open();
             }
         },
 
@@ -157,7 +155,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
 
                 view.addDependent(dialogAdicionarEditar);
-                this.dialogAdicionarEditar = dialogAdicionarEditar;
+                this._dialogAdicionarEditar = dialogAdicionarEditar;
                 return dialogAdicionarEditar;
 
             });
@@ -165,18 +163,20 @@ sap.ui.define([
 
         _carregarEquipamentoParaEdicao: function(idEquipamento) {
             const url = `${ENDPOINT_BASE}/${idEquipamento}`;
-            fetch(url)
+            return fetch(url)
                 .then(response => response.json())
                 .then(dados => {
-                    const modelo = this.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO).getModel(MODELO_NOVO_EQUIPAMENTO);
-                    modelo.setData(dados);
-                    modelo.refresh(true);
-                   
+                    if(this._dialogAdicionarEditar){
+                        let modeloEquipamento = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO);
+                        if(modeloEquipamento){
+                            modeloEquipamento.setData(dados);
+                        }
+                    }
                 });
         },
 
         aoPressionarSalvar: function() {
-            const dados = this.dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
+            const dados = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
             
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
@@ -188,7 +188,7 @@ sap.ui.define([
             this._salvarEquipamento(dados)
             .then(() => {
                 this._obterDadosEquipamentos();
-                this.dialogAdicionarEditar.destroy();
+                this._dialogAdicionarEditar.destroy();
 
             });
         }, 
@@ -221,7 +221,7 @@ sap.ui.define([
         },
         
         aoPressionarFecharTelaAdicionarEditar: function() {
-           this.dialogAdicionarEditar.close();
+           this._dialogAdicionarEditar.destroy();
         },
     });
 });
