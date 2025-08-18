@@ -206,6 +206,7 @@ sap.ui.define([
             let metodo = 'POST';
             const idEquipamento = dados.id;
 
+            console.log(dados);
             if (idEquipamento) {
                 url =  `${url}/${idEquipamento}`;
                 metodo = 'PUT';

@@ -1,6 +1,7 @@
 ﻿
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
+using Raven.Client.Documents.Session;
 using TestInvent.Extensions;
 using TestInvent.Models;
 
@@ -22,7 +23,7 @@ namespace TestInvent.Repositories
         public void Deletar(string id)
         {
             using var session = _store.OpenSession();
-            var equipamento = session.Load<EquipamentoEletronicoModel>(id) ?? throw new Exception($"Equipamento com {id} não encontrado");
+            var equipamento = BuscarPorId(id, session);
             session.Delete(equipamento);
             session.SaveChanges();
         }
@@ -38,9 +39,13 @@ namespace TestInvent.Repositories
             return query.ToList();
         }
 
-        public EquipamentoEletronicoModel? BuscarPorId(string id)
+        public EquipamentoEletronicoModel? BuscarPorId(string id, IDocumentSession? session = null)
         {
-            using var session = _store.OpenSession();
+            if (session == null) { 
+
+                session = _store.OpenSession();
+            
+            }
 
             return session.Load<EquipamentoEletronicoModel>(id.DecodificarURL()) ?? throw new Exception($"Equipamento com {id} não encontrado");
         }
@@ -48,8 +53,8 @@ namespace TestInvent.Repositories
         public void Atualizar(string id, EquipamentoEletronicoModel entity)
         {
             using var session = _store.OpenSession();
-            
-            var equipamento = session.Load<EquipamentoEletronicoModel>(id) ?? throw new Exception($"Equipamento com {id} não encontrado"); ;
+
+            var equipamento = BuscarPorId(id, session);
 
             equipamento.Nome = entity.Nome;
             equipamento.Tipo = entity.Tipo;

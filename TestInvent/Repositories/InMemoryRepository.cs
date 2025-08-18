@@ -1,5 +1,6 @@
 ﻿
 
+using Raven.Client.Documents.Session;
 using TestInvent.Models;
 
 namespace TestInvent.Repositories
@@ -20,7 +21,7 @@ namespace TestInvent.Repositories
 
         public IEnumerable<EquipamentoEletronicoModel> BuscarTodos(string nome) => _items;
 
-        public EquipamentoEletronicoModel? BuscarPorId(string? id) => _items.SingleOrDefault(x => x.Id == id);
+        public EquipamentoEletronicoModel? BuscarPorId(string? id, IDocumentSession? session = null) => _items.SingleOrDefault(x => x.Id == id);
 
         public void Adicionar(EquipamentoEletronicoModel entity)
         {

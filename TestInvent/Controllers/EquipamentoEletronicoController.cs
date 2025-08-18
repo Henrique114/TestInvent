@@ -36,6 +36,7 @@ namespace TestInvent.Controllers
         [HttpPost]
         public CreatedResult Adicionar([FromBody] EquipamentoEletronicoModel equipamentoEletronico)
         {
+            Console.WriteLine(equipamentoEletronico);
             _service.Adicionar(equipamentoEletronico);
              return Created(equipamentoEletronico.Id, equipamentoEletronico);
         }

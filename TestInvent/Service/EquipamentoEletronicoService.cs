@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Raven.Client.Documents.Session;
 using TestInvent.Models;
 using TestInvent.Repositories;
 
@@ -26,11 +27,12 @@ namespace TestInvent.Service
 
         public EquipamentoEletronicoModel BuscarPorId(string id)
         {
-            return _repository.BuscarPorId(id);
+            return _repository.BuscarPorId(id, null);
         }
 
         public void Adicionar(EquipamentoEletronicoModel equipamentoEletronico) 
         {
+            Console.WriteLine(equipamentoEletronico);
             equipamentoEletronico.DataDeInclusao = DateTimeOffset.Now;
             _validator.ValidateAndThrow(equipamentoEletronico); 
             _repository.Adicionar(equipamentoEletronico); 
