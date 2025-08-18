@@ -103,20 +103,18 @@ sap.ui.define([
         },
 
         aoPressionarEditar: function(evento) { 
+            const contexto = "equipamentos";
 
             if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
                 this._dialogDetalhes.close();
             }
             
-            let idEquipamento = null;
-            
-            if ( evento.getSource().getCustomData()) {
-               
-                idEquipamento = evento
-                                .getSource()
-                                .getCustomData()[0]
-                                .getValue();
-            }
+            let idEquipamento = evento
+                .getSource()
+                .getParent()
+                .getBindingContext(contexto)
+                .getObject()
+                .id;
 
             this._AbrirTelaAdicionarEEditarEquipamento(idEquipamento); 
         },
@@ -189,7 +187,6 @@ sap.ui.define([
             .then(() => {
                 this._obterDadosEquipamentos();
                 this._dialogAdicionarEditar.destroy();
-
             });
         }, 
         
