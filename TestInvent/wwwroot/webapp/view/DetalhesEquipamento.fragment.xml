@@ -15,7 +15,7 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoPressionarEditar">
+					press=".aoEditar">
                     <customData>
                         <core:CustomData key="itemId" value="{equipamentoSelecionadoLista>/id}" />
                         </customData>
@@ -91,7 +91,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
+            <Button text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

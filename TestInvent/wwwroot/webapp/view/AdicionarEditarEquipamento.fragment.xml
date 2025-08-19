@@ -3,10 +3,10 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idAdicionarEditar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
+    <Dialog id="idAdicionarEditar" title="{i18n>tituloPaginaAdicionar}" >
         <content>
        	    <VBox >
-                <f:Form id="FormDisplayAddEdit"
+                <f:Form id="formularioAdicionarEditar"
                         editable="true"
                         class="sapUiResponsiveMargin sapUiMediumMarginTop">
                     <f:layout>
@@ -77,8 +77,8 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoPressionarSalvar"/>
-            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoPressionarFecharTelaAdicionarEditar"/>
+            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoSalvar"/>
+            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoFecharFormulario"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

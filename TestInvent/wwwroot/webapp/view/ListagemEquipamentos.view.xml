@@ -15,7 +15,7 @@
 				<Button
 					id="btnAdicionarEquipamento"
 					text="{i18n>btnAdicionarEquipamento}"
-					press=".aoPressionarAdicionarEquipamento"
+					press=".aoAdicionarEquipamento"
 					type="Emphasized"  />
 			</contentRight>
         </Bar>
@@ -81,7 +81,7 @@
 							}"/>
 							<Button 
 								id= "btnEditarLinhaListaEquipamento"
-								press=".aoPressionarEditar"
+								press=".aoEditar"
 								icon="sap-icon://edit"
 								class="sapUiTinyMarginBegin"
 								type="Transparent">
