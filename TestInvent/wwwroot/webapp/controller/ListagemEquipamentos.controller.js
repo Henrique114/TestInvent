@@ -28,25 +28,61 @@ sap.ui.define([
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
+            
         },
 
-        // Listagem:
-        //carrega dados em tela
-            //busca todos os itens
-            //cria modelo
-            //seta dados no modelo
-            //exibe modelo
+        _iniciarModelos: function(){
+            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
+            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
+            this.getView().setModel(new JSONModel({}), MODELO_TIPOS_EQUIPAMENTO);
+            this.getView().setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+        },
 
         _acessarListar: function () {
             this.carregarLista();
+            this._iniciarModelos();
         },
 
+        carregarLista: async function (filtro) {
+            
+            let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
+            await this._carregarTiposEquipamento();
+            
+            const dadosTipo = await this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
+    
+            equipamentos.forEach(element => {
+                element.dataDeInclusao = new Date(element.dataDeInclusao);
+                element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
+            });
+
+    
+            let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
+           
+            model.setData(equipamentos);
+
+            model.refresh(true);
+            
+            
+        },
         
         aoFiltrarEquipamentos: function (evento){
             const _query = evento.getParameter("query");
             this.carregarLista(_query);
         },
         
+        // Ir para detalhes
+        // clica o item
+        // obtem o id do item ok
+        // abre tela de detalhes
+            // verifica se há uma tela já criada 
+                //se não tiver cria
+                //se tiver, abre usando a referencia da view com o id do dialog
+            //busca o item no banco pelo id
+            //cria o modelo para o item selecionado
+            //seta os dados da busca no modelo
+            //exibe os dados em tela
+            
+
         aoIrParaDetalhes: function (evento) {   
             
             const equipamentoSelecionado = evento
@@ -64,18 +100,13 @@ sap.ui.define([
               debugger;
             
             if (!dialogDetalhes) {
-                return this._criarTelaDeDetalhes(view)
-                    .then((dialogDetalhesp) => {
-                        let equipamento = EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
-                        this.dialogDetalhesp.setModel(new JSONModel(equipamento),MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
-                        dialogDetalhesp.open()
+                this._criarTelaDeDetalhes(view);
+                  
+            }
 
-                    });
-                }else{      
-                    equipamento = EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
-                    dialogDetalhes.setModel(new JSONModel(equipamento),MODELO_EQUIPAMENTO_SELECIONADO_LISTA);  
-                    dialogDetalhes.open();
-                }
+            let equipamento = EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
+            dialogDetalhes.setModel(new JSONModel(equipamento),MODELO_EQUIPAMENTO_SELECIONADO_LISTA);  
+            dialogDetalhes.open();
               
         },
         
@@ -207,26 +238,5 @@ sap.ui.define([
         aoFecharFormulario: function() {
            this._dialogAdicionarEditar.destroy();
         },
-        carregarLista: async function (filtro) {
-            
-            let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
-            await this._carregarTiposEquipamento();
-            
-            const dadosTipo = await this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
-    
-            equipamentos.forEach(element => {
-                element.dataDeInclusao = new Date(element.dataDeInclusao);
-                element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-            });
-    
-            const model = new JSONModel(equipamentos);
-            this.getView().setModel(model, MODELO_EQUIPAMENTOS_LISTAGEM);
-            
-        },
-        obterPorId: function(idEquipamento) {
-            const url = `${ENDPOINT_BASE}/${idEquipamento}`;
-            return fetch(url)
-            .then(response => response.json());
-        }
     });
 });
