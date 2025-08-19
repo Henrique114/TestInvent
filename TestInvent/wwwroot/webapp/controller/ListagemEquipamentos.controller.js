@@ -153,7 +153,14 @@ sap.ui.define([
             model.setData({});
             model.refresh(true);
             dialogAdicionarEditar.open();
-            },
+            if(idEquipamento){
+                let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamento);
+                equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
+                equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipos);
+                model.setData(equipamento);
+                model.refresh(true);
+            }
+        },
 
             _criarTelaAdicionarEEditarEquipamento: function() {
                 return Fragment.load({
