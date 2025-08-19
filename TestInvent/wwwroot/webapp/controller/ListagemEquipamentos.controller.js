@@ -161,7 +161,7 @@ sap.ui.define([
             }
         },
 
-            _criarTelaAdicionarEEditarEquipamento: function() {
+        _criarTelaAdicionarEEditarEquipamento: function() {
                 return Fragment.load({
                     id: this.getView().getId(),
                     name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
