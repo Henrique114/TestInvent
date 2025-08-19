@@ -14,15 +14,16 @@ namespace TestInvent.Extensions
             return atributo == null ? valor.ToString() : atributo.Description;
         }
 
-        public static List<Enumerador> CriarListaDeTiposParaSelectDoFormulario<TEnum>() where TEnum : Enum
+        public static List<Enumerador<T>> CriarListaDeTiposParaSelectDoFormulario<T>() where T : new()
         {
-            var listaDeItens = new List<Enumerador>();
-            foreach (TEnum item in Enum.GetValues(typeof(TEnum)))
+            var listaDeItens = new List<Enumerador<T>>();
+
+            foreach (var item in Enum.GetValues(typeof(T)))
             {
-                listaDeItens.Add(new Enumerador
+                listaDeItens.Add(new Enumerador<T>
                 {
-                    Chave = ((int)(object)item).ToString(),
-                    Descricao = item.PegarDescrição()
+                    Chave = (T)item,
+                    Descricao = ((Enum)item).PegarDescrição()
                 });
             }
             return listaDeItens;

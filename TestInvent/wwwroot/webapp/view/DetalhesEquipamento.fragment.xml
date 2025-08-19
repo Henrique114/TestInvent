@@ -3,7 +3,13 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialogDetalhes" afterClose="onDialogClose" >
+    <Dialog 
+        id="idDialogDetalhes" 
+        afterClose="onDialogClose" 
+        contentWidth="400px"
+        contentHeight="300px"
+        draggable="false"
+        resizable="false" >
     <customHeader>
         <Bar>
             <contentLeft>
@@ -15,7 +21,7 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoPressionarEditar">
+					press=".aoEditar">
                     <customData>
                         <core:CustomData key="itemIdE" value="{equipamentoSelecionadoLista>/id}" />
                         </customData>
@@ -69,13 +75,18 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
                                     <f:fields>
+
                                         <Text text="{
+
                                                 path: 'equipamentoSelecionadoLista>/dataDeInclusao',
+
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     style: 'short'
+
                                                 }                                         
 										}" />
+
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
@@ -85,7 +96,9 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
+
                                         <Text text="{= ${equipamentoSelecionadoLista>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
+
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -95,7 +108,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
+            <Button text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

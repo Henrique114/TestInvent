@@ -15,7 +15,7 @@
 				<Button
 					id="btnAdicionarEquipamento"
 					text="{i18n>btnAdicionarEquipamento}"
-					press=".aoPressionarAdicionarEquipamento"
+					press=".aoAdicionarEquipamento"
 					type="Emphasized"  />
 			</contentRight>
         </Bar>
@@ -79,14 +79,15 @@
 										
 									}
 							}"/>
-							<HBox justifyContent="End">
-								<Button 
-									id="btnEditarLinhaListaEquipamento"
-									press=".aoPressionarEditar"
-									icon="sap-icon://edit"
-									type="Transparent">
-									<customData>
-										<core:CustomData key="itemId" value="{equipamentos>id}" />
+
+							<Button 
+								id= "btnEditarLinhaListaEquipamento"
+								press=".aoEditar"
+								icon="sap-icon://edit"
+								class="sapUiTinyMarginBegin"
+								type="Transparent">
+								<customData>
+									<core:CustomData key="itemId" value="{equipamentos>id}" />
 									</customData>
 								</Button>
 								<Button 
