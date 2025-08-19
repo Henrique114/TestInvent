@@ -1,30 +1,33 @@
 sap.ui.define([
-    "../formatter/formatter"
-
-], function (formatter){
+    
+], function (){
     "use strict";
      const ENDPOINT_BASE = "/EquipamentoEletronico";
-     const MODELO_EQUIPAMENTOS_LISTAGEM = "equipamentos";
-     const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento";
+     
 
     return {
-      OberTodos: function(nome = ""){
-          let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
-            this.getView().getController()._carregarTiposEquipamento();
+        oberTodos: function(filtro){
+            let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
+            
+            return fetch(urlRequisicaoEquipamentos)
+                .then(response => response.json());
+                
+        },
 
-            fetch(urlRequisicaoEquipamentos)
-                .then(response => response.json())
-                .then(equipamentos => {
-                    const dadosTipo = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
+        obterPorId: function(idEquipamento) {
+            const url = `${ENDPOINT_BASE}/${idEquipamento}`;
 
-                    equipamentos.forEach(element => {
-                        element.dataDeInclusao = new Date(element.dataDeInclusao);
-                        element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-                    });
+            return fetch(url)
+                .then(response => response.json());
+        },
 
-                    const model = new JSONModel(equipamentos);
-                    this.getView().setModel(model, MODELO_EQUIPAMENTOS_LISTAGEM);
-            })
-      }
-    }
-})
+        atualizar: function(){
+
+
+        },
+
+        deletar: function(){
+
+        }   
+     }
+});
