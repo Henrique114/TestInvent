@@ -22,6 +22,7 @@ sap.ui.define([
     const MODELO_TRADUCAO = "i18n";
     
     let _dialogAdicionarEditar = null;
+    let _dialogDetalhes = null;
     
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
@@ -44,24 +45,17 @@ sap.ui.define([
         },
 
         carregarLista: async function (filtro) {
-            
             let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
-            await this._carregarTiposEquipamento();
-            
-            const dadosTipo = await this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
-    
+            let dadosTipo = await TiposRepositorio.oberTipos();
+             
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
             });
 
-    
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
-           
             model.setData(equipamentos);
-
             model.refresh(true);
-            
             
         },
         
@@ -90,36 +84,41 @@ sap.ui.define([
             .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
             .getObject().id;
                 
-            //this.getView().setModel(new JSONModel(equipamentoSelecionado), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
             this._abrirTelaDeDetalhes(equipamentoSelecionado);
         },
 
-        _abrirTelaDeDetalhes: function(equipamentoSelecionado) {
-            var view = this.getView();
-            var dialogDetalhes = view.byId(ID_DETALHES_EQUIPAMENTO);
-              debugger;
+
+        _abrirTelaDeDetalhes: async function(equipamentoSelecionado) {
+            let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
+            let dadosTipo = await TiposRepositorio.oberTipos();
+            let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
+            let equipamento = await EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
+            equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
+            equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipo);
             
             if (!dialogDetalhes) {
-                this._criarTelaDeDetalhes(view);
-                  
+                dialogDetalhes = await this._criarTelaDeDetalhes();
+               
             }
 
-            let equipamento = EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
-            dialogDetalhes.setModel(new JSONModel(equipamento),MODELO_EQUIPAMENTO_SELECIONADO_LISTA);  
+            dialogDetalhes.setModel(this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA));  
+            model.setData(equipamento);
+            model.refresh(true);
             dialogDetalhes.open();
               
         },
         
-        _criarTelaDeDetalhes: function(view) {
+        _criarTelaDeDetalhes: function() {
             return Fragment.load({
-                id: view.getId(),
+                id: this.getView().getId(),
                 name: NOME_FRAGMENT_DETALHES,
                 controller: this
             }).then((dialogDetalhes) => {
-                dialogDetalhes.setModel(); 
+                dialogDetalhes.setModel();
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                view.addDependent(dialogDetalhes);
-                this._dialogDetalhes = dialogDetalhes;
+                this.getView().addDependent(dialogDetalhes);
+
+                this._dialogDetalhes = dialogDetalhes
                 return dialogDetalhes;
             });
         },
@@ -129,7 +128,6 @@ sap.ui.define([
         },
         
         aoAdicionarEquipamento: function() {
-            
             this._abrirTelaAdicionarOuEditar(null);
         },
         
@@ -151,7 +149,6 @@ sap.ui.define([
         },
         
         _abrirTelaAdicionarOuEditar: function(idEquipamento) {
-            
             let view = this.getView();
             this._dialogAdicionarEditar = view.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
             
@@ -160,7 +157,6 @@ sap.ui.define([
                     .then((dialogAdicionarEditar) => {
                         dialogAdicionarEditar.open()
                         if (idEquipamento){
-
                             return this._carregarEquipamentoParaEdicao(idEquipamento);
                         }
                     });
@@ -173,19 +169,17 @@ sap.ui.define([
             _criarTelaAdicionarEEditarEquipamento: function(view) {
                 return Fragment.load({
                     id: view.getId(),
-                name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
-                controller: this
+                    name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
+                    controller: this
 
-            }).then((dialogAdicionarEditar) => {
-                dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
-
-                this._carregarTiposEquipamento();
-                dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
-                this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-
-                view.addDependent(dialogAdicionarEditar);
-                this._dialogAdicionarEditar = dialogAdicionarEditar;
-                return dialogAdicionarEditar;
+                }).then((dialogAdicionarEditar) => {
+                    dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+                    // TiposRepositorio.oberTipos();
+                    // dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
+                    this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
+                    view.addDependent(dialogAdicionarEditar);
+                    this._dialogAdicionarEditar = dialogAdicionarEditar;
+                    return dialogAdicionarEditar;
                 
             });
         },
@@ -208,13 +202,6 @@ sap.ui.define([
             });
         }, 
         
-        _carregarTiposEquipamento: function() {
-            debugger;
-
-            let dados = TiposRepositorio.oberTipos();
-            
-            this.getView().setModel(new JSONModel(dados), MODELO_TIPOS_EQUIPAMENTO)
-        },
         
         _salvarEquipamento: function(dados) {
             let url = `${ENDPOINT_BASE}`;
