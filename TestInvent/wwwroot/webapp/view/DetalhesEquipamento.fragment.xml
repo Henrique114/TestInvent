@@ -3,7 +3,13 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialogDetalhes" afterClose="onDialogClose" >
+    <Dialog 
+        id="idDialogDetalhes" 
+        afterClose="onDialogClose" 
+        contentWidth="400px"
+        contentHeight="300px"
+        draggable="false"
+        resizable="false" >
     <customHeader>
         <Bar>
             <contentLeft>
