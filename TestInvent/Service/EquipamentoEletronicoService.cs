@@ -26,7 +26,7 @@ namespace TestInvent.Service
 
         public EquipamentoEletronicoModel BuscarPorId(string id)
         {
-            return _repository.BuscarPorId(id, null);
+            return _repository.BuscarPorId(id);
         }
 
         public void Adicionar(EquipamentoEletronicoModel equipamentoEletronico) 
