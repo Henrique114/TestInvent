@@ -137,7 +137,6 @@ sap.ui.define([
             let dialogAdicionarEditar = this.getView().byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
             let model = this.getView().getModel(MODELO_NOVO_EQUIPAMENTO);
             let modelTipos = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO);
-            debugger;
             if (!dialogAdicionarEditar) {
                 dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
                
