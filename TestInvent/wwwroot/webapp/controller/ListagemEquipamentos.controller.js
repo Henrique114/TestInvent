@@ -64,19 +64,6 @@ sap.ui.define([
             this.carregarLista(_query);
         },
         
-        // Ir para detalhes
-        // clica o item
-        // obtem o id do item ok
-        // abre tela de detalhes
-            // verifica se há uma tela já criada 
-                //se não tiver cria
-                //se tiver, abre usando a referencia da view com o id do dialog
-            //busca o item no banco pelo id
-            //cria o modelo para o item selecionado
-            //seta os dados da busca no modelo
-            //exibe os dados em tela
-            
-
         aoIrParaDetalhes: function (evento) {   
             
             const equipamentoSelecionado = evento
@@ -86,7 +73,6 @@ sap.ui.define([
                 
             this._abrirTelaDeDetalhes(equipamentoSelecionado);
         },
-
 
         _abrirTelaDeDetalhes: async function(equipamentoSelecionado) {
             let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
@@ -117,7 +103,6 @@ sap.ui.define([
                 dialogDetalhes.setModel();
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
                 this.getView().addDependent(dialogDetalhes);
-
                 this._dialogDetalhes = dialogDetalhes
                 return dialogDetalhes;
             });
@@ -148,36 +133,37 @@ sap.ui.define([
                 this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
         
-        _abrirTelaAdicionarOuEditar: function(idEquipamento) {
-            let view = this.getView();
-            this._dialogAdicionarEditar = view.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
-            
-            if (!_dialogAdicionarEditar) {
-                 this._criarTelaAdicionarEEditarEquipamento(view)
-                    .then((dialogAdicionarEditar) => {
-                        dialogAdicionarEditar.open()
-                        if (idEquipamento){
-                            return this._carregarEquipamentoParaEdicao(idEquipamento);
-                        }
-                    });
-                } else{
-                    this._dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
-                    this._dialogAdicionarEditar.open();
-                }
+        _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
+            let dialogAdicionarEditar = this.getView().byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
+            let model = this.getView().getModel(MODELO_NOVO_EQUIPAMENTO);
+            let modelTipos = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO);
+            debugger;
+            if (!dialogAdicionarEditar) {
+                dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
+               
+            }
+
+
+            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
+            let dadosTipos = await TiposRepositorio.oberTipos();
+            modelTipos.setData(dadosTipos);
+            modelTipos.refresh(true);
+
+            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_NOVO_EQUIPAMENTO));  
+            model.setData({});
+            model.refresh(true);
+            dialogAdicionarEditar.open();
             },
 
-            _criarTelaAdicionarEEditarEquipamento: function(view) {
+            _criarTelaAdicionarEEditarEquipamento: function() {
                 return Fragment.load({
-                    id: view.getId(),
+                    id: this.getView().getId(),
                     name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
                     controller: this
 
                 }).then((dialogAdicionarEditar) => {
-                    dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
-                    // TiposRepositorio.oberTipos();
-                    // dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
                     this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                    view.addDependent(dialogAdicionarEditar);
+                    this.getView().addDependent(dialogAdicionarEditar);
                     this._dialogAdicionarEditar = dialogAdicionarEditar;
                     return dialogAdicionarEditar;
                 
@@ -197,7 +183,7 @@ sap.ui.define([
             
             this._salvarEquipamento(dados)
             .then(() => {
-                this._obterDadosEquipamentos();
+                this.carregarLista();
                 this._dialogAdicionarEditar.destroy();
             });
         }, 
