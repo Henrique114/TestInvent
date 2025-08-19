@@ -4,13 +4,13 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/Bar", 
     "sap/m/Title",
-    "sap/ui/core/TitleLevel", 
+    "sap/ui/core/library", 
     "sap/m/Text"
-    ], function(Dialog, Button, MessageToast, Bar, Title, TitleLevel, Text) {
+    ], function(Dialog, Button, MessageToast, Bar, Title, coreLibrary, Text) {
     return {
         criarDialogDeConfirmação: function(controller, idEquipamento) {
-
-            let dialogConfitmacaoDeletarEquipamento = new Dialog({
+            let confirmacao = false;
+            let confirmacaoDeletar = new Dialog({
                     content: [
                         new Text({
                             text: "Tem certeza que deseja apagar este equipamento?"
@@ -25,12 +25,11 @@ sap.ui.define([
                     }),
                     endButton: new Button({
                         press: () => {
-                            controller._deletarEquipamento(idEquipamento)
-                                .then(() => {
-                                    controller._obterDadosEquipamentos();
-                                    MessageToast.show("Equipamento deletado!");
-                                });
-                            dialogConfitmacaoDeletarEquipamento.close();
+                            confirmacao = true;
+                                
+                            MessageToast.show("Equipamento deletado!");
+                                
+                            confirmacaoDeletar.close();
                         },
                         text: "Confirmar"
                     }),
@@ -38,7 +37,7 @@ sap.ui.define([
                         contentMiddle: [
                             new Title({
                                 text: "Confirmar exclusão do equipamento",
-                                level: TitleLevel.H1
+                                level: coreLibrary.TitleLevel.H1
                             })
                         ]
                     }),
@@ -46,7 +45,7 @@ sap.ui.define([
                     contentWidth: "25%",
                     verticalScrolling: false
                 });
-            return dialogConfitmacaoDeletarEquipamento;
+            return {confirmacaoDeletar, confirmacao};
         }
     }
 });

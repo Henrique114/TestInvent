@@ -227,12 +227,13 @@ sap.ui.define([
             if ( evento.getSource().getCustomData()) {
                
                 idEquipamento = evento
-                                .getSource()
-                                .getCustomData()[0]
-                                .getValue();
+                    .getSource()
+                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                    .getObject().id
             }
 
-            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
+            this._abrirConfirmcaoDeletarEquipamento();
+            
 
             if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
                 this.dialogDetalhes.close();
@@ -241,9 +242,11 @@ sap.ui.define([
 
         _abrirConfirmcaoDeletarEquipamento: function(idEquipamento){
 
-            let dialogConfitmacaoDeletarEquipamento = FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this ,idEquipamento);
+            let resposta = FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this ,idEquipamento);
 
-			dialogConfitmacaoDeletarEquipamento.open();
+            confirmacaoDeletar = resposta.ConfirmacaoDeletar
+
+			confirmacaoDeletar.open();
 
 		},
 
