@@ -134,9 +134,7 @@ sap.ui.define([
                     .getSource().data("IdItem");
             }
             
-            if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
-                this._dialogDetalhes.close();
-            }
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
                 
             this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
@@ -227,8 +225,8 @@ sap.ui.define([
         },
 
         aoPressionarDeletar: function(evento){
-             let idEquipamento = null;
-            debugger;
+            let idEquipamento = null;
+          
             if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
 
                 idEquipamento = evento
@@ -241,12 +239,8 @@ sap.ui.define([
                     .getSource().data("IdItem");
             }
             
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
             this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
-            
-
-            if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
-                this._dialogDetalhes.close();
-            }
         },
 
         _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
