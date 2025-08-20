@@ -61,7 +61,7 @@
 					</Column>
 					
 					<Column hAlign="End">
-						<Text text="{i18n>acoes}" wrapping="false" class="sapUiTinyMarginEnd"/>
+						<Text text="{i18n>acoes}" wrapping="false" class="sapUiTinyMarginEnd" />
 					</Column>
 				</columns>
 				<items>
@@ -80,18 +80,16 @@
 										
 									}
 							}"/>
-							<HBox >
+							<HBox justifyContent="End">
 								<Button 
-									id= "btnEditarLinhaListaEquipamento"
+									id="btnEditarLinhaListaEquipamento"
 									press=".aoEditar"
 									icon="sap-icon://edit"
-									class="sapUiTinyMarginEnd"
 									type="Transparent"/>
 								<Button 
 									id="btnDeletarLinhaListaEquipamento"
 									press=".aoPressionarDeletar"
 									icon="sap-icon://delete"
-									class="sapUiTinyMarginBegin"
 									type="Reject"/>
 							</HBox>
 						</cells>
