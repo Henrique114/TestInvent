@@ -9,7 +9,6 @@ sap.ui.define([
     ], function(Dialog, Button, MessageToast, Bar, Title, coreLibrary, Text) {
     return {
         criarDialogDeConfirmação: function(controller, idEquipamento) {
-            let confirmacao = false;
             let confirmacaoDeletar = new Dialog({
                     content: [
                         new Text({
@@ -25,10 +24,8 @@ sap.ui.define([
                     }),
                     endButton: new Button({
                         press: () => {
-                            confirmacao = true;
-                                
+                            controller.aoPressinarConfirmar(idEquipamento);
                             MessageToast.show("Equipamento deletado!");
-                                
                             confirmacaoDeletar.close();
                         },
                         text: "Confirmar"
@@ -45,7 +42,8 @@ sap.ui.define([
                     contentWidth: "25%",
                     verticalScrolling: false
                 });
-            return {confirmacaoDeletar, confirmacao};
+                
+            return  confirmacaoDeletar;
         }
     }
 });
