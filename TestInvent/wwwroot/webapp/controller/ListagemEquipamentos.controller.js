@@ -131,7 +131,8 @@ sap.ui.define([
                     .getSource().data("IdItem");
             }
 
-                this._abrirTelaAdicionarOuEditar(idEquipamento); 
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
+            this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
         
         _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
