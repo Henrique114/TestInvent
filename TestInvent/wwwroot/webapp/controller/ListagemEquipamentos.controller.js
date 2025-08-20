@@ -117,18 +117,19 @@ sap.ui.define([
         },
         
         aoEditar: function(evento) { 
-            const contexto = "equipamentos";
+           let idEquipamento = null; 
 
-            if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
-                this._dialogDetalhes.close();
+            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+                
+                idEquipamento = evento
+                    .getSource()
+                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                    .getObject().id;
+            }else{
+
+                idEquipamento = evento
+                    .getSource().data("IdItem");
             }
-            
-            let idEquipamento = evento
-                .getSource()
-                .getParent()
-                .getBindingContext(contexto)
-                .getObject()
-                .id;
 
                 this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
