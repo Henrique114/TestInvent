@@ -53,7 +53,7 @@ sap.ui.define([
              
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
-                element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
+                element.descricaoDoTipo = formatter.obterDescricaoDoTipo(element.tipo, dadosTipo); 
             });
 
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
@@ -83,7 +83,7 @@ sap.ui.define([
             let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
             let equipamento = await EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
             equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
-            equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipo);
+            equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, dadosTipo);
             
             if (!dialogDetalhes) {
                 dialogDetalhes = await this._criarTelaDeDetalhes();
@@ -161,7 +161,7 @@ sap.ui.define([
             if(idEquipamento){
                 let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamento);
                 equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
-                equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipos);
+                equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, dadosTipos);
                 model.setData(equipamento);
                 model.refresh(true);
             }

@@ -4,7 +4,7 @@ sap.ui.define([
     "use strict";
 
     return {
-        obterDescricaoDoEnum: function (tipo, dadosTipo) {
+        obterDescricaoDoTipo: function (tipo, dadosTipo) {
             let objetoTipoEncontrado = dadosTipo.find(t => t.chave == tipo);
 
             let apenasDescricao = objetoTipoEncontrado?.descricao;
