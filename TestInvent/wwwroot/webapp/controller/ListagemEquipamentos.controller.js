@@ -148,14 +148,18 @@ sap.ui.define([
                 id: view.getId(),
                 name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
                 controller: this
+
             }).then((dialogAdicionarEditar) => {
                 dialogAdicionarEditar.setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+
                 this._carregarTiposEquipamento();
                 dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
+
                 view.addDependent(dialogAdicionarEditar);
                 this.dialogAdicionarEditar = dialogAdicionarEditar;
                 return dialogAdicionarEditar;
+
             });
         },
 
