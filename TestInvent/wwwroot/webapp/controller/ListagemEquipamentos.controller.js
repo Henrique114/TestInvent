@@ -120,20 +120,25 @@ sap.ui.define([
         },
         
         aoEditar: function(evento) { 
-            const contexto = "equipamentos";
+            let idEquipamento = null; 
 
+            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+                
+                idEquipamento = evento
+                    .getSource()
+                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                    .getObject().id;
+            }else{
+
+                idEquipamento = evento
+                    .getSource().data("IdItem");
+            }
+            
             if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
                 this._dialogDetalhes.close();
             }
-            
-            let idEquipamento = evento
-                .getSource()
-                .getParent()
-                .getBindingContext(contexto)
-                .getObject()
-                .id;
-
-                this._abrirTelaAdicionarOuEditar(idEquipamento); 
+                
+            this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
         
         _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
@@ -223,32 +228,37 @@ sap.ui.define([
 
         aoPressionarDeletar: function(evento){
              let idEquipamento = null;
-            
-            if ( evento.getSource().getCustomData()) {
-               
+            debugger;
+            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+
                 idEquipamento = evento
                     .getSource()
                     .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
-                    .getObject().id
-            }
+                    .getObject().id;
+            }else{
 
-            this._abrirConfirmcaoDeletarEquipamento();
+                idEquipamento = evento
+                    .getSource().data("IdItem");
+            }
+            
+            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
             
 
-            if (this.dialogDetalhes && this.dialogDetalhes.isOpen()) {
-                this.dialogDetalhes.close();
+            if (this._dialogDetalhes && this._dialogDetalhes.isOpen()) {
+                this._dialogDetalhes.close();
             }
         },
 
-        _abrirConfirmcaoDeletarEquipamento: function(idEquipamento){
-
-            let resposta = FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this ,idEquipamento);
-
-            confirmacaoDeletar = resposta.ConfirmacaoDeletar
-
-			confirmacaoDeletar.open();
-
+        _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
+            let dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
+			dialogConfirmacao.open();
 		},
+
+        aoPressinarConfirmar: async function(id){
+            await this._deletarEquipamento(id);
+            await this.carregarLista();
+
+        },
 
         _deletarEquipamento: function(id){
             let url = `${ENDPOINT_BASE}/${id}`;
