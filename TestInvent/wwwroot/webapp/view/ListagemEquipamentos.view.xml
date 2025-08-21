@@ -60,7 +60,7 @@
 						<Text text="{i18n>dataInclusao}" wrapping="false"/>
 					</Column>
 					<Column hAlign="End">
-						<Text text="{i18n>acoes}" wrapping="false"/>
+						<Text text="{i18n>acoes}" wrapping="false" class="sapUiTinyMarginEnd" />
 					</Column>
 				</columns>
 				<items>
@@ -79,16 +79,18 @@
 										
 									}
 							}"/>
-							<Button 
-								id= "btnEditarLinhaListaEquipamento"
-								press=".aoEditar"
-								icon="sap-icon://edit"
-								class="sapUiTinyMarginBegin"
-								type="Transparent">
-								<customData>
-									<core:CustomData key="itemId" value="{equipamentos>id}" />
-									</customData>
-								</Button>
+							 <HBox justifyContent="End">
+									<Button
+											id="btnEditarLinhaListaEquipamento"
+											press=".aoEditar"
+											icon="sap-icon://edit"
+											type="Transparent"/>
+									<Button
+											id="btnDeletarLinhaListaEquipamento"
+											press=".aoPressionarDeletar"
+											icon="sap-icon://delete"
+											type="Reject"/>
+							</HBox>
 						</cells>
 					</ColumnListItem>
 				</items>
