@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using Raven.Client.Documents.Session;
 using TestInvent.Data.MongoDB;
 using TestInvent.Models;
 
@@ -19,7 +20,7 @@ namespace TestInvent.Repositories
             return _collection.Find(_ => true).ToList();
         }
 
-        public EquipamentoEletronicoModel? BuscarPorId(string id)
+        public EquipamentoEletronicoModel? BuscarPorId(string id, IDocumentSession session)
         {
             return _collection.Find(x => x.Id == id).FirstOrDefault();
         }

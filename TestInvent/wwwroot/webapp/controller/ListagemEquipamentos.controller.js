@@ -3,174 +3,211 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment", 
     "../service/ServicoValidador",
-    "../formatter/formatter"
-],(Controller, JSONModel, Fragment, ServicoValidador, formatter) => {
+    "../formatter/formatter", 
+    "../repositorios/EquipamentoRepositorio",
+    "../repositorios/TiposRepositorio"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
-    const MODELO_EQUIPAMENTOS = "equipamentos";
-    const MODELO_TRADUCAO = "i18n";
-    const ID_TELA_DETALHES = "idDialog";  
-    const ID_TELA_NOVO_EQUIPAMENTO = "idCadastroEAlterar";
+    const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
+    const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
     const NOME_FRAGMENT_DETALHES = "ui5.testinvent.view.DetalhesEquipamento";
-    const NOME_FRAGMENT_NOVO_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEAtualizarEquipamento";
-    const ITEM_SELECIONADO_LISTA = "modeloDialogo";
-    const NOVO_EQUIPAMENTO = "modeloEquipamento";
-    const MODELO_TIPO_EQUIPAMENTO = "modeloTipoEquipamento"; 
-
+    const NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEditarEquipamento";
+    const MODELO_EQUIPAMENTOS_LISTAGEM = "equipamentos";
+    const MODELO_EQUIPAMENTO_SELECIONADO_LISTA = "equipamentoSelecionadoLista";
+    const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento"; 
+    const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
+    const MODELO_TRADUCAO = "i18n";
+    
+    let _dialogAdicionarEditar = null;
+    let _dialogDetalhes = null;
+    
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoAcessarListar, this);
+            rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
+            
         },
 
-        _aoAcessarListar: function () {
-            this._obterDadosEquipamentos();
+        _iniciarModelos: function(){
+            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
+            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
+            this.getView().setModel(new JSONModel({}), MODELO_TIPOS_EQUIPAMENTO);
+            this.getView().setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
         },
 
-        _obterDadosEquipamentos: function (nome = "") {
-            let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
-            this._carregarTiposEquipamento();
-
-            fetch(urlRequisicaoEquipamentos)
-                .then(response => response.json())
-                .then(equipamentos => {
-                    const dadosTipo = this.getView().getModel(MODELO_TIPO_EQUIPAMENTO).getData();
-
-                    equipamentos.forEach(element => {
-                        element.dataDeInclusao = new Date(element.dataDeInclusao);
-                       element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-                    });
-
-                    const model = new JSONModel(equipamentos);
-                    this.getView().setModel(model, MODELO_EQUIPAMENTOS);
-            })
+        _acessarListar: function () {
+            this.carregarLista();
+            this._iniciarModelos();
         },
 
-        aoFiltrarEquipamentos: function (event){
-            const _query = event.getParameter("query");
-            this._obterDadosEquipamentos(_query);
+        carregarLista: async function (filtro) {
+            let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
+            let dadosTipo = await TiposRepositorio.oberTipos();
+             
+            equipamentos.forEach(element => {
+                element.dataDeInclusao = new Date(element.dataDeInclusao);
+                element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
+            });
+
+            let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
+            model.setData(equipamentos);
+            model.refresh(true);
+            
         },
         
-        aoIrParaDetalhes: function (event) {   
-            const equipamentoSelecionado = event
-                .getSource()
-                .getBindingContext(MODELO_EQUIPAMENTOS)
-                .getObject();
-
-            this.getView().setModel(new JSONModel(equipamentoSelecionado), ITEM_SELECIONADO_LISTA);
-            this.AoAbrirTelaDeDetalhes();
+        aoFiltrarEquipamentos: function (evento){
+            const _query = evento.getParameter("query");
+            this.carregarLista(_query);
+        },
+        
+        aoIrParaDetalhes: function (evento) {   
+            
+            const equipamentoSelecionado = evento
+            .getSource()
+            .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+            .getObject().id;
+                
+            this._abrirTelaDeDetalhes(equipamentoSelecionado);
         },
 
-        AoAbrirTelaDeDetalhes: function() {
-           var view = this.getView();
-           var id = this.byId(ID_TELA_DETALHES);
-
-            if (!id) {
-               return this.criarTelaDeDetalhes(view)
-                    .then((dialog) => dialog.open());
-            }else{            
-                id.open();
+        _abrirTelaDeDetalhes: async function(equipamentoSelecionado) {
+            let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
+            let dadosTipo = await TiposRepositorio.oberTipos();
+            let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
+            let equipamento = await EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
+            equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
+            equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipo);
+            
+            if (!dialogDetalhes) {
+                dialogDetalhes = await this._criarTelaDeDetalhes();
+               
             }
-        },
 
-        criarTelaDeDetalhes: function(view) {
+            dialogDetalhes.setModel(this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA));  
+            model.setData(equipamento);
+            model.refresh(true);
+            dialogDetalhes.open();
+              
+        },
+        
+        _criarTelaDeDetalhes: function() {
             return Fragment.load({
-                id: view.getId(),
+                id: this.getView().getId(),
                 name: NOME_FRAGMENT_DETALHES,
                 controller: this
             }).then((dialogDetalhes) => {
-                dialogDetalhes.setModel(); 
+                dialogDetalhes.setModel();
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                view.addDependent(dialogDetalhes);
-                this.oDialogDetalhes = dialogDetalhes;
+                this.getView().addDependent(dialogDetalhes);
+                this._dialogDetalhes = dialogDetalhes
                 return dialogDetalhes;
             });
         },
         
-        aoPressionarFecharDetalhes: function() {
-            this.oDialogDetalhes.close();
+        aoFecharDetalhes: function() {
+            this._dialogDetalhes.close();
         },
-
-        aoIrParaNovoEquipamento: function() {           
-            this.AoAbrirTelaDeNovoEquipamento(); 
+        
+        aoAdicionarEquipamento: function() {
+            this._abrirTelaAdicionarOuEditar(null);
         },
+        
+        aoEditar: function(evento) { 
+           let idEquipamento = null; 
 
-        AoAbrirTelaDeNovoEquipamento: function() {
-           var view = this.getView();
-           var id = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
+            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+                
+                idEquipamento = evento
+                    .getSource()
+                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                    .getObject().id;
+            }else{
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
+            }
 
-            if (!id) {
-                return this.criarTelaDeNovoEquipamento(view)
-                    .then((dialog) => dialog.open());
-            } else{
-                id.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
-                id.open();
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
+            this._abrirTelaAdicionarOuEditar(idEquipamento); 
+        },
+        
+        _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
+            let dialogAdicionarEditar = this.getView().byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
+            let model = this.getView().getModel(MODELO_NOVO_EQUIPAMENTO);
+            let modelTipos = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO);
+            if (!dialogAdicionarEditar) {
+                dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
+               
+            }
+
+
+            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
+            let dadosTipos = await TiposRepositorio.oberTipos();
+            modelTipos.setData(dadosTipos);
+            modelTipos.refresh(true);
+
+            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_NOVO_EQUIPAMENTO));  
+            model.setData({});
+            model.refresh(true);
+            dialogAdicionarEditar.open();
+            if(idEquipamento){
+                let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamento);
+                equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
+                equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipos);
+                model.setData(equipamento);
+                model.refresh(true);
             }
         },
 
-        criarTelaDeNovoEquipamento: function(view) {
+        _criarTelaAdicionarEEditarEquipamento: function() {
             return Fragment.load({
-                id: view.getId(),
-                name: NOME_FRAGMENT_NOVO_EQUIPAMENTO,
+                id: this.getView().getId(),
+                name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
                 controller: this
-            }).then((dialog) => {
 
-                dialog.setModel(new JSONModel({}), NOVO_EQUIPAMENTO);
-                this._carregarTiposEquipamento();
-                dialog.setModel(this.getView().getModel(MODELO_TIPO_EQUIPAMENTO)); 
+            }).then((dialogAdicionarEditar) => {
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-
-                view.addDependent(dialog);
-                this.oDialog = dialog;
-                return dialog;
+                this.getView().addDependent(dialogAdicionarEditar);
+                this._dialogAdicionarEditar = dialogAdicionarEditar;
+                return dialogAdicionarEditar;
+                
             });
         },
 
-         aoPressionarFechar: function() {
-            this.oDialog.close();
-        },
-
-
-        aoPressionarSalvar: function() {
-            const dialog = this.byId(ID_TELA_NOVO_EQUIPAMENTO);
-            const dados = dialog.getModel(NOVO_EQUIPAMENTO).getData();
-
+        
+        aoSalvar: function() {
+            const dados = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
+            
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
-
+            
             dados.tipo = parseInt(dados.tipo),
             dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
-          
-            this._salvarEquipamento(dados)
-            .then(() => {
-                this._obterDadosEquipamentos();
-                this.oDialog.close();
-            });
+
+            if (dados.id){
+                EquipamentoRepositorio.atualizar(dados)
+                .then(() => {
+                    this.carregarLista();
+                    this._dialogAdicionarEditar.destroy();
+                });
+
+            }else{
+                EquipamentoRepositorio.criar(dados)
+                .then(() => {
+                    this.carregarLista();
+                    this._dialogAdicionarEditar.destroy();
+                });
+            }
         }, 
-
-        _salvarEquipamento: function(dados) {
-            const url = `${ENDPOINT_BASE}`;
-            const metodo = 'POST';
-
-            return fetch(url, {
-                method: metodo,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
-        },
         
-        _carregarTiposEquipamento: function() {
-            let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
-
-            fetch(urlRequisicaoTiposEquipamento)
-                .then(response => response.json())
-                .then(dados => this.getView().setModel(new JSONModel(dados), MODELO_TIPO_EQUIPAMENTO))
+        aoFecharFormulario: function() {
+           this._dialogAdicionarEditar.destroy();
         },
-   });
+    });
 });

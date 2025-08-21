@@ -3,19 +3,29 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idDialog" afterClose="onDialogClose" >
+    <Dialog 
+        id="idDialogDetalhes" 
+        afterClose="onDialogClose" 
+        contentWidth="400px"
+        contentHeight="300px"
+        draggable="false"
+        resizable="false" >
     <customHeader>
         <Bar>
             <contentLeft>
                 <Title 
-					text="{modeloDialogo>/nome}" 
+					text="{equipamentoSelecionadoLista>/nome}" 
 					level="H1"/>
             </contentLeft>
 			<contentRight>
 				<Button
-					id="btnNovoEquipamentoPgDetalhes"
+					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoIrParaEditarEquipamento"/>
+					press=".aoEditar">
+                    <customData>
+                        <core:CustomData key="IdItem" value="{equipamentoSelecionadoLista>/id}" />
+                        </customData>
+                </Button>
 			</contentRight>
         </Bar>
     </customHeader>
@@ -42,14 +52,14 @@
                     <f:formContainers>
                         <f:FormContainer>
                             <f:formElements>
-                                <f:FormElement label="Tipo">
+                                <f:FormElement label="{i18n>tipo}">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/descricaoDoTipo}" id="nameText"  />
+                                        <Text text="{equipamentoSelecionadoLista>/descricaoDoTipo}" id="nameText"  />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>tituloquantidade}">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/quantidadeEmEstoque} {i18n>unidade}" />
+                                        <Text text="{equipamentoSelecionadoLista>/quantidadeEmEstoque} {i18n>unidade}"/>
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
@@ -57,7 +67,8 @@
 
                                         <Text text="{
 
-                                                path: 'modeloDialogo>/dataDeInclusao',
+                                                path: 'equipamentoSelecionadoLista>/dataDeInclusao',
+
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     style: 'short'
@@ -69,13 +80,13 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
                                     <f:fields>
-                                        <Text text="{modeloDialogo>/descricao}" />
+                                        <Text text="{equipamentoSelecionadoLista>/descricao}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
 
-                                        <Text text="{= ${modeloDialogo>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
+                                        <Text text="{= ${equipamentoSelecionadoLista>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
 
                                     </f:fields>
                                 </f:FormElement>
@@ -86,7 +97,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
+            <Button text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

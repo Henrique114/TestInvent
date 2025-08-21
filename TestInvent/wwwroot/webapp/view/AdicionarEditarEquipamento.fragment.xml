@@ -3,10 +3,10 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idCadastroEAlterar" title="{i18n>tituloPaginaAdicionar}" afterClose="onDialogClose" >
+    <Dialog id="idAdicionarEditar" title="{= ${novoEquipamento>/nome} ? ${i18n>btnEditarEquipamento} : ${i18n>btnAdicionarEquipamento} }" >
         <content>
        	    <VBox >
-                <f:Form id="FormDisplayAddEdit"
+                <f:Form id="formularioAdicionarEditar"
                         editable="true"
                         class="sapUiResponsiveMargin sapUiMediumMarginTop">
                     <f:layout>
@@ -30,7 +30,7 @@
                             <f:formElements>
                              <f:FormElement label="{i18n>labelNome}" >
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/nome}" 
+                                        <Input  value="{novoEquipamento>/nome}" 
                                                 name="nome" 
                                                 id="formularionome"  
                                                 required="true"  
@@ -43,7 +43,7 @@
                                     <f:fields>
                                         <Select
                                                 forceSelection="false"
-                                                selectedKey="{modeloEquipamento>/tipo}"
+                                                selectedKey="{novoEquipamento>/tipo}"
                                                 items="{
                                                     path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
@@ -56,7 +56,7 @@
                                 </f:FormElement>
                                 <f:FormElement  label="{i18n>labelQuantidade}">
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/quantidadeEmEstoque}" 
+                                        <Input  value="{novoEquipamento>/quantidadeEmEstoque}" 
                                                 id="formularioquantidade"  
                                                 required="true"  
                                                 type="Number" 
@@ -65,7 +65,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>labelDescricao}">
                                     <f:fields>
-                                        <Input  value="{modeloEquipamento>/descricao}" 
+                                        <Input  value="{novoEquipamento>/descricao}" 
                                                 id="formulariodescricao"  
                                                 placeholder="{i18n>preencherDescricao}"/>
                                     </f:fields>
@@ -77,8 +77,8 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoPressionarSalvar"/>
-            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoPressionarFechar"/>
+            <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoSalvar"/>
+            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoFecharFormulario"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
