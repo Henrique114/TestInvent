@@ -21,9 +21,13 @@ sap.ui.define([
     const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento"; 
     const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TRADUCAO = "i18n";
+    const patametroQuery = "query";
+
     
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
+    let _query = null;
+
     
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
@@ -63,8 +67,8 @@ sap.ui.define([
         },
         
         aoFiltrarEquipamentos: function (evento){
-            const _query = evento.getParameter("query");
-            this.carregarLista(_query);
+            this._query = evento.getParameter(patametroQuery);
+-           this.carregarLista(this._query);
         },
         
         aoIrParaDetalhes: function (evento) {   
@@ -184,27 +188,27 @@ sap.ui.define([
 
         
         aoSalvar: function() {
-            const dados = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
             
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
             
-            dados.tipo = parseInt(dados.tipo),
-            dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
+            let equipamento = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
+            equipamento.tipo = parseInt(equipamento.tipo),
+            equipamento.quantidadeEmEstoque = parseInt(equipamento.quantidadeEmEstoque);
             
-            this._salvarEquipamento(dados)
+            this._salvarEquipamento(equipamento)
             .then(() => {
-                this.carregarLista();
+                this.carregarLista(this._query);
                 this._dialogAdicionarEditar.destroy();
             });
         }, 
         
         
-        _salvarEquipamento: function(dados) {
+        _salvarEquipamento: function(equipamento) {
             let url = `${ENDPOINT_BASE}`;
             let metodo = 'POST';
-            const idEquipamento = dados.id;
+            const idEquipamento = equipamento.id;
             
             if (idEquipamento) {
                 url =  `${url}/${idEquipamento}`;
@@ -216,7 +220,7 @@ sap.ui.define([
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dados)
+                body: JSON.stringify(equipamento)
             });
         },
         
@@ -250,7 +254,7 @@ sap.ui.define([
 
         aoPressinarConfirmar: async function(id){
             await this._deletarEquipamento(id);
-            await this.carregarLista();
+            await this.carregarLista(this._query);
 
         },
 
