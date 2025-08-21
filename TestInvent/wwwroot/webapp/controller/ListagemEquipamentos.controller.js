@@ -21,28 +21,45 @@ sap.ui.define([
     const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento"; 
     const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TRADUCAO = "i18n";
-    
+    const patametroQuery = "query";
+
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
     let _query = null;
+    
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
+            this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
-            
+        },
+
+         /**
+          *
+          * @param {string} nome
+          * @param {sap.ui.model.json.JSONModel} modelo
+          * @returns {sap.ui.model.json.JSONModel}
+         */
+         criarModelos: function(nome, modelo){
+             let view = this.getView();
+             if(modelo) view.setModel(modelo, nome);
+             return view.getModel(nome);
         },
 
         _iniciarModelos: function(){
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
-            this.getView().setModel(new JSONModel({}), MODELO_TIPOS_EQUIPAMENTO);
-            this.getView().setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+            let nomeModelos =   [MODELO_EQUIPAMENTOS_LISTAGEM,
+                                 MODELO_EQUIPAMENTO_SELECIONADO_LISTA,
+                                 MODELO_TIPOS_EQUIPAMENTO,
+                                 MODELO_NOVO_EQUIPAMENTO];
+ 
+             nomeModelos.forEach(element =>{
+                 this.criarModelos(element, new JSONModel({}));
+             });
         },
 
         _acessarListar: function () {
             this.carregarLista();
-            this._iniciarModelos();
         },
 
         carregarLista: async function (filtro) {
@@ -61,7 +78,7 @@ sap.ui.define([
         },
         
         aoFiltrarEquipamentos: function (evento){
-             this._query = evento.getParameter("query");
+             this._query = evento.getParameter(patametroQuery);
             this.carregarLista(this._query);
         },
         
