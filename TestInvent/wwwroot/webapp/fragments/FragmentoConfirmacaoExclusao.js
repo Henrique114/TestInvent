@@ -17,18 +17,18 @@ sap.ui.define([
                     ],
                     state: 'Warning',
                     beginButton: new Button({
-                        press: function () {
-                            this.getParent().close();
-                        },
-                        text: "Close"
-                    }),
-                    endButton: new Button({
                         press: () => {
                             controller.aoPressinarConfirmar(idEquipamento);
                             MessageToast.show("Equipamento deletado!");
                             confirmacaoDeletar.close();
                         },
                         text: "Confirmar"
+                    }),
+                    endButton: new Button({
+                        press: function () {
+                            this.getParent().close();
+                        },
+                        text: "Cancelar"
                     }),
                     customHeader: new Bar({
                         contentMiddle: [

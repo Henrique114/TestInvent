@@ -17,8 +17,8 @@
        	    
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoPressionarFecharDetalhes"/>
             <Button text="{i18n>btnConfirmar}" press="aoConfirmarDeletarEquipamento"/>
+            <Button text="{i18n>btnCancelar}" press="aoPressionarFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
