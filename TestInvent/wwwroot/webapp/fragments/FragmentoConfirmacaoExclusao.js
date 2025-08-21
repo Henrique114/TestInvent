@@ -39,7 +39,7 @@ sap.ui.define([
                         ]
                     }),
                     contentHeight: "10%",
-                    contentWidth: "25%",
+                    contentWidth: "20%",
                     verticalScrolling: false
                 });
                 
