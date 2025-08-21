@@ -6,6 +6,22 @@ sap.ui.define([
      
 
     return {
+
+
+        criar: function(dados){
+            const url = `${ENDPOINT_BASE}`;
+            const metodo = 'POST';
+
+            return fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+        },
+
         oberTodos: function(filtro){
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
             
@@ -21,8 +37,19 @@ sap.ui.define([
                 .then(response => response.json());
         },
 
-        atualizar: function(){
+        atualizar: function(dados){
 
+            const idEquipamento = dados.id;
+            const url =  `${ENDPOINT_BASE}/${idEquipamento}`;
+            const metodo = 'PUT';
+            
+            return fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
 
         },
 

@@ -126,9 +126,10 @@ sap.ui.define([
                     .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
                     .getObject().id;
             }else{
-
-                idEquipamento = evento
-                    .getSource().data("IdItem");
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
             }
 
             this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
@@ -164,16 +165,16 @@ sap.ui.define([
         },
 
         _criarTelaAdicionarEEditarEquipamento: function() {
-                return Fragment.load({
-                    id: this.getView().getId(),
-                    name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
-                    controller: this
+            return Fragment.load({
+                id: this.getView().getId(),
+                name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
+                controller: this
 
-                }).then((dialogAdicionarEditar) => {
-                    this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                    this.getView().addDependent(dialogAdicionarEditar);
-                    this._dialogAdicionarEditar = dialogAdicionarEditar;
-                    return dialogAdicionarEditar;
+            }).then((dialogAdicionarEditar) => {
+                this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
+                this.getView().addDependent(dialogAdicionarEditar);
+                this._dialogAdicionarEditar = dialogAdicionarEditar;
+                return dialogAdicionarEditar;
                 
             });
         },
@@ -188,33 +189,22 @@ sap.ui.define([
             
             dados.tipo = parseInt(dados.tipo),
             dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
-            
-            this._salvarEquipamento(dados)
-            .then(() => {
-                this.carregarLista();
-                this._dialogAdicionarEditar.destroy();
-            });
-        }, 
-        
-        
-        _salvarEquipamento: function(dados) {
-            let url = `${ENDPOINT_BASE}`;
-            let metodo = 'POST';
-            const idEquipamento = dados.id;
-            
-            if (idEquipamento) {
-                url =  `${url}/${idEquipamento}`;
-                metodo = 'PUT';
+
+            if (dados.id){
+                EquipamentoRepositorio.atualizar(dados)
+                .then(() => {
+                    this.carregarLista();
+                    this._dialogAdicionarEditar.destroy();
+                });
+
+            }else{
+                EquipamentoRepositorio.criar(dados)
+                .then(() => {
+                    this.carregarLista();
+                    this._dialogAdicionarEditar.destroy();
+                });
             }
-            
-            return fetch(url, {
-                method: metodo,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
-        },
+        }, 
         
         aoFecharFormulario: function() {
            this._dialogAdicionarEditar.destroy();
