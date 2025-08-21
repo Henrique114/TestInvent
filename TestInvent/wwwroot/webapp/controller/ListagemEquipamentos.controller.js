@@ -44,41 +44,43 @@ sap.ui.define([
          * @param {sap.ui.model.json.JSONModel} modelo
          * @returns {sap.ui.model.json.JSONModel}
         */
-       criarModelos: function(){
-        return;
-
+        criarModelos: function(nome, modelo){
+            let view = this.getView();
+            if(modelo) view.setModel(modelo, nome);
+            return view.getModel(nome);
 
        },
 
 
 
         _iniciarModelos: function(){
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
-            this.getView().setModel(new JSONModel({}), MODELO_TIPOS_EQUIPAMENTO);
-            this.getView().setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+            let nomeModelos =   [MODELO_EQUIPAMENTOS_LISTAGEM, 
+                                MODELO_EQUIPAMENTO_SELECIONADO_LISTA, 
+                                MODELO_TIPOS_EQUIPAMENTO, 
+                                MODELO_NOVO_EQUIPAMENTO];
+
+            nomeModelos.forEach(element =>{
+                this.criarModelos(element, new JSONModel({}));
+            });
         },
 
 
         _acessarListar: function () {
             this.carregarLista();
-            
-
         },
 
         carregarLista: async function (filtro) {
             let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
-            let dadosTipo = await TiposRepositorio.oberTipos();
+            let equipamentoTipo = await TiposRepositorio.oberTipos();
              
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
-                element.descricaoDoTipo = formatter.obterDescricaoDoTipo(element.tipo, dadosTipo); 
+                element.descricaoDoTipo = formatter.obterDescricaoDoTipo(element.tipo, equipamentoTipo); 
             });
 
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
             model.setData(equipamentos);
             model.refresh(true);
-            
         },
         
         aoFiltrarEquipamentos: function (evento){
@@ -89,31 +91,30 @@ sap.ui.define([
         aoIrParaDetalhes: function (evento) {   
             
             const equipamentoSelecionado = evento
-            .getSource()
-            .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
-            .getObject().id;
+                                        .getSource()
+                                        .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                                        .getObject()
+                                        .id;
                 
             this._abrirTelaDeDetalhes(equipamentoSelecionado);
         },
 
         _abrirTelaDeDetalhes: async function(equipamentoSelecionado) {
             let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
-            let dadosTipo = await TiposRepositorio.oberTipos();
+            let equipamentoTipo = await TiposRepositorio.oberTipos();
             let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
             let equipamento = await EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
             equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
-            equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, dadosTipo);
+            equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, equipamentoTipo);
             
             if (!dialogDetalhes) {
                 dialogDetalhes = await this._criarTelaDeDetalhes();
-               
             }
 
             dialogDetalhes.setModel(this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA));  
             model.setData(equipamento);
             model.refresh(true);
             dialogDetalhes.open();
-              
         },
         
         _criarTelaDeDetalhes: function() {
@@ -144,16 +145,21 @@ sap.ui.define([
             if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
                 
                 idEquipamento = evento
-                    .getSource()
-                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
-                    .getObject().id;
+                                .getSource()
+                                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                                .getObject()
+                                .id;
             }else{
 
-                idEquipamento = evento
-                    .getSource().data("IdItem");
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
             }
             
-            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()
+                ? this._dialogDetalhes.close()
+                : null;
                 
             this._abrirTelaAdicionarOuEditar(idEquipamento); 
         },
@@ -168,35 +174,34 @@ sap.ui.define([
             }
 
 
-            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
-            let dadosTipos = await TiposRepositorio.oberTipos();
-            modelTipos.setData(dadosTipos);
+            dialogAdicionarEditar.setModel(modelTipos); 
+            let equipamentoTipo = await TiposRepositorio.oberTipos();
+            modelTipos.setData(equipamentoTipo);
             modelTipos.refresh(true);
 
-            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_NOVO_EQUIPAMENTO));  
+            dialogAdicionarEditar.setModel(model);  
             model.setData({});
             model.refresh(true);
             dialogAdicionarEditar.open();
             if(idEquipamento){
                 let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamento);
                 equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
-                equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, dadosTipos);
+                equipamento.descricaoDoTipo = formatter.obterDescricaoDoTipo(equipamento.tipo, equipamentoTipo);
                 model.setData(equipamento);
                 model.refresh(true);
             }
         },
 
         _criarTelaAdicionarEEditarEquipamento: function() {
-                return Fragment.load({
-                    id: this.getView().getId(),
-                    name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
-                    controller: this
-
-                }).then((dialogAdicionarEditar) => {
-                    this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                    this.getView().addDependent(dialogAdicionarEditar);
-                    this._dialogAdicionarEditar = dialogAdicionarEditar;
-                    return dialogAdicionarEditar;
+            return Fragment.load({
+                id: this.getView().getId(),
+                name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
+                controller: this
+            }).then((dialogAdicionarEditar) => {
+                this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
+                this.getView().addDependent(dialogAdicionarEditar);
+                this._dialogAdicionarEditar = dialogAdicionarEditar;
+                return dialogAdicionarEditar;
                 
             });
         },
@@ -221,8 +226,8 @@ sap.ui.define([
         
         
         _salvarEquipamento: function(equipamento) {
-            let url = `${ENDPOINT_BASE}`;
-            let metodo = 'POST';
+            const url = `${ENDPOINT_BASE}`;
+            const metodo = 'POST';
             const idEquipamento = equipamento.id;
             
             if (idEquipamento) {
@@ -249,16 +254,22 @@ sap.ui.define([
             if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
 
                 idEquipamento = evento
-                    .getSource()
-                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
-                    .getObject().id;
+                                .getSource()
+                                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                                .getObject()
+                                .id;
             }else{
 
-                idEquipamento = evento
-                    .getSource().data("IdItem");
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
             }
             
-            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()
+            ? this._dialogDetalhes.close()
+            : null;
+
             this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
         },
 
@@ -274,8 +285,8 @@ sap.ui.define([
         },
 
         _deletarEquipamento: function(id){
-            let url = `${ENDPOINT_BASE}/${id}`;
-            let metodo = 'DELETE';
+            const url = `${ENDPOINT_BASE}/${id}`;
+            const metodo = 'DELETE';
             
 
             return fetch(url, {
