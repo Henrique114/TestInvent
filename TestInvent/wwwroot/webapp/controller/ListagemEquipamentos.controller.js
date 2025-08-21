@@ -32,10 +32,25 @@ sap.ui.define([
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
+            this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
             
         },
+
+        /**
+         *
+         * @param {string} nome
+         * @param {sap.ui.model.json.JSONModel} modelo
+         * @returns {sap.ui.model.json.JSONModel}
+        */
+       criarModelos: function(){
+        return;
+
+
+       },
+
+
 
         _iniciarModelos: function(){
             this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
@@ -47,7 +62,7 @@ sap.ui.define([
 
         _acessarListar: function () {
             this.carregarLista();
-            this._iniciarModelos();
+            
 
         },
 
