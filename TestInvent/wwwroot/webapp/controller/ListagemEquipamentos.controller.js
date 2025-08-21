@@ -5,8 +5,9 @@ sap.ui.define([
     "../service/ServicoValidador",
     "../formatter/formatter", 
     "../repositorios/EquipamentoRepositorio",
-    "../repositorios/TiposRepositorio"
-],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio) => {
+    "../repositorios/TiposRepositorio", 
+    "../fragment/FragmentoConfirmacaoExclusao"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio, FragmentoConfirmacaoExclusao) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -23,7 +24,7 @@ sap.ui.define([
     
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
-    
+    let _query = null;
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
@@ -60,8 +61,8 @@ sap.ui.define([
         },
         
         aoFiltrarEquipamentos: function (evento){
-            const _query = evento.getParameter("query");
-            this.carregarLista(_query);
+             this._query = evento.getParameter("query");
+            this.carregarLista(this._query);
         },
         
         aoIrParaDetalhes: function (evento) {   
@@ -181,33 +182,70 @@ sap.ui.define([
 
         
         aoSalvar: function() {
-            const dados = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
+            const equipamento = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
             
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
             
-            dados.tipo = parseInt(dados.tipo),
-            dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
+            equipamento.tipo = parseInt(equipamento.tipo),
+            equipamento.quantidadeEmEstoque = parseInt(equipamento.quantidadeEmEstoque)
 
-            if (dados.id){
-                EquipamentoRepositorio.atualizar(dados)
+            if (equipamento.id){
+                EquipamentoRepositorio.atualizar(equipamento)
                 .then(() => {
-                    this.carregarLista();
+                    this.carregarLista(this._query);
                     this._dialogAdicionarEditar.destroy();
                 });
 
             }else{
-                EquipamentoRepositorio.criar(dados)
+                EquipamentoRepositorio.criar(equipamento)
                 .then(() => {
-                    this.carregarLista();
+                    this.carregarLista(this._query);
                     this._dialogAdicionarEditar.destroy();
                 });
             }
         }, 
         
         aoFecharFormulario: function() {
-           this._dialogAdicionarEditar.destroy();
+            this._dialogAdicionarEditar.destroy();
+        },
+
+        aoPressionarDeletar: function(evento){
+            let idEquipamento = null;
+
+            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+                idEquipamento = evento
+                                .getSource()
+                                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                                .getObject()
+                                .id;
+            }else{
+
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
+            }
+ 
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()
+            ? this._dialogDetalhes.close()
+            : null;
+
+            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
+        },
+ 
+        _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
+            let dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
+            dialogConfirmacao.open();
+        },
+ 
+        aoPressinarConfirmar: async function(id){
+            await EquipamentoRepositorio.deletar(id)
+            .then(() => {
+                this.carregarLista(this._query);
+            });
+            await this.carregarLista(this._query);
         },
     });
 });
