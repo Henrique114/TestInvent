@@ -136,12 +136,11 @@ sap.ui.define([
         
         aoEditar: function(evento) { 
            let idEquipamento = null; 
+           const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
 
-            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+            if (modelEquipamentos) {
                 
-                idEquipamento = evento
-                    .getSource()
-                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                idEquipamento = modelEquipamentos
                     .getObject().id;
             }else{
                 idEquipamento = this._dialogDetalhes
@@ -230,11 +229,10 @@ sap.ui.define([
 
         aoPressionarDeletar: function(evento){
             let idEquipamento = null;
+            const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
 
-            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
-                idEquipamento = evento
-                                .getSource()
-                                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+            if (modelEquipamentos) {
+                idEquipamento = modelEquipamentos
                                 .getObject()
                                 .id;
             }else{
