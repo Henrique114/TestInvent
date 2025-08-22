@@ -2,13 +2,13 @@ sap.ui.define([
 	"sap/ui/core/util/MockServer"
 ], (MockServer) => {
 	"use strict";
-	//const ENDPOINT_BASE = "/EquipamentoEletronico";
+	const ENDPOINT_BASE = "/odata";
 	return {
 		init() {
 			debugger;
 			// create
 			const oMockServer = new MockServer({
-				rootUri: sap.ui.require.toUrl("ui5/testinvent") //+ ENDPOINT_BASE 
+				rootUri: "/localService/" //sap.ui.require.toUrl("ui5/testinvent") + ENDPOINT_BASE ""
 			});
 
 			const oUrlParams = new URLSearchParams(window.location.search);
@@ -20,8 +20,13 @@ sap.ui.define([
 			});
 
 			// simulate
-			const sPath = sap.ui.require.toUrl("ui5/testinvent/localService");
-			oMockServer.simulate(sPath + "/metadata.xml", sPath + "/mockdata");
+			// const sPath = sap.ui.require.toUrl("ui5/testinvent/localService");
+			// oMockServer.simulate(sPath + "/metadata.xml", sPath + "/mockdata");
+
+			 oMockServer.simulate("localService/metadata.xml", {
+				sMockdataBaseUrl: "localService/mockdata",
+				bGenerateMissingMockData: true
+			});
 
 			// start
 			oMockServer.start();

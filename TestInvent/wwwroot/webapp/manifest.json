@@ -8,7 +8,25 @@
 		"type": "application",
 		"applicationVersion": {
 			"version": "1.0.0"
-		}
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/localService/metadata.xml",
+				"type": "OData",
+				"settings": {
+				"localUri": "localService/metadata.xml",
+				"odataVersion": "2.0"
+				}
+			},
+			"equipamentoRemoto": {
+				"uri": "resources/ui5/testinvent/odata/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}		
+
 
 	},
 	"sap.ui": {
@@ -33,7 +51,16 @@
 				"settings": {
 					"bundleName": "ui5.testinvent.i18n.i18n"
 				}
-			}
+			},
+
+			"equipamento": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "Equipamentos.json"
+			},
+
+			"equipamentos": {
+       				"dataSource": "equipamentoRemoto"
+      		}
 
 		},
 		"rootView": {

@@ -1,7 +1,9 @@
 
 using FluentValidation;
+using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OData.ModelBuilder;
 using System.Text.Json.Serialization;
 using TestInvent.Data;
 using TestInvent.Models;
@@ -37,7 +39,13 @@ namespace TestInvent
                                   });
             });
 
-            builder.Services.AddControllers();
+            // Configura OData
+            builder.Services.AddControllers().AddOData(opt =>
+            {
+                var odataBuilder = new ODataConventionModelBuilder();
+                odataBuilder.EntitySet<EquipamentoEletronicoModel>("EquipamentoEletronicoModel");
+                opt.AddRouteComponents("odata", odataBuilder.GetEdmModel());
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -58,6 +66,12 @@ namespace TestInvent
                 {
                     Mappings = { [".properties"] = "application/x-msdownload" }
                 }
+            });
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
 
 

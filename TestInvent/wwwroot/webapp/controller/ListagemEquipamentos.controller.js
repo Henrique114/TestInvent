@@ -38,14 +38,14 @@ sap.ui.define([
             fetch(urlRequisicaoEquipamentos)
                 .then(response => response.json())
                 .then(equipamentos => {
-                    const dadosTipo = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
+                    //const dadosTipo = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
 
                     equipamentos.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
-                        element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
+                        //element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
                     });
 
-                    this.getView().setModel(new JSONModel(equipamentos), MODELO_EQUIPAMENTOS_LISTAGEM);
+                    //this.getView().setModel(new JSONModel(equipamentos), MODELO_EQUIPAMENTOS_LISTAGEM);
             })
         },
 
