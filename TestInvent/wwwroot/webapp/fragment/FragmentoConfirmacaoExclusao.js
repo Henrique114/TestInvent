@@ -9,39 +9,42 @@
      ], function(Dialog, Button, MessageToast, Bar, Title, coreLibrary, Text) {
      return {
          criarDialogDeConfirmação: function(controller, idEquipamento) {
-             let confirmacaoDeletar = new Dialog({
-                     content: [
-                         new Text({
-                             text: "Tem certeza que deseja apagar este equipamento?"
-                         })
-                     ],
-                     state: 'Warning',
-                     beginButton: new Button({
-                         press: function () {
-                             this.getParent().close();
-                         },
-                         text: "Close"
-                     }),
-                     endButton: new Button({
-                         press: () => {
-                             controller.aoPressinarConfirmar(idEquipamento);
-                             MessageToast.show("Equipamento deletado!");
-                             confirmacaoDeletar.close();
-                         },
-                         text: "Confirmar"
-                     }),
-                     customHeader: new Bar({
-                         contentMiddle: [
-                             new Title({
-                                 text: "Confirmar exclusão do equipamento",
-                                 level: coreLibrary.TitleLevel.H1
-                             })
-                         ]
-                     }),
-                     contentHeight: "10%",
-                     contentWidth: "20%",
-                     verticalScrolling: false
-                 });
+            const i18n = controller.getView().getModel("i18n");
+            const resourceBundle = i18n.getResourceBundle();
+
+            let confirmacaoDeletar = new Dialog({
+                content: [
+                    new Text({
+                        text: resourceBundle.getText("msgconfirmarDelete") 
+                    })
+                ],
+                state: 'Warning',
+                beginButton: new Button({
+                    press: function () {
+                        this.getParent().close();
+                    },
+                    text: resourceBundle.getText("btnCancelar") 
+                }),
+                endButton: new Button({
+                    press: () => {
+                        controller.aoPressinarConfirmar(idEquipamento);
+                        MessageToast.show(resourceBundle.getText("msgDeleteComSucesso")); 
+                        confirmacaoDeletar.close();
+                    },
+                    text: resourceBundle.getText("btnConfirmar") 
+                }),
+                customHeader: new Bar({
+                    contentMiddle: [
+                        new Title({
+                            text: resourceBundle.getText("tituloDialogConfirmacao"), 
+                            level: coreLibrary.TitleLevel.H1
+                        })
+                    ]
+                }),
+                contentHeight: "10%",
+                contentWidth: "20%",
+                verticalScrolling: false
+            });
  
              return  confirmacaoDeletar;
          }
