@@ -11,12 +11,13 @@
          criarDialogDeConfirmação: function(controller, idEquipamento) {
             const i18n = controller.getView().getModel("i18n");
             const resourceBundle = i18n.getResourceBundle();
+            
 
             let confirmacaoDeletar = new Dialog({
                 content: [
                     new Text({
                         text: resourceBundle.getText("msgconfirmarDelete") 
-                    })
+                    }).addStyleClass("sapUiSmallMargin"),
                 ],
                 state: 'Warning',
                 beginButton: new Button({
@@ -41,8 +42,8 @@
                         })
                     ]
                 }),
-                contentHeight: "10%",
-                contentWidth: "20%",
+                contentHeight: "5%",
+                contentWidth: "25%",
                 verticalScrolling: false
             });
  
