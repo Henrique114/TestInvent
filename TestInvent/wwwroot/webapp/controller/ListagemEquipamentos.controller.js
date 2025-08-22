@@ -53,9 +53,9 @@ sap.ui.define([
                                  MODELO_TIPOS_EQUIPAMENTO,
                                  MODELO_NOVO_EQUIPAMENTO];
  
-             nomeModelos.forEach(element =>{
-                 this.criarModelos(element, new JSONModel({}));
-             });
+             nomeModelos.forEach(element =>
+                 this.criarModelos(element, new JSONModel({}))
+             );
         },
 
         _acessarListar: function () {
@@ -65,11 +65,11 @@ sap.ui.define([
         carregarLista: async function (filtro) {
             let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
             let dadosTipo = await TiposRepositorio.oberTipos();
-             
+            
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-            });
+        });
 
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
             model.setData(equipamentos);
@@ -259,10 +259,7 @@ sap.ui.define([
  
         aoPressinarConfirmar: async function(id){
             await EquipamentoRepositorio.deletar(id)
-            .then(() => {
-                this.carregarLista(this._query);
-            });
-            await this.carregarLista(this._query);
+            .then(() => this.carregarLista(this._query));
         },
     });
 });
