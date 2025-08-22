@@ -4,7 +4,7 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/Bar", 
     "sap/m/Title",
-    "sap/ui/core/TitleLevel", 
+    "sap/ui/core/library", 
     "sap/m/Text"
     ], function(Dialog, Button, MessageToast, Bar, Title, TitleLevel, Text) {
     return {
