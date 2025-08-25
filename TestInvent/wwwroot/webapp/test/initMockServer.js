@@ -1,11 +1,11 @@
 sap.ui.define([
-	"../localService/mockserver"
-], (mockserver) => {
-	"use strict";
+  "ui5/testinvent/localService/mockserver"
+], function(mockserver) {
+  "use strict";
 
-	// initialize the mock server
-	mockserver.init();
+  // inicializa o mockserver antes da aplicação UI5 carregar
+  mockserver.init();
 
-	// initialize the embedded component on the HTML page
-	sap.ui.require(["sap/ui/core/ComponentSupport"]);
+  // carregar componente UI5 depois do mock inicializar
+  sap.ui.require(["sap/ui/core/ComponentSupport"]);
 });

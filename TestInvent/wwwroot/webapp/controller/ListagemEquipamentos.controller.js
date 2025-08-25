@@ -35,11 +35,12 @@ sap.ui.define([
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${nome ? "?filtro=" + encodeURIComponent(nome) : ""}`;
             this._carregarTiposEquipamento();
 
-            fetch(urlRequisicaoEquipamentos)
+            return fetch(urlRequisicaoEquipamentos)
                 .then(response => response.json())
                 .then(equipamentos => {
                     //const dadosTipo = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO).getData();
-
+                    
+                    debugger
                     equipamentos.forEach(element => {
                         element.dataDeInclusao = new Date(element.dataDeInclusao);
                         //element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 

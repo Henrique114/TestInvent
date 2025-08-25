@@ -1,8 +1,9 @@
 sap.ui.define([
    "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
-	"sap/ui/Device"
-], (UIComponent, JSONModel, Device) => {
+	"sap/ui/Device",
+	"sap/ui/model/odata/v2/ODataModel"
+], (UIComponent, JSONModel, Device, ODataModel) => {
    "use strict";
 
    return UIComponent.extend("ui5.testinvent.Component", {
@@ -19,9 +20,17 @@ sap.ui.define([
 			modeloDoDispositivo.setDefaultBindingMode("OneWay");
 			this.setModel(modeloDoDispositivo, "device");
 
+			// Cria o modelo OData apontando para o mock
+			var oModel = new ODataModel("/odata/", {
+				useBatch: false
+			});
+
+			this.setModel(oModel);
+
 			this.getRouter().initialize();
 			
 		},
+		
 		getContentDensityClass() {
 			return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";
 		}

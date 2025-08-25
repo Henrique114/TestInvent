@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Aplicação para consumir a API",
   "scripts": {
-    "start": "ui5 serve -o index.html"
+    "start": "ui5 serve -o test/mockServer.html"
   },
   "devDependencies": {
-    "@ui5/cli": "^4.0.22",
-    "eslint": "^9.31.0"
-   
+    "@ui5/cli": "^4.0.23",
+    "eslint": "^9.31.0",
+    "msw": "^2.10.5"
   },
   "dependencies": {
     "cors": "^2.8.5",

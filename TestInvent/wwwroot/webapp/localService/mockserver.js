@@ -1,35 +1,34 @@
 sap.ui.define([
-	"sap/ui/core/util/MockServer"
-], (MockServer) => {
-	"use strict";
-	const ENDPOINT_BASE = "/odata";
-	return {
-		init() {
-			debugger;
-			// create
-			const oMockServer = new MockServer({
-				rootUri: "/localService/" //sap.ui.require.toUrl("ui5/testinvent") + ENDPOINT_BASE ""
-			});
+  "sap/ui/core/util/MockServer",
+  "sap/ui/thirdparty/jquery"
+], function(MockServer, jQuery) {
+  "use strict";
 
-			const oUrlParams = new URLSearchParams(window.location.search);
+  return {
+	
+    init: function() {
+      const oMockServer = new MockServer({
+        rootUri: "/odata/"
+      });
 
-			// configure mock server with a delay
-			MockServer.config({
-				autoRespond: true,
-				autoRespondAfter: oUrlParams.get("serverDelay") || 500
-			});
+	  debugger;
+      // Configurar resposta automática com delay
+      MockServer.config({
+        autoRespond: true,
+        autoRespondAfter: 500
+      });
 
-			// simulate
-			// const sPath = sap.ui.require.toUrl("ui5/testinvent/localService");
-			// oMockServer.simulate(sPath + "/metadata.xml", sPath + "/mockdata");
+      // Simular serviço OData a partir do metadata e mockdata
+      const sPath = sap.ui.require.toUrl("ui5/testinvent/localService");
+      oMockServer.simulate(sPath + "/metadata.xml", {
+        sMockdataBaseUrl: sPath + "/mockdata",
+        bGenerateMissingMockData: true
+      });
 
-			 oMockServer.simulate("localService/metadata.xml", {
-				sMockdataBaseUrl: "localService/mockdata",
-				bGenerateMissingMockData: true
-			});
+      // Iniciar mock server
+      oMockServer.start();
 
-			// start
-			oMockServer.start();
-		}
-	};
+      return oMockServer;
+    }
+  };
 });

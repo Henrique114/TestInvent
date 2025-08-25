@@ -11,23 +11,14 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/localService/metadata.xml",
+				"uri": "/odata/",
 				"type": "OData",
 				"settings": {
-				"localUri": "localService/metadata.xml",
-				"odataVersion": "2.0"
-				}
-			},
-			"equipamentoRemoto": {
-				"uri": "resources/ui5/testinvent/odata/",
-				"type": "OData",
-				"settings": {
+					"localUri": "localService/metadata.xml",
 					"odataVersion": "2.0"
 				}
 			}
 		}		
-
-
 	},
 	"sap.ui": {
 		"technology": "UI5",
@@ -59,9 +50,9 @@
 			},
 
 			"equipamentos": {
-       				"dataSource": "equipamentoRemoto"
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "localService/mockdata/Equipamentos.json"
       		}
-
 		},
 		"rootView": {
 			"viewName": "ui5.testinvent.view.App",

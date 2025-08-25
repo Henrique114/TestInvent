@@ -11,9 +11,10 @@
 		data-sap-ui-async="true"
 		data-sap-ui-on-init="module:ui5/testinvent/test/initMockServer"
 		data-sap-ui-resource-roots='{
-			"ui5.testinvent": "../"
+			"ui5.testinvent": "../../"
 		}'>
 	</script>
+	<script type="module" src="../localService/mswMockServer.js"></script>
 </head>
 <body class="sapUiBody" id="content">
 	<div data-sap-ui-component data-name="ui5.testinvent" data-id="container" data-settings='{"id" : "testinvent"}'></div>
