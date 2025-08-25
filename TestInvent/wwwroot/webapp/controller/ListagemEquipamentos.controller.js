@@ -8,7 +8,7 @@ sap.ui.define([
 ],(Controller, JSONModel, Fragment, ServicoValidador, formatter, FragmentoConfirmacaoExclusao) => {
     "use strict";
 
-    const ENDPOINT_BASE = "/EquipamentoEletronico";
+    const ENDPOINT_BASE = "https://localhost:7104/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
     const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
