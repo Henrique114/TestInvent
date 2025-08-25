@@ -38,7 +38,6 @@ sap.ui.define([
         },
 
         atualizar: function(dados){
-
             const idEquipamento = dados.id;
             const url =  `${ENDPOINT_BASE}/${idEquipamento}`;
             const metodo = 'PUT';
@@ -53,8 +52,16 @@ sap.ui.define([
 
         },
 
-        deletar: function(){
+        deletar: function(id){
+            const url = `${ENDPOINT_BASE}/${id}`;
+            const metodo = 'DELETE';
 
-        }   
+            return fetch(url, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+        }
      }
 });

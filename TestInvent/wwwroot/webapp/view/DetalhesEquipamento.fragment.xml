@@ -21,11 +21,13 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoEditar">
-                    <customData>
-                        <core:CustomData key="IdItem" value="{equipamentoSelecionadoLista>/id}" />
-                        </customData>
-                </Button>
+					press=".aoEditar"/>
+                <Button
+                    id= "btnDeletarDetalhesEquipamento"
+                    press=".aoPressionarDeletar"
+                    icon="sap-icon://delete"
+                    class="sapUiTinyMarginBegin"
+                    type="Reject"/>
 			</contentRight>
         </Bar>
     </customHeader>

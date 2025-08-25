@@ -5,8 +5,9 @@ sap.ui.define([
     "../service/ServicoValidador",
     "../formatter/formatter", 
     "../repositorios/EquipamentoRepositorio",
-    "../repositorios/TiposRepositorio"
-],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio) => {
+    "../repositorios/TiposRepositorio", 
+    "../fragment/FragmentoConfirmacaoExclusao"
+],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio, FragmentoConfirmacaoExclusao) => {
     "use strict";
 
     const ENDPOINT_BASE = "/EquipamentoEletronico";
@@ -20,38 +21,49 @@ sap.ui.define([
     const MODELO_TIPOS_EQUIPAMENTO = "modeloTipoEquipamento"; 
     const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TRADUCAO = "i18n";
-    
+    const patametroQuery = "query";
+
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
+    let _query = null;
     
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
+            this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
-            
+        },
+
+         criarModelos: function(nome, modelo){
+             let view = this.getView();
+             if(modelo) view.setModel(modelo, nome);
+             return view.getModel(nome);
         },
 
         _iniciarModelos: function(){
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTOS_LISTAGEM);
-            this.getView().setModel(new JSONModel({}), MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
-            this.getView().setModel(new JSONModel({}), MODELO_TIPOS_EQUIPAMENTO);
-            this.getView().setModel(new JSONModel({}), MODELO_NOVO_EQUIPAMENTO);
+            let nomeModelos =   [MODELO_EQUIPAMENTOS_LISTAGEM,
+                                 MODELO_EQUIPAMENTO_SELECIONADO_LISTA,
+                                 MODELO_TIPOS_EQUIPAMENTO,
+                                 MODELO_NOVO_EQUIPAMENTO];
+ 
+             nomeModelos.forEach(element =>
+                 this.criarModelos(element, new JSONModel({}))
+             );
         },
 
         _acessarListar: function () {
             this.carregarLista();
-            this._iniciarModelos();
         },
 
         carregarLista: async function (filtro) {
             let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
             let dadosTipo = await TiposRepositorio.oberTipos();
-             
+            
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-            });
+        });
 
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
             model.setData(equipamentos);
@@ -60,8 +72,8 @@ sap.ui.define([
         },
         
         aoFiltrarEquipamentos: function (evento){
-            const _query = evento.getParameter("query");
-            this.carregarLista(_query);
+             this._query = evento.getParameter(patametroQuery);
+            this.carregarLista(this._query);
         },
         
         aoIrParaDetalhes: function (evento) {   
@@ -118,12 +130,11 @@ sap.ui.define([
         
         aoEditar: function(evento) { 
            let idEquipamento = null; 
+           const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
 
-            if (evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)) {
+            if (modelEquipamentos) {
                 
-                idEquipamento = evento
-                    .getSource()
-                    .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                idEquipamento = modelEquipamentos
                     .getObject().id;
             }else{
                 idEquipamento = this._dialogDetalhes
@@ -181,33 +192,66 @@ sap.ui.define([
 
         
         aoSalvar: function() {
-            const dados = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
+            const equipamento = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
             
             if (!ServicoValidador.validarFormulario.call(this)) {
                 return;
             }
             
-            dados.tipo = parseInt(dados.tipo),
-            dados.quantidadeEmEstoque = parseInt(dados.quantidadeEmEstoque)
+            equipamento.tipo = parseInt(equipamento.tipo),
+            equipamento.quantidadeEmEstoque = parseInt(equipamento.quantidadeEmEstoque)
 
-            if (dados.id){
-                EquipamentoRepositorio.atualizar(dados)
+            if (equipamento.id){
+                EquipamentoRepositorio.atualizar(equipamento)
                 .then(() => {
-                    this.carregarLista();
+                    this.carregarLista(this._query);
                     this._dialogAdicionarEditar.destroy();
                 });
 
             }else{
-                EquipamentoRepositorio.criar(dados)
+                EquipamentoRepositorio.criar(equipamento)
                 .then(() => {
-                    this.carregarLista();
+                    this.carregarLista(this._query);
                     this._dialogAdicionarEditar.destroy();
                 });
             }
         }, 
         
         aoFecharFormulario: function() {
-           this._dialogAdicionarEditar.destroy();
+            this._dialogAdicionarEditar.destroy();
+        },
+
+        aoPressionarDeletar: function(evento){
+            let idEquipamento = null;
+            const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
+
+            if (modelEquipamentos) {
+                idEquipamento = modelEquipamentos
+                                .getObject()
+                                .id;
+            }else{
+
+                idEquipamento = this._dialogDetalhes
+                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                                    .getData()
+                                    .id;
+            }
+ 
+            this._dialogDetalhes && this._dialogDetalhes.isOpen()
+            ? this._dialogDetalhes.close()
+            : null;
+
+            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
+        },
+ 
+        _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
+            let dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
+            dialogConfirmacao.open();
+        },
+ 
+        aoPressinarConfirmar: async function(id){
+            await EquipamentoRepositorio.deletar(id)
+            .then(() => this.carregarLista(this._query));
         },
     });
 });
