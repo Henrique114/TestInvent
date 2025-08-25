@@ -35,12 +35,6 @@ sap.ui.define([
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
         },
 
-         /**
-          *
-          * @param {string} nome
-          * @param {sap.ui.model.json.JSONModel} modelo
-          * @returns {sap.ui.model.json.JSONModel}
-         */
          criarModelos: function(nome, modelo){
              let view = this.getView();
              if(modelo) view.setModel(modelo, nome);
