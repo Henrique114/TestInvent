@@ -10,9 +10,9 @@ sap.ui.define([
     "use strict";
 
     const VIEW_NAME = "ListagemEquipamentos";
-    const QUANTIDADE_INICIAL = 2;
+    const QUANTIDADE_INICIAL = 4;
     const MODELO_EQUIPAMENTOS = "equipamentos";
-    const QUANTIDADE_MINIMA_ESPERADA = 1;
+    const QUANTIDADE_MINIMA_ESPERADA = 2;
 
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
@@ -93,10 +93,18 @@ sap.ui.define([
                     return this.waitFor({
                         controlType: "sap.m.Table",
                         viewName: VIEW_NAME,
-                        matchers: new AggregationLengthEquals({
+                        matchers: [new AggregationLengthEquals({
                             name: "items",
                             length: QUANTIDADE_INICIAL
+
+                            
                         }),
+                         function (oPage) {
+                    debugger; 
+                    return true;
+                    },
+                    
+                    ],
                         success: function () {
                             Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} itens.`);
                         },

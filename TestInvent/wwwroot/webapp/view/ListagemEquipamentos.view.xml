@@ -27,7 +27,7 @@
 						<SearchField 
 							width="50%"
 							search=".aoFiltrarEquipamentos"
-							id="inputFiltro"
+							id="{i18n>idFiltro}"
 							class="sapUiSizeCompact leftAlignedSearch"/>
 						<ToolbarSpacer/>
 					</Toolbar>

@@ -61,7 +61,6 @@ sap.ui.define([
 
             let dadosTipo = await TiposRepositorio.oberTipos();
             
-            debugger
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
