@@ -58,12 +58,14 @@ sap.ui.define([
 
         carregarLista: async function (filtro) {
             let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
+
             let dadosTipo = await TiposRepositorio.oberTipos();
             
+            debugger
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
-        });
+            });
 
             let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
             model.setData(equipamentos);

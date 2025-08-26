@@ -11,8 +11,6 @@ sap.ui.define([
             
             return fetch(urlRequisicaoTiposEquipamento)
                 .then(response => response.json());
-            
-                
         },
      }
 });

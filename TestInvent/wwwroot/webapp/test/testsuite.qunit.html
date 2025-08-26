@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-	<script
-		src="../resources/sap/ui/test/starter/createSuite.js"
-		data-sap-ui-testsuite="test-resources/ui5/testinvent/testsuite.qunit"
-		data-sap-ui-resource-roots='{
-			"test-resources.ui5.testinvent": "./"
-		}'
-	></script>
+    <title>Teste de Integração | SAPUI5 OPA</title>
+    <meta charset="utf-8">
+
+    <script 
+        id="sap-ui-bootstrap" 
+        src="https://sdk.openui5.org/resources/sap-ui-core.js" 
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-resourceroots='{"ui5.testinvent": "../"}' 
+        data-sap-ui-animation="false" 
+        data-sap-ui-compatVersion="edge" 
+        data-sap-ui-async="true">
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="https://sdk.openui5.org/resources/sap/ui/thirdparty/qunit-2.css">
+
+    <script src="https://sdk.openui5.org/resources/sap/ui/thirdparty/qunit-2.js"></script>
+    <script src="https://sdk.openui5.org/resources/sap/ui/qunit/qunit-junit.js"></script>
+
+    <script src="integration/opaTests.qunit.js"></script>
 </head>
+
 <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
 </body>
+
 </html>

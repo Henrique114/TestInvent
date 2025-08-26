@@ -26,7 +26,7 @@ sap.ui.define([
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
             
             return fetch(urlRequisicaoEquipamentos)
-                .then(response => response.json());
+                .then((response) => response.json());
                 
         },
 

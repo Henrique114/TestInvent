@@ -1,26 +1,16 @@
 sap.ui.define([
-	"sap/ui/test/opaQunit",
-	"./pages/App"
-], (opaTest) => {
-	"use strict";
+    "sap/ui/test/Opa5",
+    "sap/ui/test/opaQunit",
+    "ui5/testinvent/test/integration/Startup",
+    "ui5/testinvent/test/integration/pages/JornadaLista",
+    "ui5/testinvent/test/integration/pages/JornadaCadastro",
+    "ui5/testinvent/test/integration/pages/JornadaDetalhe"
+], (Opa5, opaTest, Startup) => {
+    "use strict";
 
-	QUnit.module("Navigation");
-
-	opaTest("Should open the Editar dialog", (Given, When, Then) => {
-		// Arrangements
-		Given.iStartMyUIComponent({
-			componentConfig: {
-				name: "ui5.testinvent"
-			}
-		});
-
-		//Actions
-		When.onTheAppPage.euPressionoOBotaoDeAdicionar();
-
-		// Assertions
-		Then.onTheAppPage.deveriaAparecerOFormularioAdicionar();
-
-		// Cleanup
-		Then.iTeardownMyApp();
-	});
+    Opa5.extendConfig({
+        arrangements: new Startup(),
+        viewNamespace: "ui5.testinvent.view.",
+        autoWait: true
+    });
 });
