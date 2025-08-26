@@ -19,20 +19,23 @@
                         text: resourceBundle.getText("msgconfirmarDelete") 
                     }).addStyleClass("sapUiSmallMargin"),
                 ],
+                id:"idDialogDeConfirmacao",
                 state: 'Warning',
                 beginButton: new Button({
                     press: function () {
-                        this.getParent().close();
+                        this.getParent().destroy();
                     },
-                    text: resourceBundle.getText("btnCancelar") 
+                    text: resourceBundle.getText("btnCancelar"),
+                    id: "btnCancelarDelete" 
                 }),
                 endButton: new Button({
                     press: () => {
                         controller.aoPressinarConfirmar(idEquipamento);
                         MessageToast.show(resourceBundle.getText("msgDeleteComSucesso")); 
-                        confirmacaoDeletar.close();
+                        confirmacaoDeletar.destroy();
                     },
-                    text: resourceBundle.getText("btnConfirmar") 
+                    text: resourceBundle.getText("btnConfirmar"), 
+                    id: "btnConfirmarDelete" 
                 }),
                 customHeader: new Bar({
                     contentMiddle: [

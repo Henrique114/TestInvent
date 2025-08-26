@@ -52,7 +52,7 @@ sap.ui.define([
                 },
                 cancelandoNaConfirmacaoDeDeletar: function () {
                     return this.waitFor({
-                        id: "__button0",
+                        id: "btnCancelarDelete",
                         actions: new Press(),
                         success: function () {
                             Opa5.assert.ok(true, "Botão Cancelar no Dialog de confirmacao foi clicado com sucesso.");
