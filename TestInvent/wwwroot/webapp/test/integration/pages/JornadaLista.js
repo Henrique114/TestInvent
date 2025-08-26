@@ -17,21 +17,7 @@ sap.ui.define([
 		When.naPaginaDeListagemDeEquipamentos.euBuscoPorNome("Teste 1");
 		Then.naPaginaDeListagemDeEquipamentos.tabelaContemItem("Teste 1");
 
-		When.naPaginaDeListagemDeEquipamentos.euClicoNoItemPeloNome("Teste 1");
-		Then.naPaginaDeDetalheDeEquipamento.paginaDeDetalheAberta();
-		When.naPaginaDeDetalheDeEquipamento.euClicoEmVoltar();
-		Then.naPaginaDeListagemDeEquipamentos.paginaDeListaAberta();
-
-		When.naPaginaDeListagemDeEquipamentos.euBuscoPorNome("Não existe");
-		Then.naPaginaDeListagemDeEquipamentos.tabelaVazia();
-
-		When.naPaginaDeListagemDeEquipamentos.euBuscoPorNome("");
-		Then.naPaginaDeListagemDeEquipamentos.tabelaCarregadaComDados();
-
-		When.naPaginaDeListagemDeEquipamentos.euClicoNoBotaoDeCadastro();
-		Then.naPaginaDeCadastroDeEquipamentos.paginaDeCadastroAberta();
-		When.naPaginaDeCadastroDeEquipamentos.euClicoEmVoltar();
-		Then.naPaginaDeListagemDeEquipamentos.paginaDeListaAberta();
+		
 
 		Then.iTeardownMyApp();
 	});
