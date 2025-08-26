@@ -1,0 +1,35 @@
+sap.ui.define([
+	"sap/ui/test/opaQunit",
+	"./Lista",
+	"./Detalhe",
+	"./Cadastro"
+	
+], function (opaTest) {
+	"use strict";
+
+	QUnit.module("Dialog exibição detalhes do equipamento selecionado.");
+
+	opaTest("Opções do Dialog de exibição detalhes.", function (Given, When, Then) {
+		Given.iStartMyApp();
+
+        
+        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
+	    Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();
+
+        Then.naPaginaDeDetalheDeEquipamento.confirmaSeItemAbertoCorrespondeAoSelecionado("TesteA");
+
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarEmDetalhes();
+        When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
+
+        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
+
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarEmDetalhes();
+        When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+
+        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
+        When.naPaginaDeDetalheDeEquipamento.fechandoDialogDeDetalhes();
+
+
+		Then.iTeardownMyApp();
+	});
+});

@@ -66,7 +66,6 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
                                     <f:fields>
-
                                         <Text text="{
 
                                                 path: 'equipamentoSelecionadoLista>/dataDeInclusao',
@@ -77,7 +76,6 @@
 
                                                 }                                         
 										}" />
-
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
@@ -87,9 +85,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
-
                                         <Text text="{= ${equipamentoSelecionadoLista>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
-
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
