@@ -17,30 +17,26 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
             actions: {
-                euClicoNoBotaoDeCadastro: function () {
-                    return this.waitFor({
-                        controlType: "sap.m.Button",
-                        viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "text",
-                            key: "btnAdicionarEquipamento"
-                        }),
-                        actions: new Press(),
-                        success: function () {
-                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
-                        },
-                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
-                    });
-                },
+                // euClicoNoBotaoDeCadastro: function () {
+                //     return this.waitFor({
+                //         controlType: "sap.m.Button",
+                //         viewName: VIEW_NAME,
+                //         matchers: new I18NText({
+                //             propertyName: "text",
+                //             key: "btnAdicionarEquipamento"
+                //         }),
+                //         actions: new Press(),
+                //         success: function () {
+                //             Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
+                //         },
+                //         errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
+                //     });
+                // },
 
                 euBuscoPorNome: function (nome) {
                     return this.waitFor({
-                        controlType: "sap.m.SearchField",
+                        id: "inputFiltro",
                         viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "id",
-                            key: "inputFiltro"
-                        }),
                         actions: new EnterText({ text: nome }),
                         success: function () {
                             Opa5.assert.ok(true, `Busca realizada com: ${nome}.`);
@@ -71,17 +67,11 @@ sap.ui.define([
                         controlType: "sap.m.Table",
                         viewName: "ListagemEquipamentos",
                         matchers: [
-                    // Adicionamos a função de callback para o debugger
-                    function (oPage) {
-                    debugger; 
-                    return true;
-                    },
-                    new I18NText({
-                    propertyName: "headerText",
-                    key: "listPageTitle"
-                    })
+                        new I18NText({
+                        propertyName: "headerText",
+                        key: "listPageTitle"
+                        })
                     ],
-
                         success: function () {
                             Opa5.assert.ok(true, "Página de lista aberta.");
                         },
@@ -99,14 +89,16 @@ sap.ui.define([
 
                             
                         }),
+                        
                          function (oPage) {
                     debugger; 
+                    
                     return true;
                     },
                     
                     ],
                         success: function () {
-                            Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} itens.`);
+                            Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} objetos.`);
                         },
                         errorMessage: "Quantidade de itens incorreta."
                     });

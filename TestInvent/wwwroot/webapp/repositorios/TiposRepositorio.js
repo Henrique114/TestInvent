@@ -6,7 +6,7 @@ sap.ui.define([
      
 
     return {
-        oberTipos: function(){
+        obterTipos: function(){
             let urlRequisicaoTiposEquipamento = `${ENDPOINT_BASE}/tipos`;
             
             return fetch(urlRequisicaoTiposEquipamento)

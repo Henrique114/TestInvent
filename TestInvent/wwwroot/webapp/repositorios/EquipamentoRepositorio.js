@@ -7,7 +7,6 @@ sap.ui.define([
 
     return {
 
-
         criar: function(dados){
             const url = `${ENDPOINT_BASE}`;
             const metodo = 'POST';
@@ -22,7 +21,7 @@ sap.ui.define([
 
         },
 
-        oberTodos: function(filtro){
+        obterTodos: function(filtro){
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
             
             return fetch(urlRequisicaoEquipamentos)

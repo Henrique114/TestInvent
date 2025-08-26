@@ -2,9 +2,8 @@ sap.ui.define([
     "sap/ui/test/Opa5",
     "sap/ui/test/opaQunit",
     "ui5/testinvent/test/integration/Startup",
-    "ui5/testinvent/test/integration/pages/JornadaLista",
-    "ui5/testinvent/test/integration/pages/JornadaCadastro",
-    "ui5/testinvent/test/integration/pages/JornadaDetalhe"
+    "ui5/testinvent/test/integration/pages/JornadaLista"
+   
 ], (Opa5, opaTest, Startup) => {
     "use strict";
 

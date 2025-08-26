@@ -31,6 +31,15 @@ sap.ui.define([
 
 
         if (url.endsWith("/EquipamentoEletronico")) {
+
+            const urlParams = new URLSearchParams(url.split("?")[1]);
+            const filtro = urlParams.get('filtro');
+            if(filtro){
+                const equipamentosFiltrados = equipamentos.filter(e => e.nome.includes(filtro));
+                return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamentosFiltrados) });
+            }
+
+
             return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamentos) });
         }
    

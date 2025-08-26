@@ -57,10 +57,10 @@ sap.ui.define([
         },
 
         carregarLista: async function (filtro) {
-            let equipamentos = await EquipamentoRepositorio.oberTodos(filtro);
+            let equipamentos = await EquipamentoRepositorio.obterTodos(filtro);
 
-            let dadosTipo = await TiposRepositorio.oberTipos();
-            
+            let dadosTipo = await TiposRepositorio.obterTipos();
+            debugger;
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
@@ -89,7 +89,7 @@ sap.ui.define([
 
         _abrirTelaDeDetalhes: async function(equipamentoSelecionado) {
             let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
-            let dadosTipo = await TiposRepositorio.oberTipos();
+            let dadosTipo = await TiposRepositorio.obterTipos();
             let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
             let equipamento = await EquipamentoRepositorio.obterPorId(equipamentoSelecionado);
             equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
@@ -159,7 +159,7 @@ sap.ui.define([
 
 
             dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
-            let dadosTipos = await TiposRepositorio.oberTipos();
+            let dadosTipos = await TiposRepositorio.obterTipos();
             modelTipos.setData(dadosTipos);
             modelTipos.refresh(true);
 
