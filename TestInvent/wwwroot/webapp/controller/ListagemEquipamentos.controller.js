@@ -25,6 +25,7 @@ sap.ui.define([
 
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
+    let _dialogConfirmacao = null;
     let _query = null;
     
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
@@ -246,8 +247,11 @@ sap.ui.define([
         },
  
         _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
-            let dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
-            dialogConfirmacao.open();
+            
+             if (!this._dialogConfirmacao) {
+                this._dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
+            }
+            this._dialogConfirmacao.open();
         },
  
         aoPressinarConfirmar: async function(id){

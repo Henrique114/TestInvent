@@ -22,38 +22,39 @@ sap.ui.define([
                         errorMessage: "Não encontrei o botão Fechar tela de detalhes."
                     });
                 },
-                euClicoEmRemover: function () {
+                 pressionandoBotaoEditarEmDetalhes: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Button",
+                        id: "btnEditarEquipamentoPgDetalhes",
                         viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "text",
-                            key: "botaoRemover"
-                        }),
                         actions: new Press(),
                         success: function () {
-                            Opa5.assert.ok(true, "Botão 'Remover' clicado com sucesso.");
+                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
                         },
-                        errorMessage: "Não encontrei o botão 'Remover'."
+                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
                     });
                 },
-                euClicoEmEditar: function () {
+                pressionandoBotaoDeletarEmDetalhes: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Button",
+                        id: "btnDeletarDetalhesEquipamento",
                         viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "text",
-                            key: "botaoEditar"
-                        }),
                         actions: new Press(),
                         success: function () {
-                            Opa5.assert.ok(true, "Botão 'Editar' clicado com sucesso.");
+                            Opa5.assert.ok(true, "Botão Deletar foi clicado com sucesso.");
                         },
-                        errorMessage: "Não encontrei o botão 'Editar'."
-
+                        errorMessage: "Botão Deletar não foi encontrado no Dialog."
                     });
                 },
-                euConfirmoRemocao: function () {
+                cancelandoNaConfirmacaoDeDeletar: function () {
+                    return this.waitFor({
+                        id: "btnCancelarDelete",
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, "Botão Cancelar foi clicado com sucesso no Dialog de confirmacao.");
+                        },
+                        errorMessage: "Botão Cancelar não foi encontrado no Dialog de confirmacao ."
+                    });
+                },
+                confirmandoRemocao: function () {
                     return this.waitFor({
                         controlType: "sap.m.Button",
                         searchOpenDialogs: true,
@@ -69,35 +70,31 @@ sap.ui.define([
                     });
                 },
 
-                euNaoConfirmoRemocao: function () {
-                    return this.waitFor({
-                        controlType: "sap.m.Button",
-                        searchOpenDialogs: true,
-                        matchers: new I18NText({
-                            propertyName: "text",
-                            key: "botaoCancelar"
-                        }),
-                        actions: new Press(),
-                        success: function () {
-                            Opa5.assert.ok(true, "Confirmou a não remoção do equipamento.");
-                        },
-                        errorMessage: "Não foi possível localizar a opção para negar a remoção."
-                    });
-                }
+               
             },
             assertions: {
-                paginaDeDetalheAberta: function () {
+                dialogDeDetalhesFoiAberto: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Page",
+                        id: "idDialogDetalhes",
                         viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "title",
-                            key: "tituloPaginaDetalhes"
-                        }),
                         success: function () {
                             Opa5.assert.ok(true, "Página de detalhes foi aberta corretamente.");
                         },
                         errorMessage: "Página de detalhes não abriu corretamente."
+                    });
+                },
+                confirmaSeItemAbertoCorrespondeAoSelecionado: function(nome){
+                    return this.waitFor({
+                        controlType: "sap.m.Title",
+                        matchers: new PropertyStrictEquals({
+                            name: "text",
+                            value: nome
+                        }),
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, `O nome: ${nome} corresponde ao item selecinado na lista.`);
+                        },
+                        errorMessage: `O nome: ${nome} não não corresponde ao selecionado em tela.`
                     });
                 }
             }
