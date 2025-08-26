@@ -48,7 +48,7 @@
                                                     path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
                                                 }"
-                                                id="formulariotipo"
+                                                id="escolhaTipo"
                                                 required="true">
                                             <core:Item key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
                                         </Select>

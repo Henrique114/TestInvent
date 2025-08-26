@@ -25,13 +25,13 @@ sap.ui.define([
                         errorMessage: "Não encontrei o botão Fechar Dialog de Adicionar equipamento."
                     });
                 },
-                preenchoONome: function (nome) {
+                preenchendoNome: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
                         matchers: new I18NText({
                             propertyName: "placeholder",
-                            key: "placeholderNome"
+                            key: "preencherNome"
                         }),
                         actions: new EnterText({ text: nome }),
                         success: function () {
@@ -40,28 +40,34 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Nome na página de cadastro."
                     });
                 },
-                preenchoOTipo: function (tipo) {
+                preenchendoTipo: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Input",
-                        viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "placeholder",
-                            key: "placeholderTipo"
-                        }),
-                        actions: new EnterText({ text: tipo }),
-                        success: function () {
-                            Opa5.assert.ok(true, "Preenchi o tipo com: " + tipo);
+                       id: "escolhaTipo",
+                        actions: new Press(),
+                        success: function(oSelect) {
+                            this.waitFor({
+                                controlType: "sap.ui.core.Item",
+                                matchers: [
+                                    new Ancestor(oSelect),
+                                    new Properties({ key: "Notebook"})
+                                ],
+                                actions: new Press(),
+                                success: function() {
+                                    Opa5.assert.strictEqual(oSelect.getSelectedKey(), "Notebook", "Notebook selecionado!");
+                                },
+                                errorMessage: "Não consegui selecionar Notebook no select."
+                            });
                         },
-                        errorMessage: "Não encontrei o campo Tipo na página de cadastro."
-                    });
+                        errorMessage: "Não consegui encontrar o Select"
+                                });
                 },
-                preenchoAQuantidade: function (quantidade) {
+                preenchendoQuantidade: function (quantidade) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
                         matchers: new I18NText({
                             propertyName: "placeholder",
-                            key: "placeholderQuantidade"
+                            key: "preencherQuantidade"
                         }),
                         matchers: new PropertyStrictEquals({
                             name: "type",
@@ -74,14 +80,10 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Quantidade na página de cadastro."
                     });
                 },
-                euClicoEmSalvar: function () {
+                clicandoEmSalvar: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Button",
+                         id: "__xmlview2--btnSalvarTelaCadastro",
                         viewName: VIEW_NAME,
-                        matchers: new I18NText({
-                            propertyName: "text",
-                            key: "botaoSalvar"
-                        }),
                         actions: new Press(),
                         success: function () {
                             Opa5.assert.ok(true, "Botão Salvar foi clicado com sucesso.");
@@ -89,25 +91,10 @@ sap.ui.define([
                         errorMessage: "Botão Salvar não foi encontrado na página de cadastro."
                     });
                 },
-                euClicoEmFecharValidacaoErro: function () {
-                    return this.waitFor({
-                        controlType: "sap.m.Button",
-                        matchers: new PropertyStrictEquals({
-                            name: "text",
-                            value: "Fechar"
-                        }),
-                        actions: new Press(),
-                        success: function () {
-                            Opa5.assert.ok(true, "Fechar da MessageBox clicado");
-                        },
-                        errorMessage: "Botão da MessageBox não encontrado."
-                    });
-                }
-
             },
 
             assertions: {
-                paginaDeCadastroAberta: function () {
+                dialogDeAdicionarAberto: function () {
                     return this.waitFor({
                         controlType: "sap.m.Page",
                         viewName: VIEW_NAME,
