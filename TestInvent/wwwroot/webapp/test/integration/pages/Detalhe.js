@@ -6,24 +6,20 @@ sap.ui.define([
 ], function (Opa5, I18NText, PropertyStrictEquals, Press) {
     "use strict";
 
-    const VIEW_NAME = "EquipamentoDetalhe";
+    const VIEW_NAME = "ListagemEquipamentos";
 
     Opa5.createPageObjects({
         naPaginaDeDetalheDeEquipamento: {
             actions: {
-                euClicoEmVoltar: function () {
+                fechandoDialogDeDetalhes: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Button",
+                        id: "btnFechar",
                         viewName: VIEW_NAME,
-                        matchers: new PropertyStrictEquals({
-                            name: "type",
-                            value: "Back"
-                        }),
                         actions: new Press(),
                         success: function () {
-                            Opa5.assert.ok(true, "Botão 'Voltar' clicado com sucesso.");
+                            Opa5.assert.ok(true, "Cliquei em Fechar tela de detalhes.");
                         },
-                        errorMessage: "Não encontrei o botão 'Voltar'."
+                        errorMessage: "Não encontrei o botão Fechar tela de detalhes."
                     });
                 },
                 euClicoEmRemover: function () {

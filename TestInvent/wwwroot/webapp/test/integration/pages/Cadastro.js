@@ -8,24 +8,21 @@ sap.ui.define([
 ], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals, MessageBox) {
     "use strict";
 
-    const VIEW_NAME = "EquipamentoCadastro";
+    const VIEW_NAME = "ListagemEquipamentos";
 
     Opa5.createPageObjects({
         naPaginaDeCadastroDeEquipamentos: {
             actions: {
 
-                euClicoEmVoltar: function () {
+                fechandoDialogDeAdicionar: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Button",
-                        matchers: new PropertyStrictEquals({
-                            name: "type",
-                            value: "Back"
-                        }),
+                        id: "btnCancelarTelaCadastroEdicao",
+                        viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {
-                            Opa5.assert.ok(true, "Cliquei em Voltar na tela de Cadastro");
+                            Opa5.assert.ok(true, "Cliquei em Fechar Dialog de Adicionar equipamento.");
                         },
-                        errorMessage: "Não encontrei o botão Voltar na tela de Cadastro."
+                        errorMessage: "Não encontrei o botão Fechar Dialog de Adicionar equipamento."
                     });
                 },
                 preenchoONome: function (nome) {

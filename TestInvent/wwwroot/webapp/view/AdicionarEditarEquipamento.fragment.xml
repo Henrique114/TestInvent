@@ -78,7 +78,7 @@
         </content>
         <buttons>
             <Button text="{i18n>btnSalvar}"  class="sapUiTinyMarginEnd" type="Emphasized" id="btnSalvarTelaCadastro" press="aoSalvar"/>
-            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastro" press="aoFecharFormulario"/>
+            <Button text="{i18n>btnCancelar}" type="Ghost" id="btnCancelarTelaCadastroEdicao" press="aoFecharFormulario"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

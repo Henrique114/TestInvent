@@ -6,8 +6,8 @@ sap.ui.define([
     const ID_INICIAL_MOCK = 3;
 
     let equipamentos = [
-        { id: "Equipamento-1-A", nome: "Teste 1", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: true },
-        { id: "Equipamento-2-A", nome: "Teste 2", tipo: "Monitor", quantidadeEmEstoque: 0, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: false }
+        { id: "Equipamento-1-A", nome: "TesteA", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: true },
+        { id: "Equipamento-2-A", nome: "TesteB", tipo: "Monitor", quantidadeEmEstoque: 0, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: false }
     ];
 
     let tipos = [
@@ -66,8 +66,8 @@ sap.ui.define([
         iTearDownMyApp: function () {
             window.fetch = undefined;
             equipamentos = [
-                { id: "Equipamento-1-A", nome: "Teste 1", tipo: "Eletrônico", quantidadeEmEstoque: 10, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: true },
-                { id: "Equipamento-2-A", nome: "Teste 2", tipo: "Mecânico", quantidadeEmEstoque: 0, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: false }
+                { id: "Equipamento-1-A", nome: "TesteA", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: true },
+                { id: "Equipamento-2-A", nome: "TesteB", tipo: "Monitor", quantidadeEmEstoque: 0, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: false }
             ];
             proximoId = ID_INICIAL_MOCK;
             return this.iTeardownMyUIComponent();

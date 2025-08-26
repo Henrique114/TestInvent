@@ -17,23 +17,51 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
             actions: {
-                // euClicoNoBotaoDeCadastro: function () {
-                //     return this.waitFor({
-                //         controlType: "sap.m.Button",
-                //         viewName: VIEW_NAME,
-                //         matchers: new I18NText({
-                //             propertyName: "text",
-                //             key: "btnAdicionarEquipamento"
-                //         }),
-                //         actions: new Press(),
-                //         success: function () {
-                //             Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
-                //         },
-                //         errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
-                //     });
-                // },
+                pressionandoBotaoAdicionar: function () {
+                    return this.waitFor({
+                        id: "btnAdicionarEquipamento",
+                        viewName: VIEW_NAME,
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
+                        },
+                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
+                    });
+                },
+                pressionandoBotaoEditarLinha1: function () {
+                    return this.waitFor({
+                        id: "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0",
+                        viewName: VIEW_NAME,
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
+                        },
+                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
+                    });
+                },
+                pressionandoBotaoDeletarLinha1: function () {
+                    return this.waitFor({
+                        id: "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0",
+                        viewName: VIEW_NAME,
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, "Botão Deletar foi clicado com sucesso.");
+                        },
+                        errorMessage: "Botão Deletar não foi encontrado no Dialog."
+                    });
+                },
+                cancelandoNaConfirmacaoDeDeletar: function () {
+                    return this.waitFor({
+                        id: "__button0",
+                        actions: new Press(),
+                        success: function () {
+                            Opa5.assert.ok(true, "Botão Cancelar no Dialog de confirmacao foi clicado com sucesso.");
+                        },
+                        errorMessage: "Botão Cancelar no Dialog de confirmacao não foi encontrado."
+                    });
+                },
 
-                euBuscoPorNome: function (nome) {
+                buscandoPorNome: function (nome) {
                     return this.waitFor({
                         id: "inputFiltro",
                         viewName: VIEW_NAME,
@@ -45,7 +73,7 @@ sap.ui.define([
                     });
                 },
 
-                euClicoNoItemPeloNome: function (nome) {
+                clicandoNoItemEAbrindoTelaDeDetalhes: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",
                         matchers: new PropertyStrictEquals({
@@ -62,7 +90,7 @@ sap.ui.define([
             },
 
             assertions: {
-                paginaDeListaAberta: function () {
+                telaListagemAberta: function () {
                     return this.waitFor({
                         controlType: "sap.m.Table",
                         viewName: "ListagemEquipamentos",
@@ -79,7 +107,7 @@ sap.ui.define([
                     });
                 },
 
-                tabelaCarregadaComDados: function () {
+                listaCarregadaComItems: function () {
                     return this.waitFor({
                         controlType: "sap.m.Table",
                         viewName: VIEW_NAME,
@@ -104,7 +132,7 @@ sap.ui.define([
                     });
                 },
 
-                tabelaContemItem: function (nome) {
+                listaExibeOResultadoDaFiltragem: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",
                         viewName: VIEW_NAME,

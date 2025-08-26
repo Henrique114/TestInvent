@@ -99,7 +99,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
+            <Button id= "btnFechar" text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

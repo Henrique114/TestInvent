@@ -1,0 +1,41 @@
+sap.ui.define([
+	"sap/ui/test/opaQunit",
+	"./Lista",
+	"./Detalhe",
+	"./Cadastro"
+	
+], function (opaTest) {
+	"use strict";
+
+	QUnit.module("Tela Listagem de Equipamento");
+
+	opaTest("Fluxo de listagem completo", function (Given, When, Then) {
+		Given.iStartMyApp();
+
+		Then.naPaginaDeListagemDeEquipamentos.telaListagemAberta();
+		Then.naPaginaDeListagemDeEquipamentos.listaCarregadaComItems();
+
+		When.naPaginaDeListagemDeEquipamentos.buscandoPorNome("TesteA");
+		Then.naPaginaDeListagemDeEquipamentos.listaExibeOResultadoDaFiltragem("TesteA");
+
+		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
+		When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
+
+		When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
+		When.naPaginaDeDetalheDeEquipamento.fechandoDialogDeDetalhes();
+
+        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1();
+		When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
+
+		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
+		When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+
+
+
+
+
+		
+
+		Then.iTeardownMyApp();
+	});
+});
