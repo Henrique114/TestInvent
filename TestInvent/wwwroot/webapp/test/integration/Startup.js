@@ -4,6 +4,7 @@ sap.ui.define([
     "use strict";
 
     const ID_INICIAL_MOCK = 3;
+    const URL_BASE = "/EquipamentoEletronico";
 
     let equipamentos = [
         { id: "Equipamento-1-A", nome: "TesteA", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: true },
@@ -29,16 +30,16 @@ sap.ui.define([
             return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
         }
 
+        let ehUrlBase = url.startsWith(URL_BASE);
+        let ehUrlBaseComFiltro = ehUrlBase && url.includes('?filtro'); 
 
-        if (url.endsWith("/EquipamentoEletronico")) {
-
+        if (ehUrlBase || ehUrlBaseComFiltro) {
             const urlParams = new URLSearchParams(url.split("?")[1]);
             const filtro = urlParams.get('filtro');
             if(filtro){
                 const equipamentosFiltrados = equipamentos.filter(e => e.nome.includes(filtro));
                 return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamentosFiltrados) });
             }
-
 
             return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamentos) });
         }

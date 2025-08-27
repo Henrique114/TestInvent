@@ -74,7 +74,7 @@ sap.ui.define([
         },
         
         aoFiltrarEquipamentos: function (evento){
-             this._query = evento.getParameter(patametroQuery);
+            this._query = evento.getParameter(patametroQuery);
             this.carregarLista(this._query);
         },
         
