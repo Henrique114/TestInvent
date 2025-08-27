@@ -30,6 +30,7 @@ sap.ui.define([
         },
 
         obterPorId: function(idEquipamento) {
+            debugger;
             const url = `${ENDPOINT_BASE}/${idEquipamento}`;
 
             return fetch(url)

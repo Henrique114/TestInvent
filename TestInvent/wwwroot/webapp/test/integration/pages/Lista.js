@@ -11,6 +11,8 @@ sap.ui.define([
 
     const VIEW_NAME = "ListagemEquipamentos";
     const QUANTIDADE_INICIAL = 4;
+    const botaoEditarLinha1Lista = "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
+    const botaoDeletarLinha1Lista = "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
     const MODELO_EQUIPAMENTOS = "equipamentos";
     const QUANTIDADE_MINIMA_ESPERADA = 2;
 
@@ -30,7 +32,7 @@ sap.ui.define([
                 },
                 pressionandoBotaoEditarLinha1: function () {
                     return this.waitFor({
-                        id: "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0",
+                        id: botaoEditarLinha1Lista,
                         viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {
@@ -41,7 +43,7 @@ sap.ui.define([
                 },
                 pressionandoBotaoDeletarLinha1: function () {
                     return this.waitFor({
-                        id: "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0",
+                        id: botaoDeletarLinha1Lista,
                         viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {
@@ -93,7 +95,7 @@ sap.ui.define([
                 telaListagemAberta: function () {
                     return this.waitFor({
                         controlType: "sap.m.Table",
-                        viewName: "ListagemEquipamentos",
+                        viewName: VIEW_NAME,
                         matchers: [
                         new I18NText({
                         propertyName: "headerText",
@@ -117,13 +119,6 @@ sap.ui.define([
 
                             
                         }),
-                        
-                         function (oPage) {
-                    debugger; 
-                    
-                    return true;
-                    },
-                    
                     ],
                         success: function () {
                             Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} objetos.`);
