@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idAdicionarEditar" title="{= ${novoEquipamento>/nome} ? ${i18n>btnEditarEquipamento} : ${i18n>btnAdicionarEquipamento} }" >
+    <Dialog id="idAdicionarEditar" title="{= ${novoEquipamento>/id} ? ${i18n>btnEditarEquipamento} : ${i18n>btnAdicionarEquipamento} }" >
         <content>
        	    <VBox >
                 <f:Form id="formularioAdicionarEditar"
@@ -48,9 +48,9 @@
                                                     path: 'modeloTipoEquipamento>/',
                                                     sorter: { path: 'descricao' }
                                                 }"
-                                                id="escolhaTipo"
+                                                id="formulariotipo"
                                                 required="true">
-                                            <core:Item key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
+                                            <core:Item id="idItem" key="{modeloTipoEquipamento>chave}" text="{modeloTipoEquipamento>descricao}" />
                                         </Select>
                                     </f:fields>
                                 </f:FormElement>
