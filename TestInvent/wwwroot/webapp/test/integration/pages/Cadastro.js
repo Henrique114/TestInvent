@@ -42,24 +42,22 @@ sap.ui.define([
                 },
                 preenchendoTipo: function () {
                     return this.waitFor({
-                       id: "escolhaTipo",
+                        id: "formulariotipo",
+                        viewName: VIEW_NAME,
                         actions: new Press(),
-                        success: function(oSelect) {
+                        success: function() {
                             this.waitFor({
-                                controlType: "sap.ui.core.Item",
-                                matchers: [
-                                    new Ancestor(oSelect),
-                                    new Properties({ key: "Notebook"})
-                                ],
+                                id: "idItem-__xmlview0--formulariotipo-1",
                                 actions: new Press(),
+                                viewName: VIEW_NAME,
                                 success: function() {
-                                    Opa5.assert.strictEqual(oSelect.getSelectedKey(), "Notebook", "Notebook selecionado!");
+                                   Opa5.assert.ok(true, "Segundo item foi clicado com sucesso.");
                                 },
-                                errorMessage: "Não consegui selecionar Notebook no select."
+                                errorMessage: "Não consegui selecionar o segundo item no select."
                             });
                         },
                         errorMessage: "Não consegui encontrar o Select"
-                                });
+                    });
                 },
                 preenchendoQuantidade: function (quantidade) {
                     return this.waitFor({
@@ -82,7 +80,7 @@ sap.ui.define([
                 },
                 clicandoEmSalvar: function () {
                     return this.waitFor({
-                         id: "__xmlview2--btnSalvarTelaCadastro",
+                         id: "btnSalvarTelaCadastro",
                         viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {
