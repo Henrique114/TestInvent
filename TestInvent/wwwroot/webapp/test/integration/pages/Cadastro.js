@@ -9,6 +9,7 @@ sap.ui.define([
     "use strict";
 
     const VIEW_NAME = "ListagemEquipamentos";
+    
 
     Opa5.createPageObjects({
         naPaginaDeCadastroDeEquipamentos: {
@@ -47,7 +48,7 @@ sap.ui.define([
                         actions: new Press(),
                         success: function() {
                             this.waitFor({
-                                id: "idItem-__xmlview0--formulariotipo-1",
+                                id: "idItem-listagemView--formulariotipo-1",
                                 actions: new Press(),
                                 viewName: VIEW_NAME,
                                 success: function() {

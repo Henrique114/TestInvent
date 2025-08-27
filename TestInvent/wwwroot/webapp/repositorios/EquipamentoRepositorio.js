@@ -21,13 +21,13 @@ sap.ui.define([
         obterTodos: function(filtro){
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
             return fetch(urlRequisicaoEquipamentos)
-                .then((response) => response.json());
+            .then((response) => response.json());
         },
 
         obterPorId: function(idEquipamento) {
             const url = `${ENDPOINT_BASE}/${idEquipamento}`;
             return fetch(url)
-                .then(response => response.json());
+            .then(response => response.json());
         },
 
         atualizar: function(dados){

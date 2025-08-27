@@ -8,8 +8,8 @@ sap.ui.define([
             let objetoTipoEncontrado = dadosTipo.find(t => t.chave == tipo);
             let apenasDescricao = objetoTipoEncontrado?.descricao;
             return apenasDescricao 
-                            ? apenasDescricao 
-                            :  tipo; 
+            ? apenasDescricao 
+            :  tipo; 
         },
     }
 })

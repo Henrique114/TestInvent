@@ -9,8 +9,6 @@ sap.ui.define([
     "../fragment/FragmentoConfirmacaoExclusao"
 ],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio, FragmentoConfirmacaoExclusao) => {
     "use strict";
-
-    const ENDPOINT_BASE = "/EquipamentoEletronico";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
     const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
@@ -28,12 +26,14 @@ sap.ui.define([
     let dialogConfirmacao = null;
     let _query = null;
     
+    
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
+            this.view = this.getView();
         },
 
          criarModelos: function(nome, modelo){
@@ -47,9 +47,8 @@ sap.ui.define([
                                  MODELO_EQUIPAMENTO_SELECIONADO_LISTA,
                                  MODELO_TIPOS_EQUIPAMENTO,
                                  MODELO_NOVO_EQUIPAMENTO];
- 
-             nomeModelos.forEach(element =>
-                 this.criarModelos(element, new JSONModel({}))
+            nomeModelos.forEach(element =>
+                this.criarModelos(element, new JSONModel({}))
             );
         },
 
@@ -128,12 +127,12 @@ sap.ui.define([
            const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
             if (modelEquipamentos) {
                 idEquipamento = modelEquipamentos
-                    .getObject().id;
+                .getObject().id;
             }else{
                 idEquipamento = this._dialogDetalhes
-                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
-                                    .getData()
-                                    .id;
+                .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                .getData()
+                .id;
             }
             this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
             this._abrirTelaAdicionarOuEditar(idEquipamento); 
@@ -208,14 +207,14 @@ sap.ui.define([
             const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
             if (modelEquipamentos) {
                 idEquipamento = modelEquipamentos
-                                .getObject()
-                                .id;
+                .getObject()
+                .id;
             }else{
 
                 idEquipamento = this._dialogDetalhes
-                                    .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
-                                    .getData()
-                                    .id;
+                .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
+                .getData()
+                .id;
             }
             this._dialogDetalhes && this._dialogDetalhes.isOpen()
             ? this._dialogDetalhes.close()
