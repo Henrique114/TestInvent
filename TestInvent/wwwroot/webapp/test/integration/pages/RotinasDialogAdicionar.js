@@ -13,7 +13,6 @@ sap.ui.define([
 		Given.iStartMyApp();
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-
 		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
 		Then.naPaginaDeCadastroDeEquipamentos.nomeComErroDeValidacao();
 		Then.naPaginaDeCadastroDeEquipamentos.tipoComErroDeValidacao();
@@ -30,20 +29,6 @@ sap.ui.define([
 
 		When.naPaginaDeCadastroDeEquipamentos.preenchendoQuantidade(3);
 		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
-
-
-
-
-
-
-
-
-		When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
-
-
-
-
-		
 
 		Then.iTeardownMyApp();
 	});
