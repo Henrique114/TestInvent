@@ -145,12 +145,12 @@ sap.ui.define([
             if (!dialogAdicionarEditar) {
                 dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
             }
-            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO)); 
+            dialogAdicionarEditar.setModel(modelTipos); 
             let dadosTipos = await TiposRepositorio.obterTipos();
             modelTipos.setData(dadosTipos);
             modelTipos.refresh(true);
 
-            dialogAdicionarEditar.setModel(this.getView().getModel(MODELO_NOVO_EQUIPAMENTO));  
+            dialogAdicionarEditar.setModel(model);  
             model.setData({});
             model.refresh(true);
             dialogAdicionarEditar.open();
