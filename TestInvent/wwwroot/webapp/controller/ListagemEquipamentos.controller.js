@@ -50,7 +50,7 @@ sap.ui.define([
  
              nomeModelos.forEach(element =>
                  this.criarModelos(element, new JSONModel({}))
-             );
+            );
         },
 
         _acessarListar: function () {

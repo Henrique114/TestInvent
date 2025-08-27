@@ -50,7 +50,7 @@
                 verticalScrolling: false
             });
  
-             return  confirmacaoDeletar;
-         }
-     }
- });
+            return  confirmacaoDeletar;
+        }
+    }
+});
