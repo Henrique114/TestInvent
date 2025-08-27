@@ -7,17 +7,32 @@ sap.ui.define([
     const URL_BASE = "/EquipamentoEletronico";
 
     let equipamentos = [
-        { id: "Equipamento-1-A", nome: "TesteA", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: true },
-        { id: "Equipamento-2-A", nome: "TesteB", tipo: "Monitor", quantidadeEmEstoque: 0, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: false }
+        { id: "Equipamento-1-A", nome: "TesteA", tipo: 1, quantidadeEmEstoque: 10, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: true },
+        { id: "Equipamento-2-A", nome: "TesteB", tipo: 4, quantidadeEmEstoque: 0, dataDeInclusao: "2025-08-25T13:39:38.1443059Z", temEstoque: false }
     ];
 
     let tipos = [
-        { 1: "Notebook"},
-        { 2: "Teclado"},
-        { 3: "Mouse"},
-        { 4: "Monitor"},
-        { 5: "Headset"},
-    ];
+  {
+    "chave": 1,
+    "descricao": "Notebook"
+  },
+  {
+    "chave": 2,
+    "descricao": "Teclado"
+  },
+  {
+    "chave": 3,
+    "descricao": "Mouse"
+  },
+  {
+    "chave": 4,
+    "descricao": "Monitor"
+  },
+  {
+    "chave": 5,
+    "descricao": "Headset"
+  }
+];
 
     let proximoId = ID_INICIAL_MOCK;
 
@@ -30,9 +45,8 @@ sap.ui.define([
             return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
         }
 
-        let ehUrlBase = url.startsWith(URL_BASE);
-        let ehUrlBaseComFiltro = ehUrlBase && url.includes('?filtro'); 
-
+        let ehUrlBase = url.endsWith(URL_BASE);
+        let ehUrlBaseComFiltro = url.includes('?filtro'); 
         if (ehUrlBase || ehUrlBaseComFiltro) {
             const urlParams = new URLSearchParams(url.split("?")[1]);
             const filtro = urlParams.get('filtro');
@@ -47,7 +61,6 @@ sap.ui.define([
         if (url.endsWith("/tipos")) {
             return Promise.resolve({ ok: true, json: () => Promise.resolve(tipos) });
         }
-
         const id = url.split("/").pop();
         const equipamento = equipamentos.find(e => e.id === id);
         return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamento) });
@@ -55,7 +68,6 @@ sap.ui.define([
 
     return Opa5.extend("ui5.testinvent.test.integration.Startup", {
         iStartMyApp: function (opcoes = {}) {
-            
             window.fetch = mockFetch;
             this.iStartMyUIComponent({
                 componentConfig: { name: "ui5.testinvent", async: true },
@@ -67,8 +79,8 @@ sap.ui.define([
         iTearDownMyApp: function () {
             window.fetch = undefined;
             equipamentos = [
-                { id: "Equipamento-1-A", nome: "TesteA", tipo: "Notebook", quantidadeEmEstoque: 10, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: true },
-                { id: "Equipamento-2-A", nome: "TesteB", tipo: "Monitor", quantidadeEmEstoque: 0, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: false }
+                { id: "Equipamento-1-A", nome: "TesteA", tipo: 1, quantidadeEmEstoque: 10, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: true },
+                { id: "Equipamento-2-A", nome: "TesteB", tipo: 4, quantidadeEmEstoque: 0, dataDeInclusao: "2025-07-08T13:39:38.1443059Z", temEstoque: false }
             ];
             proximoId = ID_INICIAL_MOCK;
             return this.iTeardownMyUIComponent();
