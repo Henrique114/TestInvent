@@ -8,12 +8,12 @@
      "sap/m/Text"
      ], function(Dialog, Button, MessageToast, Bar, Title, coreLibrary, Text) {
      return {
-         criarDialogDeConfirmação: function(controller, idEquipamento) {
+        criarDialogDeConfirmação: function(controller, idEquipamento) {
             const i18n = controller.getView().getModel("i18n");
             const resourceBundle = i18n.getResourceBundle();
             
 
-            let confirmacaoDeletar = new Dialog({
+            controller.dialogConfirmacao = new Dialog({
                 content: [
                     new Text({
                         text: resourceBundle.getText("msgconfirmarDelete") 
@@ -21,18 +21,18 @@
                 ],
                 id:"idDialogDeConfirmacao",
                 state: 'Warning',
-                beginButton: new Button({
+                endButton: new Button({
                     press: function () {
-                        this.getParent().destroy();
+                        controller.dialogConfirmacao.destroy();
                     },
                     text: resourceBundle.getText("btnCancelar"),
                     id: "btnCancelarDelete" 
                 }),
-                endButton: new Button({
+                beginButton: new Button({
                     press: () => {
                         controller.aoPressinarConfirmar(idEquipamento);
                         MessageToast.show(resourceBundle.getText("msgDeleteComSucesso")); 
-                        confirmacaoDeletar.destroy();
+                        controller.dialogConfirmacao.destroy();
                     },
                     text: resourceBundle.getText("btnConfirmar"), 
                     id: "btnConfirmarDelete" 
@@ -50,7 +50,7 @@
                 verticalScrolling: false
             });
  
-            return  confirmacaoDeletar;
+            return  controller.dialogConfirmacao ;
         }
     }
 });

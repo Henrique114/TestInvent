@@ -25,7 +25,7 @@ sap.ui.define([
 
     let _dialogAdicionarEditar = null;
     let _dialogDetalhes = null;
-    let _dialogConfirmacao = null;
+    let dialogConfirmacao = null;
     let _query = null;
     
     return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
@@ -58,6 +58,7 @@ sap.ui.define([
         },
 
         carregarLista: async function (filtro) {
+            debugger;
             let equipamentos = await EquipamentoRepositorio.obterTodos(filtro);
             let dadosTipo = await TiposRepositorio.obterTipos();
             equipamentos.forEach(element => {
@@ -224,10 +225,8 @@ sap.ui.define([
         },
  
         _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
-             if (!this._dialogConfirmacao) {
-                this._dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
-            }
-            this._dialogConfirmacao.open();
+            this.dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
+            return this.dialogConfirmacao.open();
         },
  
         aoPressinarConfirmar: async function(id){
