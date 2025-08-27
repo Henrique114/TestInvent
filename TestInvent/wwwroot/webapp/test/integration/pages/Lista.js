@@ -111,17 +111,16 @@ sap.ui.define([
 
                 listaCarregadaComItems: function () {
                     return this.waitFor({
-                        controlType: "sap.m.Table",
+                        id: "listaEquipamentos", // ID da tabela ou lista
                         viewName: VIEW_NAME,
-                        matchers: [new AggregationLengthEquals({
-                            name: "items",
-                            length: QUANTIDADE_INICIAL
-
-                            
-                        }),
-                    ],
+                        matchers: [
+                            new AggregationLengthEquals({
+                                name: "items",
+                                length: QUANTIDADE_INICIAL
+                            })
+                        ],
                         success: function () {
-                            Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} objetos.`);
+                            Opa5.assert.ok(true, `Tabela contém ${QUANTIDADE_INICIAL} itens.`);
                         },
                         errorMessage: "Quantidade de itens incorreta."
                     });
