@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core" 
     xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form">
-    <Dialog id="idAdicionarEditar" title="{= ${novoEquipamento>/id} ? ${i18n>btnEditarEquipamento} : ${i18n>btnAdicionarEquipamento} }" >
+    <Dialog id="idAdicionarEditar" title="{= ${novoEquipamento>/id} ? ${i18n>tituloPaginaEditar} : ${i18n>tituloPaginaAdicionar} }" >
         <content>
        	    <VBox >
                 <f:Form id="formularioAdicionarEditar"
