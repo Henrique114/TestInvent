@@ -38,6 +38,17 @@ sap.ui.define([
 
 
     function mockFetch(url, opcoesFetch) {
+
+        debugger;
+        if (opcoesFetch?.method === "DELETE") {
+            const id = url.split("/").pop();
+            if (id) { 
+                var equipamentosAtualizados = equipamentos.filter((item) => item.id !== id); 
+                equipamentos = equipamentosAtualizados;
+            }
+            return Promise.resolve({ ok: true});
+        }
+
         if (opcoesFetch?.method === "POST") {
             const novoEquipamento = JSON.parse(opcoesFetch.body);
             novoEquipamento.id = `Equipamento-${proximoId++}-A`;
