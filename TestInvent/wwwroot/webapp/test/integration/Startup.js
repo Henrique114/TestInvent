@@ -38,8 +38,6 @@ sap.ui.define([
 
 
     function mockFetch(url, opcoesFetch) {
-
-        debugger;
         if (opcoesFetch?.method === "DELETE") {
             const id = url.split("/").pop();
             if (id) { 

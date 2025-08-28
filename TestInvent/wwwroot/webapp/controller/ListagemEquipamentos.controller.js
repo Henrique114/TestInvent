@@ -57,7 +57,6 @@ sap.ui.define([
         },
 
         carregarLista: async function (filtro) {
-            debugger;
             let equipamentos = await EquipamentoRepositorio.obterTodos(filtro);
             let dadosTipo = await TiposRepositorio.obterTipos();
             equipamentos.forEach(element => {

@@ -111,7 +111,7 @@ sap.ui.define([
 
                 listaCarregadaComItems: function () {
                     return this.waitFor({
-                        id: "listaEquipamentos", // ID da tabela ou lista
+                        id: "listaEquipamentos",
                         viewName: VIEW_NAME,
                         matchers: [
                             new AggregationLengthEquals({
