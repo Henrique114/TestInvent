@@ -42,14 +42,25 @@ sap.ui.define([
                     });
                 },
                 pressionandoBotaoDeletarLinha1: function () {
-                    return this.waitFor({
-                        id: botaoDeletarLinha1Lista,
+                   return this.waitFor({
+                        id: "listaEquipamentos",
                         viewName: VIEW_NAME,
-                        actions: new Press(),
-                        success: function () {
-                            Opa5.assert.ok(true, "Botão Deletar foi clicado com sucesso.");
+                        success: function (oTable) {
+                            var oPrimeiraLinha = oTable.getItems()[1]; // primeira linha
+                            var oHBox = oPrimeiraLinha.getCells()[3]; // célula que contém o HBox com os botões
+
+                            var oBotaoEditar = oHBox.getItems().find(function (item) {
+                                return item.getIcon && item.getIcon() === "sap-icon://edit";
+                            });
+
+                            if (oBotaoEditar) {
+                                new Press().executeOn(oBotaoEditar);
+                                Opa5.assert.ok(true, "Botão Editar da linha 1 foi clicado com sucesso.");
+                            } else {
+                                Opa5.assert.ok(false, "Botão Editar não encontrado na linha 1.");
+                            }
                         },
-                        errorMessage: "Botão Deletar não foi encontrado no Dialog."
+                        errorMessage: "Tabela de equipamentos não encontrada."
                     });
                 },
                 cancelandoNaConfirmacaoDeDeletar: function () {
