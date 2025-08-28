@@ -14,7 +14,7 @@ sap.ui.define([
     const botaoEditarLinha1Lista = "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
     const botaoDeletarLinha1Lista = "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
     const MODELO_EQUIPAMENTOS = "equipamentos";
-    const QUANTIDADE_MINIMA_ESPERADA = 2;
+ 
 
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
@@ -31,17 +31,6 @@ sap.ui.define([
                     });
                 },
                 pressionandoBotaoEditarLinha1: function () {
-                    return this.waitFor({
-                        id: botaoEditarLinha1Lista,
-                        viewName: VIEW_NAME,
-                        actions: new Press(),
-                        success: function () {
-                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
-                        },
-                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
-                    });
-                },
-                pressionandoBotaoDeletarLinha1: function () {
                    return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
@@ -58,6 +47,28 @@ sap.ui.define([
                                 Opa5.assert.ok(true, "Botão Editar da linha 1 foi clicado com sucesso.");
                             } else {
                                 Opa5.assert.ok(false, "Botão Editar não encontrado na linha 1.");
+                            }
+                        },
+                        errorMessage: "Tabela de equipamentos não encontrada."
+                    });
+                },
+                pressionandoBotaoDeletarLinha1: function () {
+                   return this.waitFor({
+                        id: "listaEquipamentos",
+                        viewName: VIEW_NAME,
+                        success: function (oTable) {
+                            var oPrimeiraLinha = oTable.getItems()[1]; // primeira linha
+                            var oHBox = oPrimeiraLinha.getCells()[3]; // célula que contém o HBox com os botões
+
+                            var oBotaoDelete = oHBox.getItems().find(function (item) {
+                                return item.getIcon && item.getIcon() === "sap-icon://delete";
+                            });
+
+                            if (oBotaoDelete) {
+                                new Press().executeOn(oBotaoDelete);
+                                Opa5.assert.ok(true, "Botão Delete da linha 1 foi clicado com sucesso.");
+                            } else {
+                                Opa5.assert.ok(false, "Botão Delete não encontrado na linha 1.");
                             }
                         },
                         errorMessage: "Tabela de equipamentos não encontrada."
