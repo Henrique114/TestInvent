@@ -25,7 +25,7 @@ sap.ui.define([
 
         When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
         When.naPaginaDeAdicionarDeEquipamentos.preenchendoNome("Asus");
-        When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo();
+        When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo("Monitor");
         When.naPaginaDeAdicionarDeEquipamentos.preenchendoQuantidade(3);
         When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
         
