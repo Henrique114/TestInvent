@@ -7,8 +7,6 @@ sap.ui.define([
     "ui5/testinvent/test/integration/pages/RotinasDialogAdicionar",
     "ui5/testinvent/test/integration/pages/RotinasDialogEditar",
     "ui5/testinvent/test/integration/pages/RotinasRemocao",
-
-
 ], (Opa5, opaTest, Startup) => {
     "use strict";
 

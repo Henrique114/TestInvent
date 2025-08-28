@@ -16,7 +16,7 @@ sap.ui.define([
 
                 fechandoDialogDeEditar: function () {
                     return this.waitFor({
-                        id: "btnCancelarTelaAdicionarEdicao",
+                        id: "btnCancelarTelaCadastroEdicao",
                         viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {

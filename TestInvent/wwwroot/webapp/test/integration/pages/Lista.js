@@ -10,7 +10,7 @@ sap.ui.define([
     "use strict";
 
     const VIEW_NAME = "ListagemEquipamentos";
-    const QUANTIDADE_INICIAL = 4;
+    const QUANTIDADE_INICIAL = 5;
     const botaoEditarLinha1Lista = "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
     const botaoDeletarLinha1Lista = "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
     const MODELO_EQUIPAMENTOS = "equipamentos";

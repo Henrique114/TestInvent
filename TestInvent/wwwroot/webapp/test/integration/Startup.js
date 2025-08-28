@@ -12,27 +12,27 @@ sap.ui.define([
     ];
 
     let tipos = [
-  {
-    "chave": 1,
-    "descricao": "Notebook"
-  },
-  {
-    "chave": 2,
-    "descricao": "Teclado"
-  },
-  {
-    "chave": 3,
-    "descricao": "Mouse"
-  },
-  {
-    "chave": 4,
-    "descricao": "Monitor"
-  },
-  {
-    "chave": 5,
-    "descricao": "Headset"
-  }
-];
+        {
+            "chave": 1,
+            "descricao": "Notebook"
+        },
+        {
+            "chave": 2,
+            "descricao": "Teclado"
+        },
+        {
+            "chave": 3,
+            "descricao": "Mouse"
+        },
+        {
+            "chave": 4,
+            "descricao": "Monitor"
+        },
+        {
+            "chave": 5,
+            "descricao": "Headset"
+        }
+    ];
 
     let proximoId = ID_INICIAL_MOCK;
 
