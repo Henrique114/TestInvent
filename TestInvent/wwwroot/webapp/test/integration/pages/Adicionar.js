@@ -4,15 +4,16 @@ sap.ui.define([
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/actions/Press",
     "sap/ui/test/matchers/PropertyStrictEquals",
-    "sap/m/MessageBox"
-], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/test/matchers/AggregationContainsPropertyEqual"
+], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals, MessageBox, AggregationContainsPropertyEqual) {
     "use strict";
 
     const VIEW_NAME = "ListagemEquipamentos";
     
 
     Opa5.createPageObjects({
-        naPaginaDeCadastroDeEquipamentos: {
+        naPaginaDeAdicionarDeEquipamentos: {
             actions: {
 
                 fechandoDialogDeAdicionar: function () {
@@ -38,26 +39,29 @@ sap.ui.define([
                         success: function () {
                             Opa5.assert.ok(true, "Preenchi o nome com: " + nome);
                         },
-                        errorMessage: "Não encontrei o campo Nome na página de cadastro."
+                        errorMessage: "Não encontrei o campo Nome na página de Adicionar."
                     });
                 },
-                preenchendoTipo: function () {
+               preenchendoTipo: function (tipo) {
                     return this.waitFor({
                         id: "formulariotipo",
                         viewName: VIEW_NAME,
-                        actions: new Press(),
-                        success: function() {
+                        actions: new sap.ui.test.actions.Press(), // abre o Select
+                        success: function () {
                             this.waitFor({
-                                id: "idItem-listagemView--formulariotipo-1",
-                                actions: new Press(),
-                                viewName: VIEW_NAME,
-                                success: function() {
-                                   Opa5.assert.ok(true, "Segundo item foi clicado com sucesso.");
+                                controlType: "sap.ui.core.Item", // pode ser sap.ui.core.Item se não usar StandardListItem
+                                matchers: new sap.ui.test.matchers.PropertyStrictEquals({
+                                    name: "text", // ou "text", conforme usado no Select
+                                    value: tipo
+                                }),
+                                actions: new sap.ui.test.actions.Press(), // aqui sim seleciona o item
+                                success: function () {
+                                    Opa5.assert.ok(true, "Item '" + tipo + "' selecionado e selectedKey atualizado.");
                                 },
-                                errorMessage: "Não consegui selecionar o segundo item no select."
+                                errorMessage: "Não consegui selecionar o item '" + tipo + "' no Select."
                             });
                         },
-                        errorMessage: "Não consegui encontrar o Select"
+                        errorMessage: "Não consegui abrir o Select."
                     });
                 },
                 preenchendoQuantidade: function (quantidade) {
@@ -76,18 +80,22 @@ sap.ui.define([
                         success: function () {
                             Opa5.assert.ok(true, "Preenchi a quantidade com: " + quantidade);
                         },
-                        errorMessage: "Não encontrei o campo Quantidade na página de cadastro."
+                        errorMessage: "Não encontrei o campo Quantidade na página de Adicionar."
                     });
                 },
                 clicandoEmSalvar: function () {
                     return this.waitFor({
-                         id: "btnSalvarTelaCadastro",
+                        controlType: "sap.m.Button",
                         viewName: VIEW_NAME,
+                        matchers: new I18NText({
+                            propertyName: "text",
+                            key: "btnSalvar"
+                        }),
                         actions: new Press(),
                         success: function () {
                             Opa5.assert.ok(true, "Botão Salvar foi clicado com sucesso.");
                         },
-                        errorMessage: "Botão Salvar não foi encontrado na página de cadastro."
+                        errorMessage: "Botão Salvar não foi encontrado na página de Adicionar."
                     });
                 },
             },
@@ -102,9 +110,9 @@ sap.ui.define([
                             key: "tituloPaginaCadastro"
                         }),
                         success: function () {
-                            Opa5.assert.ok(true, "Página de cadastro foi aberta corretamente.");
+                            Opa5.assert.ok(true, "Página de Adicionar foi aberta corretamente.");
                         },
-                        errorMessage: "Página de cadastro não abriu corretamente."
+                        errorMessage: "Página de Adicionar não abriu corretamente."
                     });
                 },
 
