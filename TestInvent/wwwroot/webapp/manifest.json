@@ -3,6 +3,11 @@
 	"sap.app": {
 		"id": "ui5.testinvent",
 		"i18n": "i18n/i18n.properties",
+		"supportedLocales": [
+			"en",
+			"pt"
+		],
+		"fallbackLocale": "pt",
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"type": "application",
