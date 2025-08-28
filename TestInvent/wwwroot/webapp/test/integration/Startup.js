@@ -50,6 +50,7 @@ sap.ui.define([
         if (opcoesFetch?.method === "POST") {
             const novoEquipamento = JSON.parse(opcoesFetch.body);
             novoEquipamento.id = `Equipamento-${proximoId++}-A`;
+            novoEquipamento.dataDeInclusao = new Date();
             equipamentos.push(novoEquipamento);
             return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
         }
