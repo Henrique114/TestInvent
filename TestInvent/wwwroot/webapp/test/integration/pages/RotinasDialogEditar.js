@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/test/opaQunit",
 	"./Lista",
 	"./Detalhe",
-	"./Cadastro",
+	"./Adicionar",
     "./Editar",
 	
 ], function (opaTest) {

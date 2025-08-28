@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/test/opaQunit",
 	"./Lista",
 	"./Detalhe",
-	"./Cadastro"
+	"./Adicionar"
 	
 ], function (opaTest) {
 	"use strict";
@@ -19,13 +19,13 @@ sap.ui.define([
 		Then.naPaginaDeListagemDeEquipamentos.listaExibeOResultadoDaFiltragem("TesteA");
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-		When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
+		When.naPaginaDeAdicionarDeEquipamentos.fechandoDialogDeAdicionar();
 
 		When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
 		When.naPaginaDeDetalheDeEquipamento.fechandoDialogDeDetalhes();
 
         When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1();
-		When.naPaginaDeCadastroDeEquipamentos.fechandoDialogDeAdicionar();
+		When.naPaginaDeAdicionarDeEquipamentos.fechandoDialogDeAdicionar();
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
 		When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();

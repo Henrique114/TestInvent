@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/test/opaQunit",
 	"./Lista",
 	"./Detalhe",
-	"./Cadastro",
+	"./Adicionar",
     "./Editar",
     "./Remocao"
 	
@@ -24,10 +24,10 @@ sap.ui.define([
 		When.noDialogDeConfirmacao.clicandoEmConfirmar();
 
         When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-        When.naPaginaDeCadastroDeEquipamentos.preenchendoNome("Asus");
-        When.naPaginaDeCadastroDeEquipamentos.preenchendoTipo();
-        When.naPaginaDeCadastroDeEquipamentos.preenchendoQuantidade(3);
-        When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
+        When.naPaginaDeAdicionarDeEquipamentos.preenchendoNome("Asus");
+        When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo();
+        When.naPaginaDeAdicionarDeEquipamentos.preenchendoQuantidade(3);
+        When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
         
         When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
 	    Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();

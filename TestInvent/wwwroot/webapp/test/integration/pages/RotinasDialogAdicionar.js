@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/test/opaQunit",
 	"./Lista",
 	"./Detalhe",
-	"./Cadastro"
+	"./Adicionar"
 	
 ], function (opaTest) {
 	"use strict";
@@ -13,22 +13,22 @@ sap.ui.define([
 		Given.iStartMyApp();
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeCadastroDeEquipamentos.nomeComErroDeValidacao();
-		Then.naPaginaDeCadastroDeEquipamentos.tipoComErroDeValidacao();
-		Then.naPaginaDeCadastroDeEquipamentos.quantidadeComErroDeValidacao();
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		Then.naPaginaDeAdicionarDeEquipamentos.nomeComErroDeValidacao();
+		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
+		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeCadastroDeEquipamentos.preenchendoNome("Asus");
-		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeCadastroDeEquipamentos.tipoComErroDeValidacao();
-		Then.naPaginaDeCadastroDeEquipamentos.quantidadeComErroDeValidacao();
+		When.naPaginaDeAdicionarDeEquipamentos.preenchendoNome("Asus");
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
+		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeCadastroDeEquipamentos.preenchendoTipo();
-		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeCadastroDeEquipamentos.quantidadeComErroDeValidacao();
+		When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo("Monitor");
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeCadastroDeEquipamentos.preenchendoQuantidade(3);
-		When.naPaginaDeCadastroDeEquipamentos.clicandoEmSalvar();
+		When.naPaginaDeAdicionarDeEquipamentos.preenchendoQuantidade(3);
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
 
 		Then.iTeardownMyApp();
 	});
