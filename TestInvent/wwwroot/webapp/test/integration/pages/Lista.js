@@ -2,19 +2,14 @@ sap.ui.define([
     "sap/ui/test/Opa5",
     "sap/ui/test/matchers/AggregationLengthEquals",
     "sap/ui/test/matchers/I18NText",
-    "sap/ui/test/matchers/BindingPath",
     "sap/ui/test/actions/Press",
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/matchers/PropertyStrictEquals"
-], function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText, PropertyStrictEquals) {
+], function (Opa5, AggregationLengthEquals, I18NText, Press, EnterText, PropertyStrictEquals) {
     "use strict";
 
     const VIEW_NAME = "ListagemEquipamentos";
     const QUANTIDADE_INICIAL = 5;
-    const botaoEditarLinha1Lista = "btnEditarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
-    const botaoDeletarLinha1Lista = "btnDeletarLinhaListaEquipamento-__xmlview0--listaEquipamentos-0";
-    const MODELO_EQUIPAMENTOS = "equipamentos";
- 
 
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
@@ -34,16 +29,16 @@ sap.ui.define([
                    return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
-                        success: function (oTable) {
-                            var oPrimeiraLinha = oTable.getItems()[1]; // primeira linha
-                            var oHBox = oPrimeiraLinha.getCells()[3]; // célula que contém o HBox com os botões
+                        success: function (table) {
+                            var primeiraLinha = table.getItems()[1]; 
+                            var hBox = primeiraLinha.getCells()[3]; 
 
-                            var oBotaoEditar = oHBox.getItems().find(function (item) {
+                            var botaoEditar = hBox.getItems().find(function (item) {
                                 return item.getIcon && item.getIcon() === "sap-icon://edit";
                             });
 
-                            if (oBotaoEditar) {
-                                new Press().executeOn(oBotaoEditar);
+                            if (botaoEditar) {
+                                new Press().executeOn(botaoEditar);
                                 Opa5.assert.ok(true, "Botão Editar da linha 1 foi clicado com sucesso.");
                             } else {
                                 Opa5.assert.ok(false, "Botão Editar não encontrado na linha 1.");
@@ -56,16 +51,16 @@ sap.ui.define([
                    return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
-                        success: function (oTable) {
-                            var oPrimeiraLinha = oTable.getItems()[1]; // primeira linha
-                            var oHBox = oPrimeiraLinha.getCells()[3]; // célula que contém o HBox com os botões
+                        success: function (table) {
+                            var primeiraLinha = table.getItems()[1]; 
+                            var hBox = primeiraLinha.getCells()[3]; 
 
-                            var oBotaoDelete = oHBox.getItems().find(function (item) {
+                            var botaoDelete = hBox.getItems().find(function (item) {
                                 return item.getIcon && item.getIcon() === "sap-icon://delete";
                             });
 
-                            if (oBotaoDelete) {
-                                new Press().executeOn(oBotaoDelete);
+                            if (botaoDelete) {
+                                new Press().executeOn(botaoDelete);
                                 Opa5.assert.ok(true, "Botão Delete da linha 1 foi clicado com sucesso.");
                             } else {
                                 Opa5.assert.ok(false, "Botão Delete não encontrado na linha 1.");

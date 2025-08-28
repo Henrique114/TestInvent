@@ -46,15 +46,15 @@ sap.ui.define([
                     return this.waitFor({
                         id: "formulariotipo",
                         viewName: VIEW_NAME,
-                        actions: new sap.ui.test.actions.Press(), // abre o Select
+                        actions: new Press(), 
                         success: function () {
                             this.waitFor({
-                                controlType: "sap.ui.core.Item", // pode ser sap.ui.core.Item se não usar StandardListItem
+                                controlType: "sap.ui.core.Item", 
                                 matchers: new sap.ui.test.matchers.PropertyStrictEquals({
-                                    name: "text", // ou "text", conforme usado no Select
+                                    name: "text", 
                                     value: tipo
                                 }),
-                                actions: new sap.ui.test.actions.Press(), // aqui sim seleciona o item
+                                actions: new Press(), 
                                 success: function () {
                                     Opa5.assert.ok(true, "Item '" + tipo + "' selecionado e selectedKey atualizado.");
                                 },
