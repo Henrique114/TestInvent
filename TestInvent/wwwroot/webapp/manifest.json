@@ -5,9 +5,9 @@
 		"i18n": "i18n/i18n.properties",
 		"supportedLocales": [
 			"en",
-			"pt"
+			"pt_BR"
 		],
-		"fallbackLocale": "pt",
+		"fallbackLocale": "pt_BR",
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"type": "application",
