@@ -15,16 +15,19 @@ sap.ui.define([
                 body: JSON.stringify(dados)
             });
         },
+
         obterTodos: function(filtro){
             let urlRequisicaoEquipamentos = `${ENDPOINT_BASE}${filtro ? "?filtro=" + encodeURIComponent(filtro) : ""}`;
             return fetch(urlRequisicaoEquipamentos)
             .then((response) => response.json());
         },
+
         obterPorId: function(idEquipamento) {
             const url = `${ENDPOINT_BASE}/${idEquipamento}`;
             return fetch(url)
             .then(response => response.json());
         },
+
         atualizar: function(dados){
             const idEquipamento = dados.id;
             const url =  `${ENDPOINT_BASE}/${idEquipamento}`;
@@ -37,6 +40,7 @@ sap.ui.define([
                 body: JSON.stringify(dados)
             });
         },
+        
         deletar: function(id){
             const url = `${ENDPOINT_BASE}/${id}`;
             const metodo = 'DELETE';

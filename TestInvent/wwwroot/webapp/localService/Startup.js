@@ -89,9 +89,11 @@ sap.ui.define([
         const equipamento = equipamentos.find(e => e.id === id);
         return Promise.resolve({ ok: true, json: () => Promise.resolve(equipamento) });
     }
+
     function _pegarListaTiposEquipamento(){
         return Promise.resolve({ ok: true, json: () => Promise.resolve(tipos) });
     }
+
     function adicionar(opcoesFetch){
         const novoEquipamento = JSON.parse(opcoesFetch.body);
         novoEquipamento.id = `Equipamento-${proximoId++}-A`;
@@ -99,6 +101,7 @@ sap.ui.define([
         equipamentos.push(novoEquipamento);
         return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
     }
+
     function atualizar(url , opcoesFetch){
         const id = url.split("/").pop();
         const novoEquipamento = JSON.parse(opcoesFetch.body);
@@ -115,6 +118,7 @@ sap.ui.define([
         equipamentos.push(novoEquipamento);
         return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
     }
+    
     function deletar(url){
         const id = url.split("/").pop();
         if (id) { 
