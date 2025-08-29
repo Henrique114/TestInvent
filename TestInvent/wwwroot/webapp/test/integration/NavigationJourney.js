@@ -1,6 +1,6 @@
 sap.ui.define([
     "sap/ui/test/Opa5",
-    "ui5/testinvent/test/integration/Startup",
+    "ui5/testinvent/localService/Startup",
     "ui5/testinvent/test/integration/pages/RotinasTelaListagem",
     "ui5/testinvent/test/integration/pages/RotinasDialogDetalhes",
     "ui5/testinvent/test/integration/pages/RotinasDialogAdicionar",
