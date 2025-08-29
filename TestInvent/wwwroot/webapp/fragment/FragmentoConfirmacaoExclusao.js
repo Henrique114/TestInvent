@@ -12,7 +12,6 @@
             const i18n = controller.getView().getModel("i18n");
             const resourceBundle = i18n.getResourceBundle();
             
-
             controller.dialogConfirmacao = new Dialog({
                 content: [
                     new Text({
@@ -49,7 +48,6 @@
                 contentWidth: "25%",
                 verticalScrolling: false
             });
- 
             return  controller.dialogConfirmacao ;
         }
     }

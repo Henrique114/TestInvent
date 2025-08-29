@@ -5,7 +5,6 @@ sap.ui.define([
     "sap/ui/test/actions/Press"
 ], function (Opa5, I18NText, PropertyStrictEquals, Press) {
     "use strict";
-
     const VIEW_NAME = "ListagemEquipamentos";
 
     Opa5.createPageObjects({
@@ -69,8 +68,6 @@ sap.ui.define([
                         errorMessage: "Não foi possível localizar a opção para confirmar a remoção."
                     });
                 },
-
-               
             },
             assertions: {
                 dialogDeDetalhesFoiAberto: function () {

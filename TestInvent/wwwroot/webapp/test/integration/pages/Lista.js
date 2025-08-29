@@ -7,7 +7,6 @@ sap.ui.define([
     "sap/ui/test/matchers/PropertyStrictEquals"
 ], function (Opa5, AggregationLengthEquals, I18NText, Press, EnterText, PropertyStrictEquals) {
     "use strict";
-
     const VIEW_NAME = "ListagemEquipamentos";
     const QUANTIDADE_INICIAL = 5;
 
@@ -32,11 +31,9 @@ sap.ui.define([
                         success: function (table) {
                             var primeiraLinha = table.getItems()[1]; 
                             var hBox = primeiraLinha.getCells()[3]; 
-
                             var botaoEditar = hBox.getItems().find(function (item) {
                                 return item.getIcon && item.getIcon() === "sap-icon://edit";
                             });
-
                             if (botaoEditar) {
                                 new Press().executeOn(botaoEditar);
                                 Opa5.assert.ok(true, "Botão Editar da linha 1 foi clicado com sucesso.");
@@ -54,11 +51,9 @@ sap.ui.define([
                         success: function (table) {
                             var primeiraLinha = table.getItems()[1]; 
                             var hBox = primeiraLinha.getCells()[3]; 
-
                             var botaoDelete = hBox.getItems().find(function (item) {
                                 return item.getIcon && item.getIcon() === "sap-icon://delete";
                             });
-
                             if (botaoDelete) {
                                 new Press().executeOn(botaoDelete);
                                 Opa5.assert.ok(true, "Botão Delete da linha 1 foi clicado com sucesso.");
@@ -79,7 +74,6 @@ sap.ui.define([
                         errorMessage: "Botão Cancelar no Dialog de confirmacao não foi encontrado."
                     });
                 },
-
                 buscandoPorNome: function (nome) {
                     return this.waitFor({
                         id: "inputFiltro",
@@ -91,7 +85,6 @@ sap.ui.define([
                         errorMessage: "Campo de busca não encontrado."
                     });
                 },
-
                 clicandoNoItemEAbrindoTelaDeDetalhes: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",
@@ -107,7 +100,6 @@ sap.ui.define([
                     });
                 }
             },
-
             assertions: {
                 telaListagemAberta: function () {
                     return this.waitFor({
@@ -125,7 +117,6 @@ sap.ui.define([
                         errorMessage: "Página de lista não abriu."
                     });
                 },
-
                 listaCarregadaComItems: function () {
                     return this.waitFor({
                         id: "listaEquipamentos",
@@ -142,7 +133,6 @@ sap.ui.define([
                         errorMessage: "Quantidade de itens incorreta."
                     });
                 },
-
                 listaExibeOResultadoDaFiltragem: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",

@@ -5,11 +5,9 @@ sap.ui.define([
     const ID_INPUT_NOME = "formularionome";
     const ID_SELECT_TIPO = "formulariotipo";
     const ID_INPUT_QUANTIDADE = "formularioquantidade";
-
-   const ValueState = coreLibrary.ValueState;   
+    const ValueState = coreLibrary.ValueState;   
 
     return {
-
         validarFormulario: function() {
             const campos = [
                 {id: ID_INPUT_NOME, chave: "Nome", getValue: () => this.byId(ID_INPUT_NOME).getValue()},
@@ -28,7 +26,6 @@ sap.ui.define([
                 }
                 this.byId(campo.id).setValueState(ValueState.None);
             });
-
             if (mensagensErros.length > 0) {
                 return false;
             }

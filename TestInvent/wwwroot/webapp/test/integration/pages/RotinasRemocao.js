@@ -5,7 +5,6 @@ sap.ui.define([
 	"./Adicionar",
     "./Editar",
     "./Remocao"
-	
 ], function (opaTest) {
 	"use strict";
 
