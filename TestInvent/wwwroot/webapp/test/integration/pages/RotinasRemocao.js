@@ -14,33 +14,33 @@ sap.ui.define([
 		Given.iStartMyApp();
 
         
-        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
-        Then.noDialogDeConfirmacao.dialogDeConfirmacaoAberto();
-		When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1ParaAbrirODialogDeConfirmacaoDeDeletar();
+        Then.noDialogDeConfirmacao.verificandoSeODialogDeConfirmacaoEstaAberto();
+		When.naPaginaDeListagemDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar();
         
-        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
-        Then.noDialogDeConfirmacao.dialogDeConfirmacaoAberto();
-		When.noDialogDeConfirmacao.clicandoEmConfirmar();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1ParaAbrirODialogDeConfirmacaoDeDeletar();
+        Then.noDialogDeConfirmacao.verificandoSeODialogDeConfirmacaoEstaAberto();
+		When.noDialogDeConfirmacao.pressionandoConfirmarNoDialogDeConfirmacaoParaConfirmarODelete();
 
-        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-        When.naPaginaDeAdicionarDeEquipamentos.preenchendoNome("Asus");
-        When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo("Monitor");
-        When.naPaginaDeAdicionarDeEquipamentos.preenchendoQuantidade(3);
-        When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+        When.naPaginaDeListagemDeEquipamentos.conferindoAAberturaDoDialogpressionandoBotaoAdicionar();
+        When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Asus");
+        When.naPaginaDeAdicionarDeEquipamentos.clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar("Monitor");
+        When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar(3);
+        When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
         
-        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
-	    Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();
-        Then.naPaginaDeDetalheDeEquipamento.confirmaSeItemAbertoCorrespondeAoSelecionado("TesteA");
-        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarEmDetalhes();
-        Then.noDialogDeConfirmacao.dialogDeConfirmacaoAberto();
-        When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+        When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");
+	    Then.naPaginaDeDetalheDeEquipamento.verificandoSeODialogDeDetalhesEstaAberto();
+        Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("TesteA");
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarNoDialogDeDetalhes();
+        Then.noDialogDeConfirmacao.verificandoSeODialogDeConfirmacaoEstaAberto();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar();
 
-        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
-	    Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();
-        Then.naPaginaDeDetalheDeEquipamento.confirmaSeItemAbertoCorrespondeAoSelecionado("TesteA");
-        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarEmDetalhes();
-        Then.noDialogDeConfirmacao.dialogDeConfirmacaoAberto();
-        When.noDialogDeConfirmacao.clicandoEmConfirmar();
+        When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");
+	    Then.naPaginaDeDetalheDeEquipamento.verificandoSeODialogDeDetalhesEstaAberto();
+        Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("TesteA");
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarNoDialogDeDetalhes();
+        Then.noDialogDeConfirmacao.verificandoSeODialogDeConfirmacaoEstaAberto();
+        When.noDialogDeConfirmacao.pressionandoConfirmarNoDialogDeConfirmacaoParaConfirmarODelete();
 		Then.iTeardownMyApp();
 	});
 });

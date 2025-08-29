@@ -12,24 +12,24 @@ sap.ui.define([
 	opaTest("Rotinas de Edição de equipamento.", function (Given, When, Then) {
 		Given.iStartMyApp();
 
-        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1();
-        Then.naPaginaDeEditarDeEquipamentos.dialogDeEditarAberto();
-        When.naPaginaDeEditarDeEquipamentos.limparCampoNome("");
-		When.naPaginaDeEditarDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeEditarDeEquipamentos.nomeComErroDeValidacao();
-		When.naPaginaDeEditarDeEquipamentos.preenchendoNome("Acer");
-		When.naPaginaDeEditarDeEquipamentos.clicandoEmSalvar();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1ParaAbrirODialogDeEdição();
+        Then.naPaginaDeEditarDeEquipamentos.verificandoSeODialogDeEditarEstaAberto();
+        When.naPaginaDeEditarDeEquipamentos.clicandoNoInputNomeEInserindoUmaStringVazia("");
+		When.naPaginaDeEditarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar();
+		Then.naPaginaDeEditarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
+		When.naPaginaDeEditarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Acer");
+		When.naPaginaDeEditarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar();
         
-		When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("Acer");
-        Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();
-        Then.naPaginaDeDetalheDeEquipamento.confirmaSeItemAbertoCorrespondeAoSelecionado("Acer");
+		When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("Acer");
+        Then.naPaginaDeDetalheDeEquipamento.verificandoSeODialogDeDetalhesEstaAberto();
+        Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("Acer");
         When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarEmDetalhes();
-        Then.naPaginaDeEditarDeEquipamentos.dialogDeEditarAberto();
-        When.naPaginaDeEditarDeEquipamentos.limparCampoNome("");
-		When.naPaginaDeEditarDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeEditarDeEquipamentos.nomeComErroDeValidacao();
-		When.naPaginaDeEditarDeEquipamentos.preenchendoNome("Samsung");
-		When.naPaginaDeEditarDeEquipamentos.clicandoEmSalvar();
+        Then.naPaginaDeEditarDeEquipamentos.verificandoSeODialogDeEditarEstaAberto();
+        When.naPaginaDeEditarDeEquipamentos.clicandoNoInputNomeEInserindoUmaStringVazia("");
+		When.naPaginaDeEditarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar();
+		Then.naPaginaDeEditarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
+		When.naPaginaDeEditarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Samsung");
+		When.naPaginaDeEditarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar();
 
 		Then.iTeardownMyApp();
 	});

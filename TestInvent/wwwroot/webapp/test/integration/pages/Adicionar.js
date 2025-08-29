@@ -11,7 +11,7 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeAdicionarDeEquipamentos: {
             actions: {
-                fechandoDialogDeAdicionar: function () {
+                conferindoOFechamentoDoDialogDeAdicionarPressionandoFechar: function () {
                     return this.waitFor({
                         id: "btnCancelarTelaCadastroEdicao",
                         viewName: VIEW_NAME,
@@ -22,7 +22,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o botão Fechar Dialog de Adicionar equipamento."
                     });
                 },
-                preenchendoNome: function (nome) {
+                clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -37,7 +37,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Nome na página de Adicionar."
                     });
                 },
-               preenchendoTipo: function (tipo) {
+               clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar: function (tipo) {
                     return this.waitFor({
                         id: "formulariotipo",
                         viewName: VIEW_NAME,
@@ -59,7 +59,7 @@ sap.ui.define([
                         errorMessage: "Não consegui abrir o Select."
                     });
                 },
-                preenchendoQuantidade: function (quantidade) {
+                clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar: function (quantidade) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -78,7 +78,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Quantidade na página de Adicionar."
                     });
                 },
-                clicandoEmSalvar: function () {
+                precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar: function () {
                     return this.waitFor({
                         controlType: "sap.m.Button",
                         viewName: VIEW_NAME,
@@ -109,7 +109,7 @@ sap.ui.define([
                         errorMessage: "Página de Adicionar não abriu corretamente."
                     });
                 },
-                nomeComErroDeValidacao: function () {
+                verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao: function () {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -121,34 +121,6 @@ sap.ui.define([
                             Opa5.assert.ok(true, "Campo Nome está em Error state.");
                         },
                         errorMessage: "Campo Nome não apresentou erro."
-                    });
-                },
-                tipoComErroDeValidacao: function () {
-                    return this.waitFor({
-                        controlType: "sap.m.Input",
-                        viewName: VIEW_NAME,
-                        matchers: new PropertyStrictEquals({
-                            name: "valueState",
-                            value: "Error"
-                        }),
-                        success: function () {
-                            Opa5.assert.ok(true, "Campo Tipo está em Error state.");
-                        },
-                        errorMessage: "Campo Tipo não apresentou erro."
-                    });
-                },
-                quantidadeComErroDeValidacao: function () {
-                    return this.waitFor({
-                        controlType: "sap.m.Input",
-                        viewName: VIEW_NAME,
-                        matchers: new PropertyStrictEquals({
-                            name: "valueState",
-                            value: "Error"
-                        }),
-                        success: function () {
-                            Opa5.assert.ok(true, "Campo Quantidade está em Error state.");
-                        },
-                        errorMessage: "Campo Quantidade não apresentou erro."
                     });
                 }
             }

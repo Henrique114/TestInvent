@@ -13,7 +13,7 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeListagemDeEquipamentos: {
             actions: {
-                pressionandoBotaoAdicionar: function () {
+                conferindoAAberturaDoDialogpressionandoBotaoAdicionar: function () {
                     return this.waitFor({
                         id: "btnAdicionarEquipamento",
                         viewName: VIEW_NAME,
@@ -24,7 +24,7 @@ sap.ui.define([
                         errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
                     });
                 },
-                pressionandoBotaoEditarLinha1: function () {
+                pressionandoBotaoEditarLinha1ParaAbrirODialogDeEdição: function () {
                    return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
@@ -44,7 +44,7 @@ sap.ui.define([
                         errorMessage: "Tabela de equipamentos não encontrada."
                     });
                 },
-                pressionandoBotaoDeletarLinha1: function () {
+                pressionandoBotaoDeletarLinha1ParaAbrirODialogDeConfirmacaoDeDeletar: function () {
                    return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
@@ -64,7 +64,7 @@ sap.ui.define([
                         errorMessage: "Tabela de equipamentos não encontrada."
                     });
                 },
-                cancelandoNaConfirmacaoDeDeletar: function () {
+                pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar: function () {
                     return this.waitFor({
                         id: "btnCancelarDelete",
                         actions: new Press(),
@@ -74,7 +74,7 @@ sap.ui.define([
                         errorMessage: "Botão Cancelar no Dialog de confirmacao não foi encontrado."
                     });
                 },
-                buscandoPorNome: function (nome) {
+                identificandoOCampoPesquisaEFazendoUmaBuscaPorNome: function (nome) {
                     return this.waitFor({
                         id: "inputFiltro",
                         viewName: VIEW_NAME,
@@ -85,7 +85,7 @@ sap.ui.define([
                         errorMessage: "Campo de busca não encontrado."
                     });
                 },
-                clicandoNoItemEAbrindoTelaDeDetalhes: function (nome) {
+                clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",
                         matchers: new PropertyStrictEquals({
@@ -101,7 +101,7 @@ sap.ui.define([
                 }
             },
             assertions: {
-                telaListagemAberta: function () {
+                AcessaandoAListaEConferindoSeFoiAberta: function () {
                     return this.waitFor({
                         controlType: "sap.m.Table",
                         viewName: VIEW_NAME,
@@ -117,7 +117,7 @@ sap.ui.define([
                         errorMessage: "Página de lista não abriu."
                     });
                 },
-                listaCarregadaComItems: function () {
+                conferindoSeAQuantidadeDeItensListadosEhAEsperada: function () {
                     return this.waitFor({
                         id: "listaEquipamentos",
                         viewName: VIEW_NAME,
@@ -133,7 +133,7 @@ sap.ui.define([
                         errorMessage: "Quantidade de itens incorreta."
                     });
                 },
-                listaExibeOResultadoDaFiltragem: function (nome) {
+                conferindoOResultadoDaBuscaPorNome: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Text",
                         viewName: VIEW_NAME,

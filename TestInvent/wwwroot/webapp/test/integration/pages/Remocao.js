@@ -8,7 +8,7 @@ sap.ui.define([
     Opa5.createPageObjects({
         noDialogDeConfirmacao: {
             actions: {
-                clicandoEmConfirmar: function () {
+                pressionandoConfirmarNoDialogDeConfirmacaoParaConfirmarODelete: function () {
                     return this.waitFor({
                         id: "btnConfirmarDelete",
                         actions: new Press(),
@@ -20,7 +20,7 @@ sap.ui.define([
                 },
             },
             assertions: {
-                dialogDeConfirmacaoAberto: function () {
+                verificandoSeODialogDeConfirmacaoEstaAberto: function () {
                     return this.waitFor({
                         id: "idDialogDeConfirmacao",
                         success: function () {

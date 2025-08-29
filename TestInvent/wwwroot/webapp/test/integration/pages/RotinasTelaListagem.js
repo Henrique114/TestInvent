@@ -12,23 +12,23 @@ sap.ui.define([
 	opaTest("Rotinas de listagem de equipamentos", function (Given, When, Then) {
 		Given.iStartMyApp();
 
-		Then.naPaginaDeListagemDeEquipamentos.telaListagemAberta();
-		Then.naPaginaDeListagemDeEquipamentos.listaCarregadaComItems();
+		Then.naPaginaDeListagemDeEquipamentos.AcessaandoAListaEConferindoSeFoiAberta();
+		Then.naPaginaDeListagemDeEquipamentos.conferindoSeAQuantidadeDeItensListadosEhAEsperada();
 
-		When.naPaginaDeListagemDeEquipamentos.buscandoPorNome("TesteA");
-		Then.naPaginaDeListagemDeEquipamentos.listaExibeOResultadoDaFiltragem("TesteA");
+		When.naPaginaDeListagemDeEquipamentos.identificandoOCampoPesquisaEFazendoUmaBuscaPorNome("TesteA");
+		Then.naPaginaDeListagemDeEquipamentos.conferindoOResultadoDaBuscaPorNome("TesteA");
 
-		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-		When.naPaginaDeAdicionarDeEquipamentos.fechandoDialogDeAdicionar();
+		When.naPaginaDeListagemDeEquipamentos.conferindoAAberturaDoDialogpressionandoBotaoAdicionar();
+		When.naPaginaDeAdicionarDeEquipamentos.conferindoOFechamentoDoDialogDeAdicionarPressionandoFechar();
 
-		When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
-		When.naPaginaDeDetalheDeEquipamento.fechandoDialogDeDetalhes();
+		When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");
+		When.naPaginaDeDetalheDeEquipamento.clicandoNoBotaoFecharDoDialogParaFecharAExibiçãoDosDetalhes();
 
-        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1();
-		When.naPaginaDeEditarDeEquipamentos.fechandoDialogDeEditar();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1ParaAbrirODialogDeEdição();
+		When.naPaginaDeEditarDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeEdicaoParaFecharDialogDeEditar();
 
-		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
-		When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1ParaAbrirODialogDeConfirmacaoDeDeletar();
+		When.naPaginaDeListagemDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar();
 
 		Then.iTeardownMyApp();
 	});

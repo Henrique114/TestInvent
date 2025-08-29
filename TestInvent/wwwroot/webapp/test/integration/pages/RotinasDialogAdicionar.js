@@ -11,23 +11,23 @@ sap.ui.define([
 	opaTest("Rotinas de adicionar novo equipamento", function (Given, When, Then) {
 		Given.iStartMyApp();
 
-		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();
-		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
-		Then.naPaginaDeAdicionarDeEquipamentos.nomeComErroDeValidacao();
+		When.naPaginaDeListagemDeEquipamentos.conferindoAAberturaDoDialogpressionandoBotaoAdicionar();
+		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
+		Then.naPaginaDeAdicionarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
 		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
 		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeAdicionarDeEquipamentos.preenchendoNome("Asus");
-		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Asus");
+		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
 		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
 		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeAdicionarDeEquipamentos.preenchendoTipo("Monitor");
-		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar("Monitor");
+		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
 		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
-		When.naPaginaDeAdicionarDeEquipamentos.preenchendoQuantidade(3);
-		When.naPaginaDeAdicionarDeEquipamentos.clicandoEmSalvar();
+		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar(3);
+		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
 
 		Then.iTeardownMyApp();
 	});

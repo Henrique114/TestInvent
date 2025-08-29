@@ -11,7 +11,7 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeEditarDeEquipamentos: {
             actions: {
-                fechandoDialogDeEditar: function () {
+                pressionandoOBotaoCancelarNoDialogDeEdicaoParaFecharDialogDeEditar: function () {
                     return this.waitFor({
                         id: "btnCancelarTelaCadastroEdicao",
                         viewName: VIEW_NAME,
@@ -22,7 +22,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o botão Fechar Dialog de Editar equipamento."
                     });
                 },
-                limparCampoNome: function (nome) {
+                clicandoNoInputNomeEInserindoUmaStringVazia: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -37,7 +37,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Nome na página de Editar."
                     });
                 },
-                preenchendoNome: function (nome) {
+                clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar: function (nome) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -52,7 +52,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Nome na página de Editar."
                     });
                 },
-                preenchendoTipo: function () {
+                clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar: function () {
                     return this.waitFor({
                         id: "formulariotipo",
                         viewName: VIEW_NAME,
@@ -71,7 +71,7 @@ sap.ui.define([
                         errorMessage: "Não consegui encontrar o Select"
                     });
                 },
-                preenchendoQuantidade: function (quantidade) {
+                clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar: function (quantidade) {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,
@@ -90,7 +90,7 @@ sap.ui.define([
                         errorMessage: "Não encontrei o campo Quantidade na página de Editar."
                     });
                 },
-                clicandoEmSalvar: function () {
+                precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar: function () {
                     return this.waitFor({
                          id: "btnSalvarTelaCadastro",
                         viewName: VIEW_NAME,
@@ -103,7 +103,7 @@ sap.ui.define([
                 },
             },
             assertions: {
-                dialogDeEditarAberto: function () {
+                verificandoSeODialogDeEditarEstaAberto: function () {
                     return this.waitFor({
                         id: "idAdicionarEditar",
                         viewName: VIEW_NAME,
@@ -113,7 +113,7 @@ sap.ui.define([
                         errorMessage: "dialog de Editar não abriu corretamente."
                     });
                 },
-                nomeComErroDeValidacao: function () {
+                verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao: function () {
                     return this.waitFor({
                         controlType: "sap.m.Input",
                         viewName: VIEW_NAME,

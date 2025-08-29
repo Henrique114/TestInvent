@@ -11,21 +11,21 @@ sap.ui.define([
 	opaTest("Opções do Dialog de exibição detalhes.", function (Given, When, Then) {
 		Given.iStartMyApp();
 
-        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
-	    Then.naPaginaDeDetalheDeEquipamento.dialogDeDetalhesFoiAberto();
+        When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");
+	    Then.naPaginaDeDetalheDeEquipamento.verificandoSeODialogDeDetalhesEstaAberto();
 
-        Then.naPaginaDeDetalheDeEquipamento.confirmaSeItemAbertoCorrespondeAoSelecionado("TesteA");
+        Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("TesteA");
 
         When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarEmDetalhes();
-        When.naPaginaDeAdicionarDeEquipamentos.fechandoDialogDeAdicionar();
+        When.naPaginaDeEditarDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeEdicaoParaFecharDialogDeEditar();
 
-        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteA");
+        When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");
 
-        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarEmDetalhes();
-        When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoDeletarNoDialogDeDetalhes();
+        When.naPaginaDeListagemDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar();
 
-        When.naPaginaDeListagemDeEquipamentos.clicandoNoItemEAbrindoTelaDeDetalhes("TesteB");
-        When.naPaginaDeDetalheDeEquipamento.fechandoDialogDeDetalhes();
+        When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteB");
+        When.naPaginaDeDetalheDeEquipamento.clicandoNoBotaoFecharDoDialogParaFecharAExibiçãoDosDetalhes();
 
 		Then.iTeardownMyApp();
 	});

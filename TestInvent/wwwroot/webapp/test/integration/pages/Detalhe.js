@@ -10,7 +10,7 @@ sap.ui.define([
     Opa5.createPageObjects({
         naPaginaDeDetalheDeEquipamento: {
             actions: {
-                fechandoDialogDeDetalhes: function () {
+                clicandoNoBotaoFecharDoDialogParaFecharAExibiçãoDosDetalhes: function () {
                     return this.waitFor({
                         id: "btnFechar",
                         viewName: VIEW_NAME,
@@ -32,7 +32,7 @@ sap.ui.define([
                         errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
                     });
                 },
-                pressionandoBotaoDeletarEmDetalhes: function () {
+                pressionandoBotaoDeletarNoDialogDeDetalhes: function () {
                     return this.waitFor({
                         id: "btnDeletarDetalhesEquipamento",
                         viewName: VIEW_NAME,
@@ -43,7 +43,7 @@ sap.ui.define([
                         errorMessage: "Botão Deletar não foi encontrado no Dialog."
                     });
                 },
-                cancelandoNaConfirmacaoDeDeletar: function () {
+                pressionandoOBotaoCancelarNoDialogDeConfirmacaoDeDeletarParaFecharDialogDeConfirmacaoDeDeletar: function () {
                     return this.waitFor({
                         id: "btnCancelarDelete",
                         actions: new Press(),
@@ -70,7 +70,7 @@ sap.ui.define([
                 },
             },
             assertions: {
-                dialogDeDetalhesFoiAberto: function () {
+                verificandoSeODialogDeDetalhesEstaAberto: function () {
                     return this.waitFor({
                         id: "idDialogDetalhes",
                         viewName: VIEW_NAME,
@@ -80,7 +80,7 @@ sap.ui.define([
                         errorMessage: "Página de detalhes não abriu corretamente."
                     });
                 },
-                confirmaSeItemAbertoCorrespondeAoSelecionado: function(nome){
+                confirmandoSeItemAbertoCorrespondeAoSelecionado: function(nome){
                     return this.waitFor({
                         controlType: "sap.m.Title",
                         matchers: new PropertyStrictEquals({
