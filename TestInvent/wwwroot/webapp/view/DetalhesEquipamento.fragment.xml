@@ -21,10 +21,10 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoEditar"/>
+					press=".aoClicarEmEditarrNoDialogDeDetalhes"/>
                 <Button
                     id= "btnDeletarDetalhesEquipamento"
-                    press=".aoPressionarDeletar"
+                    press=".aoClicarEmDeletarNoDialogDeDetalhes"
                     icon="sap-icon://delete"
                     class="sapUiTinyMarginBegin"
                     type="Reject"/>

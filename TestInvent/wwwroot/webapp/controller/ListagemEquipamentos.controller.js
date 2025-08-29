@@ -11,7 +11,6 @@ sap.ui.define([
     "use strict";
     const CONTROLLER_NAME = "ui5.testinvent.controller.ListagemEquipamentos";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
-    const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
     const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
     const NOME_FRAGMENT_DETALHES = "ui5.testinvent.view.DetalhesEquipamento";
     const NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO = "ui5.testinvent.view.AdicionarEditarEquipamento";
@@ -21,25 +20,33 @@ sap.ui.define([
     const MODELO_NOVO_EQUIPAMENTO = "novoEquipamento";
     const MODELO_TRADUCAO = "i18n";
     const patametroQuery = "query";
-
-    let _dialogAdicionarEditar = null;
-    let _dialogDetalhes = null;
-    let dialogConfirmacao = null;
-    let _query = null;
     
     return Controller.extend(CONTROLLER_NAME, {
+
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
+            
             this.view = this.getView();
         },
-        criarModelos: function(nome, modelo){
-            let view = this.getView();
-            if(modelo) view.setModel(modelo, nome);
-            return view.getModel(nome);
+
+        modelo: function(nome, dados) {
+            
+            let modelo = this.getView().getModel(nome);
+
+            if (!modelo) {
+                this.getView().setModel(new JSONModel(dados), nome);
+                return this.getView().getModel(nome);
+            }
+
+            if (dados) 
+                modelo.setData(dados);
+
+            return modelo;
         },
+
         _iniciarModelos: function(){
             let nomeModelos = [
                 MODELO_EQUIPAMENTOS_LISTAGEM,
@@ -47,173 +54,175 @@ sap.ui.define([
                 MODELO_TIPOS_EQUIPAMENTO,
                 MODELO_NOVO_EQUIPAMENTO
             ];
-            nomeModelos.forEach(element =>
-                this.criarModelos(element, new JSONModel({}))
-            );
+
+            nomeModelos.forEach(element => this.modelo(element, {}));
         },
+
         _acessarListar: function () {
-            this.carregarLista();
+            return this.carregarLista();
         },
+
         carregarLista: async function (filtro) {
             let equipamentos = await EquipamentoRepositorio.obterTodos(filtro);
             let dadosTipo = await TiposRepositorio.obterTipos();
+            this.modelo(MODELO_TIPOS_EQUIPAMENTO, dadosTipo);
             equipamentos.forEach(element => {
                 element.dataDeInclusao = new Date(element.dataDeInclusao);
                 element.descricaoDoTipo = formatter.obterDescricaoDoEnum(element.tipo, dadosTipo); 
             });
-            let model = this.getView().getModel(MODELO_EQUIPAMENTOS_LISTAGEM);
-            model.setData(equipamentos);
+            let model = this.modelo(MODELO_EQUIPAMENTOS_LISTAGEM, equipamentos);
             model.refresh(true);
         },
+
         aoFiltrarEquipamentos: function (evento){
             this._query = evento.getParameter(patametroQuery);
             this.carregarLista(this._query);
         },
-        aoIrParaDetalhes: function (evento) {   
+
+        aoIrParaDetalhes: function (evento) {
             const idEquipamentoSelecionado = evento
-            .getSource()
-            .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
-            .getObject().id;
+                .getSource()
+                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                .getObject()
+                .id;
+
             this._abrirTelaDeDetalhes(idEquipamentoSelecionado);
         },
+
         _abrirTelaDeDetalhes: async function(idEquipamentoSelecionado) {
-            let dialogDetalhes = this.getView().byId(ID_DETALHES_EQUIPAMENTO);
-            let dadosTipo = await TiposRepositorio.obterTipos();
-            let model = this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA);
+            let dadosTipo = this.modelo(MODELO_TIPOS_EQUIPAMENTO).getData();
             let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamentoSelecionado);
             equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
             equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipo);
+            let modeloEquipamentoSelecionado = this.modelo(MODELO_EQUIPAMENTO_SELECIONADO_LISTA, equipamento)
             
-            if (!dialogDetalhes) {
-                dialogDetalhes = await this._criarTelaDeDetalhes();
-            }
-
-            dialogDetalhes.setModel(this.getView().getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA));  
-            model.setData(equipamento);
-            model.refresh(true);
+            let dialogDetalhes = await this._criarTelaDeDetalhes();
+            dialogDetalhes.setModel(modeloEquipamentoSelecionado);
             dialogDetalhes.open();
         },
+
         _criarTelaDeDetalhes: function() {
             return Fragment.load({
-                id: this.getView().getId(),
+                id: this.view.getId(),
                 name: NOME_FRAGMENT_DETALHES,
                 controller: this
             }).then((dialogDetalhes) => {
                 dialogDetalhes.setModel();
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                this.getView().addDependent(dialogDetalhes);
+                this.view.addDependent(dialogDetalhes);
                 this._dialogDetalhes = dialogDetalhes
                 return dialogDetalhes;
             });
         },
+
         aoFecharDetalhes: function() {
-            this._dialogDetalhes.close();
+            this._dialogDetalhes.destroy();
         },
+
         aoAdicionarEquipamento: function() {
+            let modeloNovoEquipamento = this.modelo(MODELO_NOVO_EQUIPAMENTO, {});
+            modeloNovoEquipamento.refresh(true);
             this._abrirTelaAdicionarOuEditar(null);
         },
-        aoEditar: function(evento) { 
-           let idEquipamento = null; 
-           const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
-            if (modelEquipamentos) {
-                idEquipamento = modelEquipamentos
-                .getObject().id;
-            }else{
-                idEquipamento = this._dialogDetalhes
-                .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
-                .getData()
-                .id;
-            }
-            this._dialogDetalhes && this._dialogDetalhes.isOpen()? this._dialogDetalhes.close(): null;
-            this._abrirTelaAdicionarOuEditar(idEquipamento); 
-        },
-        _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
-            let dialogAdicionarEditar = this.getView().byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
-            let model = this.getView().getModel(MODELO_NOVO_EQUIPAMENTO);
-            let modelTipos = this.getView().getModel(MODELO_TIPOS_EQUIPAMENTO);
-            if (!dialogAdicionarEditar) {
-                dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
-            }
-            dialogAdicionarEditar.setModel(modelTipos); 
-            let dadosTipos = await TiposRepositorio.obterTipos();
-            modelTipos.setData(dadosTipos);
-            modelTipos.refresh(true);
 
-            dialogAdicionarEditar.setModel(model);  
-            model.setData({});
-            model.refresh(true);
+        aoClicarEmEditarrNoDialogDeDetalhes: function(){
+            let idEquipamento = this.modelo(MODELO_EQUIPAMENTO_SELECIONADO_LISTA).getProperty("/id")
+            this._abrirTelaAdicionarOuEditar(idEquipamento);
+            this._dialogDetalhes.destroy();
+        },
+
+        aoClicarEmEditarNaLinha: function(evento){
+            let idEquipamento = evento
+                .getSource()
+                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
+                .getObject()
+                .id;
+
+            this._abrirTelaAdicionarOuEditar(idEquipamento);
+        },
+
+        _abrirTelaAdicionarOuEditar: async function(idEquipamento) {
+            let dialogAdicionarEditar = this.view.byId(ID_ADICIONAR_EDITAR_EQUIPAMENTO);
+
+            if (!dialogAdicionarEditar) 
+                dialogAdicionarEditar = await this._criarTelaAdicionarEEditarEquipamento();
+
             dialogAdicionarEditar.open();
-            if(idEquipamento){
+
+            if (idEquipamento) {
                 let equipamento = await EquipamentoRepositorio.obterPorId(idEquipamento);
-                equipamento.dataDeInclusao = new Date(equipamento.dataDeInclusao);
-                equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipos);
-                model.setData(equipamento);
-                model.refresh(true);
+                let dadosTipo = this.modelo(MODELO_TIPOS_EQUIPAMENTO).getData();
+                equipamento.descricaoDoTipo = formatter.obterDescricaoDoEnum(equipamento.tipo, dadosTipo);
+                let modeloNovoEquipamento = this.modelo(MODELO_NOVO_EQUIPAMENTO, equipamento);
+                modeloNovoEquipamento.refresh(true);
             }
         },
+
         _criarTelaAdicionarEEditarEquipamento: function() {
             return Fragment.load({
-                id: this.getView().getId(),
+                id: this.view.getId(),
                 name: NOME_FRAGMENT_ADICIONAR_EDITAR_EQUIPAMENTO,
                 controller: this
             }).then((dialogAdicionarEditar) => {
                 this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();   
-                this.getView().addDependent(dialogAdicionarEditar);
+                this.view.addDependent(dialogAdicionarEditar);
                 this._dialogAdicionarEditar = dialogAdicionarEditar;
                 return dialogAdicionarEditar;
             });
         },
+
         aoSalvar: function() {
-            const equipamento = this._dialogAdicionarEditar.getModel(MODELO_NOVO_EQUIPAMENTO).getData();
-            if (!ServicoValidador.validarFormulario.call(this)) {
+            const equipamento = this.modelo(MODELO_NOVO_EQUIPAMENTO).getData();
+
+            if (!ServicoValidador.validarFormulario.call(this)) 
                 return;
-            }
-            equipamento.tipo = parseInt(equipamento.tipo),
-            equipamento.quantidadeEmEstoque = parseInt(equipamento.quantidadeEmEstoque)
+            
+            equipamento.tipo = parseInt(equipamento.tipo);
+            equipamento.quantidadeEmEstoque = parseInt(equipamento.quantidadeEmEstoque);
+
             if (equipamento.id){
                 EquipamentoRepositorio.atualizar(equipamento)
-                .then(() => {
-                    this.carregarLista(this._query);
-                    this._dialogAdicionarEditar.destroy();
-                });
-            }else{
+                    .then(() => {
+                        this.carregarLista(this._query);
+                        this._dialogAdicionarEditar.destroy();
+                    });
+            } else {
                 EquipamentoRepositorio.criar(equipamento)
-                .then(() => {
-                    this.carregarLista(this._query);
-                    this._dialogAdicionarEditar.destroy();
-                });
+                    .then(() => {
+                        this.carregarLista(this._query);
+                        this._dialogAdicionarEditar.destroy();
+                    });
             }
         }, 
+
         aoFecharFormulario: function() {
             this._dialogAdicionarEditar.destroy();
         },
-        aoPressionarDeletar: function(evento){
-            let idEquipamento = null;
-            const modelEquipamentos = evento.getSource().getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM);
-            if (modelEquipamentos) {
-                idEquipamento = modelEquipamentos
+
+        aoClicarEmDeletarNoDialogDeDetalhes: function(){
+            let idEquipamento = this.modelo(MODELO_EQUIPAMENTO_SELECIONADO_LISTA).getProperty("/id")
+            this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
+            this._dialogDetalhes.destroy();
+        },
+
+        aoClicarEmDeletarNaLinha: function(evento){
+            let idEquipamento = evento
+                .getSource()
+                .getBindingContext(MODELO_EQUIPAMENTOS_LISTAGEM)
                 .getObject()
                 .id;
-            }else{
-
-                idEquipamento = this._dialogDetalhes
-                .getModel(MODELO_EQUIPAMENTO_SELECIONADO_LISTA)
-                .getData()
-                .id;
-            }
-            this._dialogDetalhes && this._dialogDetalhes.isOpen()
-            ? this._dialogDetalhes.close()
-            : null;
 
             this._abrirConfirmcaoDeletarEquipamento(idEquipamento);
         },
+
         _abrirConfirmcaoDeletarEquipamento: async function(idEquipamento){
             this.dialogConfirmacao = await FragmentoConfirmacaoExclusao.criarDialogDeConfirmação(this, idEquipamento);
             return this.dialogConfirmacao.open();
         },
-        aoPressinarConfirmar: async function(id){
-            await EquipamentoRepositorio.deletar(id)
-            .then(() => this.carregarLista(this._query));
+
+        aoPressinarConfirmar: function(id){
+            return EquipamentoRepositorio.deletar(id)
+                .then(() => this.carregarLista(this._query));
         },
     });
 });
