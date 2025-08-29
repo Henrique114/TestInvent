@@ -9,6 +9,7 @@ sap.ui.define([
     "../fragment/FragmentoConfirmacaoExclusao"
 ],(Controller, JSONModel, Fragment, ServicoValidador, formatter, EquipamentoRepositorio, TiposRepositorio, FragmentoConfirmacaoExclusao) => {
     "use strict";
+    const CONTROLLER_NAME = "ui5.testinvent.controller.ListagemEquipamentos";
     const ROTA_LISTAGEM = "ListagemEquipamentos";
     const ID_DETALHES_EQUIPAMENTO = "idDialogDetalhes";
     const ID_ADICIONAR_EDITAR_EQUIPAMENTO = "idAdicionarEditar";
@@ -26,7 +27,7 @@ sap.ui.define([
     let dialogConfirmacao = null;
     let _query = null;
     
-    return Controller.extend("ui5.testinvent.controller.ListagemEquipamentos", {
+    return Controller.extend(CONTROLLER_NAME, {
         onInit: function () {
             this._oResourceBundle = this.getOwnerComponent().getModel(MODELO_TRADUCAO).getResourceBundle();
             this._iniciarModelos();
