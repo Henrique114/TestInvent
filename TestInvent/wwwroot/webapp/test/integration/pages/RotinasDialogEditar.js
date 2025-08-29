@@ -4,13 +4,12 @@ sap.ui.define([
 	"./Detalhe",
 	"./Adicionar",
     "./Editar",
-	
 ], function (opaTest) {
 	"use strict";
 
 	QUnit.module("Dialog Formulario Editar equipamento.");
 
-	opaTest("Rotinas de Edição e equipamento.", function (Given, When, Then) {
+	opaTest("Rotinas de Edição de equipamento.", function (Given, When, Then) {
 		Given.iStartMyApp();
 
         When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoEditarLinha1();

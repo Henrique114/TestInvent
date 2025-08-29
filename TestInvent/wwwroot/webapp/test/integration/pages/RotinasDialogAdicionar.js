@@ -3,13 +3,12 @@ sap.ui.define([
 	"./Lista",
 	"./Detalhe",
 	"./Adicionar"
-	
 ], function (opaTest) {
 	"use strict";
 
 	QUnit.module("Dialog Formulario Adicionar equipamento.");
 
-	opaTest("Fluxo de Adicionar completo", function (Given, When, Then) {
+	opaTest("Rotinas de adicionar novo equipamento", function (Given, When, Then) {
 		Given.iStartMyApp();
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoAdicionar();

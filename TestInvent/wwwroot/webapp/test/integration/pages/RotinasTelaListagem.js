@@ -9,7 +9,7 @@ sap.ui.define([
 
 	QUnit.module("Tela Listagem de Equipamento");
 
-	opaTest("Fluxo de listagem completo", function (Given, When, Then) {
+	opaTest("Rotinas de listagem de equipamentos", function (Given, When, Then) {
 		Given.iStartMyApp();
 
 		Then.naPaginaDeListagemDeEquipamentos.telaListagemAberta();
@@ -29,12 +29,6 @@ sap.ui.define([
 
 		When.naPaginaDeListagemDeEquipamentos.pressionandoBotaoDeletarLinha1();
 		When.naPaginaDeListagemDeEquipamentos.cancelandoNaConfirmacaoDeDeletar();
-
-
-
-
-
-		
 
 		Then.iTeardownMyApp();
 	});
