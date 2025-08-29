@@ -4,18 +4,13 @@ sap.ui.define([
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/actions/Press",
     "sap/ui/test/matchers/PropertyStrictEquals",
-    "sap/m/MessageBox",
-    "sap/ui/test/matchers/AggregationContainsPropertyEqual"
-], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals, MessageBox, AggregationContainsPropertyEqual) {
+], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals) {
     "use strict";
-
     const VIEW_NAME = "ListagemEquipamentos";
     
-
     Opa5.createPageObjects({
         naPaginaDeAdicionarDeEquipamentos: {
             actions: {
-
                 fechandoDialogDeAdicionar: function () {
                     return this.waitFor({
                         id: "btnCancelarTelaCadastroEdicao",
@@ -99,7 +94,6 @@ sap.ui.define([
                     });
                 },
             },
-
             assertions: {
                 dialogDeAdicionarAberto: function () {
                     return this.waitFor({
@@ -115,7 +109,6 @@ sap.ui.define([
                         errorMessage: "Página de Adicionar não abriu corretamente."
                     });
                 },
-
                 nomeComErroDeValidacao: function () {
                     return this.waitFor({
                         controlType: "sap.m.Input",

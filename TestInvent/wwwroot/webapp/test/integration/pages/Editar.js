@@ -4,16 +4,13 @@ sap.ui.define([
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/actions/Press",
     "sap/ui/test/matchers/PropertyStrictEquals",
-    "sap/m/MessageBox"
-], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals, MessageBox) {
+], function (Opa5, I18NText, EnterText, Press, PropertyStrictEquals) {
     "use strict";
-
     const VIEW_NAME = "ListagemEquipamentos";
 
     Opa5.createPageObjects({
         naPaginaDeEditarDeEquipamentos: {
             actions: {
-
                 fechandoDialogDeEditar: function () {
                     return this.waitFor({
                         id: "btnCancelarTelaCadastroEdicao",
@@ -105,7 +102,6 @@ sap.ui.define([
                     });
                 },
             },
-
             assertions: {
                 dialogDeEditarAberto: function () {
                     return this.waitFor({
@@ -117,7 +113,6 @@ sap.ui.define([
                         errorMessage: "dialog de Editar não abriu corretamente."
                     });
                 },
-
                 nomeComErroDeValidacao: function () {
                     return this.waitFor({
                         controlType: "sap.m.Input",
