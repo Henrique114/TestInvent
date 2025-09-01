@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Aplicação para consumir a API",
   "scripts": {
-    "start": "ui5 serve -o ui5/testinvent/test/testsuite.qunit.html"
+    "start": "ui5 serve -o test/testsuite.qunit.html"
   },
   "devDependencies": {
     "@ui5/cli": "^4.0.23",

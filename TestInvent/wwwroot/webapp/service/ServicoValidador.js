@@ -1,6 +1,7 @@
 sap.ui.define([
    "sap/ui/core/library",
-], (coreLibrary) => {
+   "sap/ui/model/resource/ResourceModel"
+], (coreLibrary, ResourceModel) => {
    "use strict";
    
    const i18nPathTests = "../i18n/i18n.properties";
@@ -17,11 +18,10 @@ sap.ui.define([
    return {
         validarFormulario: function() {
             const urlCompleta = window.location.href;
-
             let urii18n = urlCompleta.includes(parteUrlTest)? i18nPathTests : i18nPath;
-            var i18nModel = new sap.ui.model.resource.ResourceModel({ 
+            let i18nModel = new ResourceModel({ 
             bundleUrl : urii18n });
-            var oBundle = i18nModel.getResourceBundle();
+            let oBundle = i18nModel.getResourceBundle();
             const campos = [
                 {id: ID_INPUT_NOME, chave: chaveNome, getValue: () => this.byId(ID_INPUT_NOME).getValue()},
                 {id: ID_SELECT_TIPO, chave: chaveTipo, getValue: () => this.byId(ID_SELECT_TIPO).getSelectedKey()},

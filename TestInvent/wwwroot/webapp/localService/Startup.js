@@ -1,6 +1,7 @@
 sap.ui.define([
-    "sap/ui/test/Opa5"
-], function (Opa5) {
+    "sap/ui/test/Opa5",
+    "sap/ui/model/resource/ResourceModel"
+], function (Opa5, ResourceModel) {
     "use strict";
     const ID_INICIAL_MOCK = 3;
     const URL_BASE = "/EquipamentoEletronico";
@@ -34,10 +35,14 @@ sap.ui.define([
     ];
     
     let proximoId = ID_INICIAL_MOCK;
+    const parteUrlTest = "test"
     
-   
-    let i18nModel = new sap.ui.model.resource.ResourceModel({ 
-    bundleUrl : "../i18n/i18n.properties" });
+    const i18nPathTests = "../i18n/i18n.properties";
+    const i18nPath = "i18n/i18n.properties";
+    const urlCompleta = window.location.href;
+    let urii18n = urlCompleta.includes(parteUrlTest)? i18nPathTests : i18nPath;
+    let i18nModel = new ResourceModel({ 
+    bundleUrl : urii18n });
     let oBundle = i18nModel.getResourceBundle();
         
     function mockFetch(url, opcoesFetch) {
@@ -58,7 +63,7 @@ sap.ui.define([
     function identificarBuscaPeloEndPoint(url){
         
         let ehUrlBase = url.endsWith(URL_BASE);
-        const parametroFiltroUrl = "?filtro"
+        const parametroFiltroUrl = "?filtro";
         let ehUrlBaseComFiltro = url.includes(parametroFiltroUrl); 
 
         if (ehUrlBase || ehUrlBaseComFiltro) {
