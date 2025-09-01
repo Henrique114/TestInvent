@@ -21,10 +21,10 @@
 				<Button
 					id="btnEditarEquipamentoPgDetalhes"
 					icon="sap-icon://edit"
-					press=".aoEditar"/>
+					press=".aoClicarEmEditarrNoDialogDeDetalhes"/>
                 <Button
                     id= "btnDeletarDetalhesEquipamento"
-                    press=".aoPressionarDeletar"
+                    press=".aoClicarEmDeletarNoDialogDeDetalhes"
                     icon="sap-icon://delete"
                     class="sapUiTinyMarginBegin"
                     type="Reject"/>
@@ -66,7 +66,6 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>dataInclusao}">
                                     <f:fields>
-
                                         <Text text="{
 
                                                 path: 'equipamentoSelecionadoLista>/dataDeInclusao',
@@ -77,7 +76,6 @@
 
                                                 }                                         
 										}" />
-
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>descricaoEquipamento}">
@@ -87,9 +85,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>disponibilidadeEquipamento}">
                                     <f:fields>
-
                                         <Text text="{= ${equipamentoSelecionadoLista>/temEmEstoque} === true ? ${i18n>txtDisponivel} : ${i18n>txtIndisponivel} }" />
-
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
@@ -99,7 +95,7 @@
 	        </VBox>
         </content>
         <buttons>
-            <Button text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
+            <Button id= "btnFechar" text="{i18n>btnFechar}" press="aoFecharDetalhes"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

@@ -40,11 +40,11 @@
 				inset="false"
 				width="auto"
 				items="{ path: 'equipamentos>/',
-					sorter : {
-						path : 'descricaoDoTipo',
-						group : true
-					}
-						}">
+						sorter : {
+							path : 'descricaoDoTipo',
+							group : true
+						}
+					}">
 				<columns>
 					<Column
 						hAlign="End"
@@ -82,12 +82,12 @@
 							 <HBox justifyContent="End">
 									<Button
 											id="btnEditarLinhaListaEquipamento"
-											press=".aoEditar"
+											press=".aoClicarEmEditarNaLinha"
 											icon="sap-icon://edit"
 											type="Transparent"/>
 									<Button
 											id="btnDeletarLinhaListaEquipamento"
-											press=".aoPressionarDeletar"
+											press=".aoClicarEmDeletarNaLinha"
 											icon="sap-icon://delete"
 											type="Reject"/>
 							</HBox>
