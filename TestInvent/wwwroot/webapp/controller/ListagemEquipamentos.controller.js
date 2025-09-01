@@ -28,7 +28,6 @@ sap.ui.define([
             this._iniciarModelos();
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._acessarListar, this);
-            
             this.view = this.getView();
         },
 
