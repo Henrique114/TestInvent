@@ -37,13 +37,12 @@ sap.ui.define([
     
    
     let i18nModel = new sap.ui.model.resource.ResourceModel({ 
-    bundleUrl : "i18n/i18n.properties" });
+    bundleUrl : "../i18n/i18n.properties" });
     let oBundle = i18nModel.getResourceBundle();
         
     function mockFetch(url, opcoesFetch) {
         const _url = url;
         const metodo = opcoesFetch?.method;
-
         switch (metodo) {
             case "POST":
                 return adicionar(opcoesFetch);
@@ -115,7 +114,7 @@ sap.ui.define([
             console.error(oBundle.getText("msgErrorAtualizar", error.message));
         }
 
-        equipamentos.push(novoEquipamento);
+        
         return Promise.resolve({ ok: true, json: () => Promise.resolve(novoEquipamento) });
     }
     

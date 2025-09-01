@@ -21,15 +21,15 @@ sap.ui.define([
                         errorMessage: "Não encontrei o botão Fechar tela de detalhes."
                     });
                 },
-                 pressionandoBotaoEditarEmDetalhes: function () {
+                 pressionandoBotaoEditarNoDialogDeDetalhes: function () {
                     return this.waitFor({
                         id: "btnEditarEquipamentoPgDetalhes",
                         viewName: VIEW_NAME,
                         actions: new Press(),
                         success: function () {
-                            Opa5.assert.ok(true, "Botão Cadastrar foi clicado com sucesso.");
+                            Opa5.assert.ok(true, "Botão Editar foi clicado com sucesso.");
                         },
-                        errorMessage: "Botão Cadastrar não foi encontrado na página de lista."
+                        errorMessage: "Botão Editar não foi encontrado no Dialog de Detalhes."
                     });
                 },
                 pressionandoBotaoDeletarNoDialogDeDetalhes: function () {

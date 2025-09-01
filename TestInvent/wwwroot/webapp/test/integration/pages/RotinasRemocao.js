@@ -23,7 +23,7 @@ sap.ui.define([
 		When.noDialogDeConfirmacao.pressionandoConfirmarNoDialogDeConfirmacaoParaConfirmarODelete();
 
         When.naPaginaDeListagemDeEquipamentos.conferindoAAberturaDoDialogpressionandoBotaoAdicionar();
-        When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Asus");
+        When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("AOC");
         When.naPaginaDeAdicionarDeEquipamentos.clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar("Monitor");
         When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar(3);
         When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();

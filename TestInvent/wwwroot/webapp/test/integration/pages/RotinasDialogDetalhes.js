@@ -16,7 +16,7 @@ sap.ui.define([
 
         Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("TesteA");
 
-        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarEmDetalhes();
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarNoDialogDeDetalhes();
         When.naPaginaDeEditarDeEquipamentos.pressionandoOBotaoCancelarNoDialogDeEdicaoParaFecharDialogDeEditar();
 
         When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("TesteA");

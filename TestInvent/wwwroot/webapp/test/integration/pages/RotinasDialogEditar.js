@@ -23,7 +23,7 @@ sap.ui.define([
 		When.naPaginaDeListagemDeEquipamentos.clicandoEmUmaLinhaDaListaParaAbrirODialogDeDetalhes("Acer");
         Then.naPaginaDeDetalheDeEquipamento.verificandoSeODialogDeDetalhesEstaAberto();
         Then.naPaginaDeDetalheDeEquipamento.confirmandoSeItemAbertoCorrespondeAoSelecionado("Acer");
-        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarEmDetalhes();
+        When.naPaginaDeDetalheDeEquipamento.pressionandoBotaoEditarNoDialogDeDetalhes();
         Then.naPaginaDeEditarDeEquipamentos.verificandoSeODialogDeEditarEstaAberto();
         When.naPaginaDeEditarDeEquipamentos.clicandoNoInputNomeEInserindoUmaStringVazia("");
 		When.naPaginaDeEditarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeEditar();

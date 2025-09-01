@@ -3,6 +3,7 @@ sap.ui.define([
 ], (coreLibrary) => {
    "use strict";
    
+   const i18nPathTests = "../i18n/i18n.properties";
    const i18nPath = "i18n/i18n.properties";
    const ID_INPUT_NOME = "formularionome";
    const ID_SELECT_TIPO = "formulariotipo";
@@ -12,11 +13,14 @@ sap.ui.define([
    const chaveQuantidade = "Quantidade";
    const mensagemDeErro = "msgCampoObrigarorio";
    const ValueState = coreLibrary.ValueState;   
-   
+   const parteUrlTest = "test"
    return {
-       validarFormulario: function() {
+        validarFormulario: function() {
+            const urlCompleta = window.location.href;
+
+            let urii18n = urlCompleta.includes(parteUrlTest)? i18nPathTests : i18nPath;
             var i18nModel = new sap.ui.model.resource.ResourceModel({ 
-            bundleUrl : i18nPath });
+            bundleUrl : urii18n });
             var oBundle = i18nModel.getResourceBundle();
             const campos = [
                 {id: ID_INPUT_NOME, chave: chaveNome, getValue: () => this.byId(ID_INPUT_NOME).getValue()},

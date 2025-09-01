@@ -14,17 +14,14 @@ sap.ui.define([
 		When.naPaginaDeListagemDeEquipamentos.conferindoAAberturaDoDialogpressionandoBotaoAdicionar();
 		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
 		Then.naPaginaDeAdicionarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
-		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
-		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
 
 		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoNomeEInseridoUmNomeNoFormularioDeAdicionar("Asus");
 		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
-		Then.naPaginaDeAdicionarDeEquipamentos.tipoComErroDeValidacao();
-		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
+		Then.naPaginaDeAdicionarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
 
 		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoSelectDoTipoESelecionandoUmTipoNoFormularioDeAdicionar("Monitor");
 		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
-		Then.naPaginaDeAdicionarDeEquipamentos.quantidadeComErroDeValidacao();
+		Then.naPaginaDeAdicionarDeEquipamentos.verificandoSeOsCamposEstaoInformandoComAsMensagensDeValidacao();
 
 		When.naPaginaDeAdicionarDeEquipamentos.clicandoNoInputDoQuantidadeEInseridoUmNumeroNoFormularioDeAdicionar(3);
 		When.naPaginaDeAdicionarDeEquipamentos.precionandoOBotaoSalvarParaSalvarOsDadosDoFormurarioDeAdicionar();
